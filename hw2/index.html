@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Photo Album</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+  <link rel="shortcut icon" href="https://www.pornhub.com/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+  <main>
+    <div id="display">
+      <img src="" id="displayImg">
+    </div>
+    <header>
+      <h1 id="albumName"></h1>
+      <div id="album">
+        Album :
+        <br />
+        <button id="album0" onclick="changeAlbum(0)">landscape</button>
+        <button id="album1" onclick="changeAlbum(1)">flower</button>
+        <button id="album2" onclick="changeAlbum(2)">people</button>
+        <button id="addAlbum" onclick="addAlbum()">+</button>
+      </div>
+      <p>When life gives you lemons, make lemonade.</p>
+
+      <section id="thumbnails">
+        <article>
+          <div id="photo0" onclick="clickImg(0)"><img src="" /></div>
+        </article>
+        <article>
+          <div id="photo1" onclick="clickImg(1)"><img src="" /></div>
+        </article>
+        <article>
+          <div id="photo2" onclick="clickImg(2)"><img src="" /></div>
+        </article>
+        <article>
+          <div id="photo3" onclick="clickImg(3)"><img src="" /></div>
+        </article>
+        <article>
+          <div id="photo4" onclick="clickImg(4)"><img src="" /></div>
+        </article>
+        <article>
+          <div id="photo5" onclick="clickImg(5)"><img src="" /></div>
+        </article>
+        <article>
+          <div id="photo6" onclick="clickImg(6)"><img src="" /></div>
+        </article>
+        <article>
+          <div id="photo7" onclick="clickImg(7)"><img src="" /></div>
+        </article>
+      </section>
+
+      <div>
+        <button id="prev" onclick="prevImg()">prev</button>
+        <button id="next" onclick="nextImg()">next</button>
+      </div>
+      <div id="num">1/8</div>
+    </header>
+  </main>
+  <script src="main.js"></script>
+</body>
+
+</html>
