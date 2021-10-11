@@ -6,35 +6,28 @@
     <title>Digital Frame</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="shortcut icon" href="https://www.pornhub.com/favicon.ico" type="image/x-icon" />
-    <audio src="music.mp3" autoplay controls style="position: absolute; left:1em"></audio>
+    <audio src="music.mp3" autoplay controls></audio>
 
 </head>
 
 <body>
 <main>
     <header>
-        <h1>Landscape</h1>
+        <div id="albumName">landscape</div>
         <p>When life gives you lemons, make lemonade.</p>
-    
-    <!-- <div class="display">
-        <img src="photos/photo4.jpg"> -->
-        <!-- <span>〉</span> -->
-    <!-- </div> -->
-
-    <!-- <div class="photo">
-        <img src="photos/photo1.jpg" />
-        <img src="photos/photo2.jpg" />
-        <img src="photos/photo3.jpg" />
-        <img src="photos/photo4.jpg"  style="height: 100%; width: 100%;">
-        <img src="photos/photo5.jpg" />
-        <img src="photos/photo6.jpg" />
-        <img src="photos/photo7.jpg" />
-        <img src="photos/photo8.jpg" />
-    </div> -->
-
+        <hr/>
+        Album :
+      <div id="album">
+        <br />
+        <button id="album0" onclick="changeAlbum(0)">landscape</button>
+        <button id="album1" onclick="changeAlbum(1)">flower</button>
+        <button id="album2" onclick="changeAlbum(2)">people</button>
+        <button id="addAlbum" onclick="addAlbum()">+</button>
+      </div>   
+      <hr/> 
     <section id="thumbnails">
         <article>       
-            <a class="thumbnail" href="photos/photo1.jpg"><img src="photos/photo1.jpg"  /></a>
+            <a class="thumbnail" href="photos/photo1.jpg" id="selected"><img src="photos/photo1.jpg"  /></a>
         </article>
         <article>       
             <a class="thumbnail" href="photos/photo2.jpg"><img src="photos/photo2.jpg"  /></a>
@@ -57,15 +50,11 @@
         <article>       
             <a class="thumbnail" href="photos/photo8.jpg"><img src="photos/photo8.jpg"  /></a>
         </article>
+        <div id="order">
+            <button id="prev" onclick="prevImg()">prev</button>
+            <button id="next" onclick="nextImg()">next</button>
+        </div>
     </section>
-
-    <div>
-        <span id="album">Other Albums:  </span>
-        <br/>
-        <span><button id="butt">Favorite</button></span>
-        <span><button id="butt">Pet</button></span>
-        <span><button id="butt">Family</button></span>
-    </div>
     </header>
 </main>
 </body>
