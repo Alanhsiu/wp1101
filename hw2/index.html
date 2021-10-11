@@ -16,18 +16,21 @@
       <img src="" id="displayImg">
     </div>
     <header>
-      <h1 id="albumName"></h1>
+      <div id="albumName"></div>
+      <hr/>
+      Album :
       <div id="album">
-        Album :
         <br />
         <button id="album0" onclick="changeAlbum(0)">landscape</button>
         <button id="album1" onclick="changeAlbum(1)">flower</button>
         <button id="album2" onclick="changeAlbum(2)">people</button>
+        <button id="album3" onclick="changeAlbum(3)">Empty</button>
         <button id="addAlbum" onclick="addAlbum()">+</button>
       </div>
-      <p>When life gives you lemons, make lemonade.</p>
-
-      <section id="thumbnails">
+      <!-- <p>When life gives you lemons, make lemonade.</p> -->
+      <hr/>
+      Preview :
+      <div id="preview">
         <article>
           <div id="photo0" onclick="clickImg(0)"><img src="" /></div>
         </article>
@@ -52,7 +55,7 @@
         <article>
           <div id="photo7" onclick="clickImg(7)"><img src="" /></div>
         </article>
-      </section>
+      </div>
 
       <div>
         <button id="prev" onclick="prevImg()">prev</button>
