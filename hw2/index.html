@@ -17,24 +17,23 @@
     </div>
     <header>
       <div id="albumName"></div>
-      <hr/>
+      <hr />
       Album :
+      <button id="deleteAlbum" onclick="deleteAlbum()">delete</button>
+      <button id="addAlbum" onclick="addAlbum()">+</button>
       <div id="album">
         <br />
         <button id="album0" onclick="changeAlbum(0)">landscape</button>
         <button id="album1" onclick="changeAlbum(1)">flower</button>
         <button id="album2" onclick="changeAlbum(2)">people</button>
         <button id="album3" onclick="changeAlbum(3)">Empty</button>
-        <button id="addAlbum" onclick="addAlbum()">+</button>
       </div>
-      <!-- <p>When life gives you lemons, make lemonade.</p> -->
-      <hr/>
+      <hr />
       Preview :
+      <button id="deletePhoto" onclick="deletePhoto()">delete</button>
+      <button id="addPhoto" onclick="addPhoto()">+</button>
       <div id="preview">
-        <article>
-          <div id="photo0" onclick="clickImg(0)"><img src="" /></div>
-        </article>
-        <article>
+        <!-- <article>
           <div id="photo1" onclick="clickImg(1)"><img src="" /></div>
         </article>
         <article>
@@ -55,10 +54,13 @@
         <article>
           <div id="photo7" onclick="clickImg(7)"><img src="" /></div>
         </article>
+        <article>
+          <div id="photo8" onclick="clickImg(8)"><img src="" /></div>
+        </article> -->
       </div>
 
       <div>
-        <button id="prev" onclick="prevImg()">prev</button>
+        <button id="prev" onclick="prevImg()">prev</button>      
         <button id="next" onclick="nextImg()">next</button>
       </div>
       <div id="num">1/8</div>
