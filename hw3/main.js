@@ -1,5 +1,6 @@
 let list = [];
 let done_list = []; //record done or not
+let completedBtn = false;
 
 
 //framework
@@ -17,8 +18,8 @@ rootNode.appendChild(sectionNode);
 
 //class
 class todo {
-    constructor(data, num) {
-        var btnState = 0;
+    constructor(data, num, btnState) {
+        // var btnState = 0;
         this.node = document.createElement("li");
         this.node.className = "todo-app__item";
         let boxNode = document.createElement("div");
@@ -52,10 +53,17 @@ class todo {
             // this.parentNode.removeChild(this);
             list.splice(num, 1);
             done_list.splice(num, 1);
-            setList()
+            setList();
             setLeft();
             checkLeft();
         });
+        if (btnState === 1){
+            h1Node.style = "text-decoration: line-through; opacity: 0.5;";
+            inputNode.checked=true;
+        }
+        if(completedBtn==true){
+            this.node.style.display = "none";
+        }
 
         function changeState() {
             if (btnState === 0) {
@@ -117,7 +125,7 @@ function add_item(item) {
         return;
     list.push(item);
     done_list.push(false);
-    ulNode.appendChild(new todo(list[list.length-1], list.length-1).todoNode);
+    ulNode.appendChild(new todo(list[list.length - 1], list.length - 1, 0).todoNode);
     footerNode.style.display = "";
     setLeft();
 }
@@ -132,8 +140,12 @@ function setList() {
     while (ulNode.firstChild) {
         ulNode.removeChild(ulNode.firstChild);
     }
-    for (let i = 0; i < list.length; i++)
-        ulNode.appendChild(new todo(list[i], i).todoNode);
+    for (let i = 0; i < list.length; i++) {
+        if (done_list[i]===true)
+            ulNode.appendChild(new todo(list[i], i, 1).todoNode);
+        else
+            ulNode.appendChild(new todo(list[i], i, 0).todoNode);
+    }
     setLeft();
 }
 
@@ -153,11 +165,13 @@ function checkLeft() {
 
 //function footer
 allNode.addEventListener("click", function () {
+    completedBtn=false;
     for (var i = 0; i < list.length; i++) {
         ulNode.childNodes[i].style.display = "";
     }
 });
 activeNode.addEventListener("click", function () {
+    completedBtn=false;
     for (var i = 0; i < list.length; i++) {
         if (done_list[i] === true)
             ulNode.childNodes[i].style.display = "none";
@@ -167,6 +181,7 @@ activeNode.addEventListener("click", function () {
     }
 });
 completedNode.addEventListener("click", function () {
+    completedBtn=true;
     for (var i = 0; i < list.length; i++) {
         if (done_list[i] === false)
             ulNode.childNodes[i].style.display = "none";
@@ -179,8 +194,8 @@ completedNode.addEventListener("click", function () {
 
 // note : remove&removeChild are not the same
 clearNode.addEventListener("click", function () {
-    for (let i = list.length-1; i >= 0; i--) {
-        if (done_list[i]===true) {
+    for (let i = list.length - 1; i >= 0; i--) {
+        if (done_list[i] === true) {
             // let targetNode = document.getElementById(i).parentNode;
             ulNode.childNodes[i].style.display = "none";
             ulNode.removeChild(ulNode.childNodes[i]);
