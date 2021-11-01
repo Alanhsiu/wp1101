@@ -1,6 +1,7 @@
 /* eslint-disable no-eval */
 import React, { useState } from "react";
 import './App.css'
+import Display from "./components/Display";
 
 const App = () => {
   const [result, setResult] = useState("");
@@ -52,25 +53,26 @@ const App = () => {
     }
   }
   const recallMemory=()=>{
-    setResult(result.concat(memory))
+    setResult(memory)
   }
   const clearMemory=()=>{
     setMemory("0")}
 
   const addMemory=()=>{
-      setMemory((eval(memory)+eval(result)).toString())
+    setMemory((eval(memory)+eval(result)).toString())
+    setRestart(true);
+    setResult("")
   }
   const addNegtiveMemory=()=>{
-    console.log(memory);
-    setMemory((eval(result)*(-1)).toString())
+    setMemory((eval(memory)+eval(result)*(-1)).toString())
+    setRestart(true);
+    setResult("")
   }
   return (
     <>
       <div className="container">
         <div className="keypad">
-        <form id="display">
-            <input type="text" value={result} />
-        </form>
+        <Display result={result}/>
         <button className="operator1" name="(" onClick={handClick} >(</button>
         <button className="operator1" name=")" onClick={handClick} >)</button>
         <button className="highlight" onClick={clearAll} id="clear">AC</button>
