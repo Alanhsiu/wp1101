@@ -1,0 +1,15 @@
+{
+  "name": "hw6",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server && nodemon server.js"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "nodemon": "^2.0.15"
+  }
+  
+}
