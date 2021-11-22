@@ -15,8 +15,8 @@ function App() {
   };
 
   const handleGuess = async () => {
-    let num = document.getElementById("numberInput").value;
-    setNumber(num);
+    let num = document.getElementById("Input").value;
+    // setNumber(num);
     const response = await guess(num);
     if (response === "Equal") setHasWon(true);
     else {
@@ -26,24 +26,23 @@ function App() {
   };
 
   const handleRestart = async () => {
-    await restart();
+    const response = await restart();
     setHasWon(false);
+    console.log(response);
   };
 
   const startMenu = (
     <div>
-      <button onClick={() => handleStart}> start game </button>
+      <button onClick={handleStart}> start game </button>
     </div>
   );
 
   const gameMode = (
     <>
       <p>Guess a number between 1 to 100</p>
-      <input id="numberInput" type="text" value={number}>
-        {number}
-      </input>
+      <input id="Input" onChange={(e) => setNumber(e.target.value)}/>
       <button // Send number to backend
-        onClick={() => handleGuess}
+        onClick={handleGuess}
         disabled={!number}
       >
         guess!
@@ -54,7 +53,7 @@ function App() {
   const winningMode = (
     <>
       <p>you won! the number was {number}.</p>
-      <button onClick={() => handleRestart}>restart</button>
+      <button onClick={handleRestart}>restart</button>
     </>
   );
 

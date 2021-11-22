@@ -13,7 +13,7 @@ const guess = async (number) => {
     } = await instance.get('/guess', { params: { number } });
     return msg;
   } catch (error) {
-    return "Error: " + { number } + " is not a valid number (1 - 100)";
+    return "Error: it is not a valid number (1 - 100)";
   }
 };
 const restart = async() => {
