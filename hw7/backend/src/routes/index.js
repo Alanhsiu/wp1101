@@ -43,16 +43,17 @@ db.once("open", async () => {
 router.get("/query-cards", async (req, res) => {
   const queryType = req.query.type;
   const queryString = req.query.queryString;
-  console.log(queryType);
   console.log(queryString);
-  const query = await ScoreCard.find({ queryType: queryString });
+  let query;
+  if (queryType == "name") query = await ScoreCard.find({ name: queryString });
+  else query = await ScoreCard.find({ subject: queryString });
   console.log(query);
   console.log(query.length);
-  let results = [];
-  // for (let i = 0; i < query.length; i++) {
-  //   results +=
-  //     "(" + query[i].name + "," + query[i].subject + "," + query[i].score;
-  // }
+  var results = new Array();
+  for (let i = 0; i < query.length; i++) {
+    results[i] =
+      "Exist (" + query[i].name + "," + query[i].subject + "," + query[i].score +")";
+  }
   if (query.length !== 0) res.send({ messages: results });
   else res.send({ message: "Not found" });
 });

@@ -1,8 +1,8 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
-const ADD_MESSAGE_COLOR = '#3d84b8';
-const REGULAR_MESSAGE_COLOR = '#2b2e4a';
-const ERROR_MESSAGE_COLOR = '#fb3640';
+const ADD_MESSAGE_COLOR = "#3d84b8";
+const REGULAR_MESSAGE_COLOR = "#2b2e4a";
+const ERROR_MESSAGE_COLOR = "#fb3640";
 
 const ScoreCardContext = createContext({
   messages: [],
@@ -10,6 +10,7 @@ const ScoreCardContext = createContext({
   addCardMessage: () => {},
   addRegularMessage: () => {},
   addErrorMessage: () => {},
+  clearAll: () => {}
 });
 
 const makeMessage = (message, color) => {
@@ -34,6 +35,12 @@ const ScoreCardProvider = (props) => {
     setMessages([...messages, makeMessage(message, ERROR_MESSAGE_COLOR)]);
   };
 
+  const clearAll = () => {
+    setMessages([]);
+    console.clear();
+    console.log("g");
+  };
+
   return (
     <ScoreCardContext.Provider
       value={{
@@ -41,6 +48,7 @@ const ScoreCardProvider = (props) => {
         addCardMessage,
         addRegularMessage,
         addErrorMessage,
+        clearAll
       }}
       {...props}
     />
