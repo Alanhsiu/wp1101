@@ -66,9 +66,9 @@ export default (boardSize, mineNum) => {
   {
     /* Warning: The value of any cell will not be bigger than 8 logically. */
   }
-  {
+  
     /* Testing: printBoard() */
-  }
+  
   for (let i = 0; i < boardSize; i++) {
     for (let j = 0; j < boardSize; j++) {
       if (board[i][j].value !== "💣") {

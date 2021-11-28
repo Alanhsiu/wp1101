@@ -29,12 +29,10 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
 
   // Creating a board
   const freshBoard = () => {
-    {
-      /* -- TODO 3-1 -- */
-    }
-    {
-      /* Useful Hint: createBoard(...) */
-    }
+    /* -- TODO 3-1 -- */
+
+    /* Useful Hint: createBoard(...) */
+    
     createBoard(boardSize, mineNum);
   };
 
@@ -83,7 +81,7 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
     }
   };
   return (
-    <div className="boardPage">
+    <div className="boardPage" style={{ display: {} }}>
       <div className="boardWrapper">
         {/* This line of code is just for testing. Please delete it if you finish this function. */}
 
