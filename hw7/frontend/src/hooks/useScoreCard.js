@@ -10,7 +10,6 @@ const ScoreCardContext = createContext({
   addCardMessage: () => {},
   addRegularMessage: () => {},
   addErrorMessage: () => {},
-  clearAll: () => {}
 });
 
 const makeMessage = (message, color) => {
@@ -25,20 +24,17 @@ const ScoreCardProvider = (props) => {
   };
 
   const addRegularMessage = (...ms) => {
-    setMessages([
-      ...messages,
-      ...ms.map((m) => makeMessage(m, REGULAR_MESSAGE_COLOR)),
-    ]);
+    console.log(ms);
+    if (ms[0] === "Database cleared") setMessages([makeMessage("Database cleared", REGULAR_MESSAGE_COLOR)]);
+    else
+      setMessages([
+        ...messages,
+        ...ms.map((m) => makeMessage(m, REGULAR_MESSAGE_COLOR)),
+      ]);
   };
 
   const addErrorMessage = (message) => {
     setMessages([...messages, makeMessage(message, ERROR_MESSAGE_COLOR)]);
-  };
-
-  const clearAll = () => {
-    setMessages([]);
-    console.clear();
-    console.log("g");
   };
 
   return (
@@ -48,7 +44,6 @@ const ScoreCardProvider = (props) => {
         addCardMessage,
         addRegularMessage,
         addErrorMessage,
-        clearAll
       }}
       {...props}
     />

@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import styled from "styled-components";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
-import axios from '../api';
-import { useScoreCard } from '../hooks/useScoreCard';
+import axios from "../api";
+import { useScoreCard } from "../hooks/useScoreCard";
 
 const Wrapper = styled.section`
   display: flex;
@@ -16,13 +16,12 @@ const Wrapper = styled.section`
 `;
 
 const Header = () => {
-  const { addRegularMessage,clearAll } = useScoreCard();
+  const { addRegularMessage } = useScoreCard();
 
   const handleClear = async () => {
     const {
       data: { message },
-    } = await axios.delete('/clear-db');
-    clearAll();
+    } = await axios.delete("/clear-db");
     addRegularMessage(message);
   };
 

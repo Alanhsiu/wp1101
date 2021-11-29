@@ -34,28 +34,39 @@ const db = mongoose.connection;
 db.on("error", (err) => console.log(err));
 db.once("open", async () => {
   await deleteDB();
-  await saveScoreCard("a", "Chinese", 100);
-  await saveScoreCard("s", "Math", 90);
-  await saveScoreCard("d", "English", 80);
+  await saveScoreCard("Alan", "Chinese", 100);
+  await saveScoreCard("Alan", "EM", 99);
+  await saveScoreCard("Alan", "ML", 98);
+  await saveScoreCard("Bob", "Math", 90);
+  await saveScoreCard("Bob", "WP", 66);
+  await saveScoreCard("Candy", "English", 80);
+  await saveScoreCard("Daniel", "EM", 87);
+  await saveScoreCard("Ric", "WP", 0);
 });
 ///
 
 router.get("/query-cards", async (req, res) => {
   const queryType = req.query.type;
   const queryString = req.query.queryString;
-  console.log(queryString);
+  // console.log(queryString);
   let query;
   if (queryType == "name") query = await ScoreCard.find({ name: queryString });
   else query = await ScoreCard.find({ subject: queryString });
-  console.log(query);
-  console.log(query.length);
+  // console.log(query);
+  // console.log(query.length);
   var results = new Array();
   for (let i = 0; i < query.length; i++) {
     results[i] =
-      "Exist (" + query[i].name + "," + query[i].subject + "," + query[i].score +")";
+      "Exist (" +
+      query[i].name +
+      "," +
+      query[i].subject +
+      "," +
+      query[i].score +
+      ")";
   }
   if (query.length !== 0) res.send({ messages: results });
-  else res.send({ message: "Not found" });
+  else res.send({ message: queryType + " (" + queryString + ") not found" });
 });
 router.delete("/clear-db", async (_, res) => {
   await deleteDB();
@@ -66,7 +77,7 @@ router.post("/create-card", async (req, res) => {
   const subject = req.body.subject;
   const score = req.body.score;
   const existing = await ScoreCard.findOne({ name, subject });
-  console.log("here:" + existing);
+  // console.log("here:" + existing);
   ScoreCard.findOneAndDelete({ name, subject }, function (err, docs) {
     if (err) {
       console.log(err);
