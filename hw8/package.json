@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "start": "cd frontend && npm start",
+    "server": "cd backend && npm run server"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "antd": "^4.17.2",
+    "axios": "^0.24.0",
+    "styled-components": "^5.3.3"
+  },
+  "name": "hw8",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}
