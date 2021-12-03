@@ -35,7 +35,6 @@ db.once("open", () => {
     ws.onmessage = async (byteString) => {
       const { data } = byteString;
       const [task, payload] = JSON.parse(data);
-      // wss.broadcastMessage(data,task);
       switch (task) {
         case "input": {
           const { name, body } = payload;
@@ -57,8 +56,8 @@ db.once("open", () => {
         }
         case "clear": {
           Message.deleteMany({}, () => {
-            sendData(["cleared"]);
-            sendStatus({ type: "info", msg: "Message cache cleared." });
+            sendData(["cleared"],ws);
+            sendStatus({ type: "info", msg: "Message cache cleared." }, ws);
           });
           break;
         }
