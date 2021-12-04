@@ -6,7 +6,6 @@ import WebSocket from "ws";
 import Message from "../models/message";
 import { sendData, sendStatus, initData } from "./wssConnect";
 
-const router = express.Router();
 dotenv.config();
 
 const broadcastMessage = (data, status) => {
@@ -32,6 +31,7 @@ db.on("error", (err) => console.log(err));
 db.once("open", () => {
   console.log("MongoDB connected!");
   wss.on("connection", (ws) => {
+    initData(ws);
     ws.onmessage = async (byteString) => {
       const { data } = byteString;
       const [task, payload] = JSON.parse(data);
@@ -44,20 +44,25 @@ db.once("open", () => {
           } catch (e) {
             throw new Error("Message DB save error: " + e);
           }
-          sendData(["output", [payload]], ws);
-          sendStatus(
-            {
-              type: "success",
-              msg: "Message sent.",
-            },
-            ws
-          );
+          broadcastMessage(["output", [payload]], {
+            type: "success",
+            msg: "Message sent.",
+          });
+          // sendData(["output", [payload]], ws);
+          // sendStatus(
+          //   {
+          //     type: "success",
+          //     msg: "Message sent.",
+          //   },
+          //   ws
+          // );
           break;
         }
         case "clear": {
           Message.deleteMany({}, () => {
-            sendData(["cleared"],ws);
-            sendStatus({ type: "info", msg: "Message cache cleared." }, ws);
+            broadcastMessage(["cleared"],{ type: "info", msg: "Message cache cleared." })
+            // sendData(["cleared"], ws);
+            // sendStatus({ type: "info", msg: "Message cache cleared." }, ws);
           });
           break;
         }
