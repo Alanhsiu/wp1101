@@ -84,7 +84,7 @@ const Body = () => {
     if (!messages) addErrorMessage(message);
     else addRegularMessage(...messages);
   };
-
+  //subject price region
   return (
     <Wrapper>
       <Tabs
@@ -94,8 +94,8 @@ const Body = () => {
           setTab(newTab);
         }}
       >
-        <Tab label="Resume" value="Resume" id="add" />
-        <Tab label="Find" value="Find" id="query" />
+        <Tab label="Find Teachers" value="Resume" id="add" />
+        <Tab label="Find Cases" value="Find" id="query" />
       </Tabs>
       {tabType==="Resume"?
       <Row style={{ height: "80px" }}>
