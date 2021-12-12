@@ -18,18 +18,26 @@ const Wrapper = styled.section`
 const Header = () => {
   const { addRegularMessage } = useScoreCard();
 
-  const handleClear = async () => {
-    const {
-      data: { message },
-    } = await axios.delete('/api/clear-db');
-    addRegularMessage(message);
-  };
+  // const handleClear = async () => {
+  //   const {
+  //     data: { message },
+  //   } = await axios.delete('/api/clear-db');
+  //   addRegularMessage(message);
+  // };
+  const handleClick1=()=>{
 
+  }
+  const handleClick2=()=>{
+
+  }
   return (
     <Wrapper>
       <Typography variant="h2">NTU Tutor Web</Typography>
-      <Button variant="contained" color="secondary" onClick={handleClear}>
-        Clear
+      <Button variant="contained" color="secondary" onClick={handleClick1}>
+        Case Publish
+      </Button>
+      <Button variant="contained" color="secondary" onClick={handleClick2}>
+        Edit Resume
       </Button>
     </Wrapper>
   );

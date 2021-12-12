@@ -126,7 +126,7 @@ const Body = () => {
           disabled={!name || !subject}
           onClick={handleAdd}
         >
-          Add
+          SEARCH
         </Button>
       </Row>:
       <Row style={{ height: "80px" }}>

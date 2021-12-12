@@ -17,13 +17,15 @@ const Wrapper = styled.div`
 `;
 const LOCALSTORAGE_KEY = "save-me";
 
-function App() {
+function Main() {
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [me, setMe] = useState(savedMe || "");
   const [username, setUsername] = useState(me);
+  const [password, setPassword] = useState("")
   // const [body, setBody] = useState(""); // textBody
   // const bodyRef = useRef(null);
   const [signedIn, setSignedIn] = useState(false);
+  const [registered, setRegistered] = useState(false);
   const displayStatus = (payload) => {
     if (payload.msg) {
       const { type, msg } = payload;
@@ -56,8 +58,11 @@ function App() {
         <Wrapper className="App">
           <SignIn
             me={me}
+            password={password}
             setMe={setMe}
+            setPassword={setPassword}
             setSignedIn={setSignedIn}
+            setRegistered={setRegistered}
             displayStatus={displayStatus}
           />
         </Wrapper>
@@ -68,4 +73,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;
