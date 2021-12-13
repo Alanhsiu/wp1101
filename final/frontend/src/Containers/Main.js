@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect, useRef, React } from "react";
 import { message } from "antd";
 import SignIn from "./SignIn";
-import Homepage from "./Homepage";
+import Body from "./Body";
 import { ScoreCardProvider} from "../hooks/useScoreCard";
 
 
@@ -67,7 +67,7 @@ function Main() {
           />
         </Wrapper>
       ) : (
-        <ScoreCardProvider><Homepage /></ScoreCardProvider> 
+        <ScoreCardProvider><Body /></ScoreCardProvider> 
       )}
     </>
   );

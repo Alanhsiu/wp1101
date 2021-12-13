@@ -1,9 +1,14 @@
-import Header from './Header';
-import Body from './Body';
+import Main from './Main';
 import Resume from './Resume';
 import Publish from './Publish';
+import Appbar from './appBar'
+import { ScoreCardProvider} from "../hooks/useScoreCard";
+
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
+
+import React from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 const Wrapper = styled.div`
   margin: auto;
@@ -20,12 +25,18 @@ const StyledPaper = styled(Paper)`
   width: 60%; 
 `;
 
-function Homepage() {
+function Homepage(props) {
+  const navigate = useNavigate()
+
   return (
     <Wrapper>
       <StyledPaper elevation={3}>
-        <Header />
-        <Body />
+        <Appbar navigate={navigate} />
+      <Routes>
+        <Route path="/" element={<Main navigate={navigate} />} />
+        <Route path = "/resume"element={<Resume navigate={navigate} />} />
+        <Route path="/publish" element={<Publish navigate={navigate} />} />
+      </Routes>
       </StyledPaper>
     </Wrapper>
   );

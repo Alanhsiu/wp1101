@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './Containers/Main';
+import App from './Containers/Header';
 import reportWebVitals from './reportWebVitals';
 
 
