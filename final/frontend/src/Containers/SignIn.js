@@ -1,5 +1,9 @@
 import { Button, Input, Space } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import {
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  LockOutlined,
+} from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import Title from "../Components/Title";
 import styled from "styled-components";
@@ -10,23 +14,25 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const SignIn = ({ me, setMe, setSignedIn, displayStatus, setRegistered}) => (
+const SignIn = ({ me, setMe, setSignedIn, displayStatus, setRegistered }) => (
   <>
     <Title>
       <h1>NTU Tutor</h1>
     </Title>
     <Wrapper>
-      <Input
-        prefix={<UserOutlined />}
-        value={me}
-        enterButton="Sign In"
-        onChange={(e) => setMe(e.target.value)}
-        placeholder="Enter your name"
-        size="large"
-        style={{ width: 300, margin: 50 }}
-      />
+      <Space direction="vertical">
+        <Input
+          prefix={<UserOutlined />}
+          value={me}
+          enterButton="Sign In"
+          onChange={(e) => setMe(e.target.value)}
+          placeholder="Enter your name"
+          size="large"
+        />
+      </Space>
       <Space direction="vertical">
         <Input.Password
+          prefix={<LockOutlined />}
           placeholder="input password"
           iconRender={(visible) =>
             visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
@@ -45,9 +51,7 @@ const SignIn = ({ me, setMe, setSignedIn, displayStatus, setRegistered}) => (
       >
         Sign In
       </Button>
-      <Button>
-        Register
-      </Button>
+      <Button>Register</Button>
     </Wrapper>
   </>
 );
