@@ -82,8 +82,12 @@ export default function Dashboard() {
       document: TASK_DELETED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
-        const delId = subscriptionData.data.id
-        return delId;
+        const {
+          data: { taskDeleted },
+        } = subscriptionData;
+        const delId = taskDeleted.id
+        return {
+          id:delId}
       },
     });
   }, [subscribeToMore]);
