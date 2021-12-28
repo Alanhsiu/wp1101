@@ -85,9 +85,10 @@ export default function Dashboard() {
         const {
           data: { taskDeleted },
         } = subscriptionData;
-        const delId = taskDeleted.id
+        const delId = taskDeleted.id;
         return {
-          id:delId}
+          id: delId,
+        };
       },
     });
   }, [subscribeToMore]);
@@ -106,9 +107,9 @@ export default function Dashboard() {
     updateTask({
       variables: {
         id,
-        status
+        status,
       },
-    })
+    });
   };
 
   // drag and drop
