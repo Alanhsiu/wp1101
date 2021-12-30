@@ -12,10 +12,10 @@ const checkUser = (db, name, errFunc) => {
 const checkChatBox = (db, chatBoxName, errFunc) => {
   if (!chatBoxName) throw new Error("Missing chatBox name for " + errFunc);
   return db.ChatBoxModel.findOne({ name: chatBoxName });
-};
+}; 
 
 const checkMessage = async (db, from, to, message, errFunc) => {
-  const chatBox = makeName(from, to);
+  const chatBoxName = makeName(from, to);
   return {
     chatBox: await checkChatBox(db, chatBoxName, errFunc),
     sender: await checkUser(db, from, errFunc),

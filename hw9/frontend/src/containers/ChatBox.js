@@ -52,6 +52,7 @@ const ChatBox = ({ me, friend, ...props }) => {
 
   if (loading) return <p>loading</p>;
 
+  console.log(data.chatBox);
   return (
     <Messages>
       {data.chatBox.messages.map(({ sender: { name }, body }, i) => (

@@ -22,12 +22,13 @@ const Mutation = {
 
     const chatBoxName = makeName(from, to);
     const newMsg = await newMessage(db, sender, message);
-    chatBox.message.push(newMsg);
+    chatBox.messages.push(newMsg);
     await chatBox.save();
 
     pubsub.publish(`chatBox ${chatBoxName}`, {
-      message: { mutation: "CREATED", messsage: newMsg },
+      message: { mutation: "CREATED", message: newMsg },
     });
+    console.log(newMsg);
     return newMsg;
   },
 

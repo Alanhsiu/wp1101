@@ -103,4 +103,3 @@ const ChatRoom = ({ me, displayStatus }) => {
   );
 };
 export default ChatRoom;
-  

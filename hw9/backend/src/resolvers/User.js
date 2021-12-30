@@ -9,6 +9,9 @@ const User = {
   //     return comment.author === parent.id;
   //   });
   // },
+  // async user(parent, {me}, {db}, info){
+  //   return await UserModel.findOne({name:me})
+// }
 };
 
 export { User as default };
