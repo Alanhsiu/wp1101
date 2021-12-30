@@ -8,6 +8,7 @@ const checkUser = (db, name, errFunc) => {
   return db.UserModel.findOne({ name });
 };
 
+// return the found chatBox (can be null)
 const checkChatBox = (db, chatBoxName, errFunc) => {
   if (!chatBoxName) throw new Error("Missing chatBox name for " + errFunc);
   return db.ChatBoxModel.findOne({ name: chatBoxName });
@@ -22,7 +23,7 @@ const checkMessage = async (db, from, to, message, errFunc) => {
   };
 };
 
-// make sure calling checkUser/checkMessage beforehand 
+// make sure calling checkUser/checkMessage beforehand
 const newUser = (db, name) => {
   return new db.UserModel({ name }).save();
 };
@@ -30,15 +31,16 @@ const newMessage = (db, sender, body) => {
   return new db.MessageModel({ sender, body }).save();
 };
 const newChatBox = (db, chatBoxName) => {
+  console.log(chatBoxName);
   return new db.ChatBoxModel({ name: chatBoxName }).save();
 };
 
-export{
-    makeName,
-    checkUser,
-    checkChatBox,
-    checkMessage,
-    newUser,
-    newMessage,
-    newChatBox
+export {
+  makeName,
+  checkUser,
+  checkChatBox,
+  checkMessage,
+  newUser,
+  newMessage,
+  newChatBox,
 };

@@ -1,6 +1,5 @@
 type Query {
   chatBox(name1: String, name2: String): ChatBox!
-  user(query: String):[User!]!
 }
 
 type Mutation {
