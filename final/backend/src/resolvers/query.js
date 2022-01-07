@@ -1,5 +1,5 @@
 import CaseModel from "../models/Case";
-import ResumeModel from "../models/parent";
+import ResumeModel from "../models/Resume";
 
 const Query = {
     cases(parent, {name, subject, price}, { db }, info) {

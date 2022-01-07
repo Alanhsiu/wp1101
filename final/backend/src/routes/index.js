@@ -2,7 +2,7 @@ import express from "express";
 import createResume from "./api/createResume";
 import deleteDB from "./api/deleteDB";
 import Teacher from "../models/teacher";
-import Parent from "../models/parent";
+import Parent from "../models/Resume";
 import uuid from "node-uuid";
 import session from "express-session";
 import bcrypt from "bcrypt";

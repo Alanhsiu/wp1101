@@ -2,7 +2,6 @@ import { useState,useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Paper from "@material-ui/core/Paper";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import styled from "styled-components";
@@ -23,7 +22,6 @@ const Wrapper = styled.section`
 
 const Row = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
   width: 100%;
   padding: 1em;
@@ -33,11 +31,6 @@ const StyledFormControl = styled(FormControl)`
   min-width: 120px;
 `;
 
-const ContentPaper = styled(Paper)`
-  height: 300px;
-  padding: 2em;
-  overflow: auto;
-`;
 
 const Body = (props) => {
   const classes = useStyles();
@@ -142,7 +135,7 @@ const Body = (props) => {
         <Tab label="Find Cases" value="Find" id="query" />
       </Tabs>
       {tabType==="Resume"?
-      <Row style={{ height: "30px" }}>
+      <Row style={{ height: "50px" }}>
         <TextField
           className={classes.input}
           placeholder="Name"
@@ -173,7 +166,7 @@ const Body = (props) => {
           SEARCH
         </Button>
       </Row>:
-      <Row style={{ height: "80px" }}>
+      <Row style={{ height: "50px" }}>
         <StyledFormControl>
           <FormControl component="fieldset">
             <RadioGroup
@@ -195,7 +188,7 @@ const Body = (props) => {
           </FormControl>
         </StyledFormControl>
         <TextField
-          placeholder="Query string..."
+          placeholder="Type here..."
           value={queryString}
           onChange={handleChange(setQueryString)}
           style={{ flex: 1 }}
@@ -210,6 +203,7 @@ const Body = (props) => {
           Query
         </Button>
       </Row>}
+      <br/>
       <div className="board-discuss-container">
           <div className="articles-container">
             {queries.map((post, i) => (

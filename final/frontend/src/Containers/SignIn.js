@@ -6,19 +6,15 @@ import {
 } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import Title from "../Components/Title";
-import styled from "styled-components";
+import SignInBox from "../Components/SignInBox";
 
-const Wrapper = styled.div`
-  margin: 30px;
-  align-items: center;
-  justify-content: center;
-`;
-const SignIn = (props,{ me, setMe, setSignedIn, displayStatus, setRegistered }) => (
+
+const SignIn = ({ me, setMe, setSignedIn, displayStatus, setRegistered, navigate }) => (
   <>
     <Title>
       <h1>NTU Tutor</h1>
     </Title>
-    <Wrapper>
+    <SignInBox>
       <Space direction="vertical">
         <Input
           prefix={<UserOutlined />}
@@ -45,13 +41,13 @@ const SignIn = (props,{ me, setMe, setSignedIn, displayStatus, setRegistered }) 
               type: "error",
               msg: "Missing user name",
             });
-          else props.navigate('/body')
+          else navigate('/body')
         }}
       >
         Sign In
       </Button>
       <Button>Register</Button>
-    </Wrapper>
+    </SignInBox>
   </>
 );
 export default SignIn;

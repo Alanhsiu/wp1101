@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 const Title = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   overflow-x: auto;
-  cursor : pointer
+  cursor: pointer;
 
   h1 {
-    margin: 0;
-    margin-right: 20px;
-    font-size: 3em;
-  `;
+    margin: 20px;
+    font-size: 5em;
+    color: blue;
+  }
+`;
 
-export default Title
+export default Title;
