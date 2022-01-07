@@ -1,14 +1,13 @@
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
-const ResumeModel = new Schema({
-  id: ID,
+const ResumeSchema = new Schema({
   name: String,
-  subjects: Array,
-  price: Int,
+  subject: String,
   content: String,
-  dueDate: Date,
+  price: Number,
+  dueDate: Date
 });
-const ResumeModel = mongoose.model("Parent", ParentSchema);
+const ResumeModel = mongoose.model("Resume", ResumeSchema);
 
 export default ResumeModel;

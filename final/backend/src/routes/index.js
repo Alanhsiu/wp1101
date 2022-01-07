@@ -6,12 +6,12 @@ import Parent from "../models/parent";
 import uuid from "node-uuid";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import fetch from "node-fetch";
-import mongoose from "mongoose";
-const MongoStore = require("connect-mongo")(session);
+import dotenv from "dotenv-defaults";
+dotenv.config();
+const MongoStore = require("connect-mongo");
 
 import { User } from "../models/User";
-import { loginRequired } from "./api/middleware";
+//import { loginRequired } from "./api/middleware";
 
 const router = express.Router();
 const secret = uuid.v4();
@@ -26,7 +26,7 @@ const sessionOptions = {
   saveUninitialized: false,
   secret,
   unset: "destroy",
-  store: new MongoStore({ url: process.env.MONGO_URL }),
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
 };
 
 sessionOptions.store.clear();
@@ -90,7 +90,7 @@ router.delete("/clear-db", async (_, res) => {
   res.send({ message: msg });
 });
 
-router.get("/session", loginRequired, async (req, res, next) => {
+router.get("/session", async (req, res, next) => {
   res.status(200).send({
     userID: req.session.userID,
   });

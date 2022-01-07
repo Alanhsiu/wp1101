@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 const CaseSchema = new Schema({
-  id: ID,
   name: String,
-  subject: Subject,
+  subject: String,
   content: String,
-  price: Int,
+  price: Number,
   dueDate: Date
 });
 const CaseModel = mongoose.model("Case", CaseSchema);
