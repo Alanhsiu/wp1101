@@ -63,16 +63,17 @@ router.get("/query-cards", async (req, res) => {
   const queryType = req.query.type;
   const queryString = req.query.queryString;
   let query;
-<<<<<<< HEAD
-  if (queryType == "name") {query = await Teacher.find({ name: queryString });
-  console.log("ok")
-  console.log(query)}
-  else {query = await Teacher.find({ subject: queryString });
-  console.log("ok")
-  console.log(query)}
+  if (queryType == "name") {
+    query = await Teacher.find({ name: queryString });
+    console.log("ok");
+    console.log(query);
+  } else {
+    query = await Teacher.find({ subject: queryString });
+    console.log("ok");
+    console.log(query);
+  }
   if (query.length !== 0) res.send({ message: query });
-  else res.send({message:`${queryType} (${queryString}) not found!`});
-=======
+  else res.send({ message: `${queryType} (${queryString}) not found!` });
   if (queryType == "name") query = await Teacher.find({ name: queryString });
   else query = await Teacher.find({ subject: queryString });
   var results = new Array();
