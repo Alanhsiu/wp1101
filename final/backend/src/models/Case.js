@@ -2,11 +2,13 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 const CaseSchema = new Schema({
-  id: Number,
-  subject: String,
-  price: Number,
-  experience: String,
+  id: ID,
+  name: String,
+  subject: Subject,
+  content: String,
+  price: Int,
+  dueDate: Date
 });
-const Case = mongoose.model("Case", CaseSchema);
+const CaseModel = mongoose.model("Case", CaseSchema);
 
-export default Case;
+export default CaseModel;

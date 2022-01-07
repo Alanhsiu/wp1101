@@ -5,7 +5,7 @@ scalar Date
 
 type Query {
   cases(Subject: Subject): [Case!]
-  teacher(name: String, Subject: Subject, Price: Int): [Resume!]!  
+  teacher(name: String, Subject: Subject, price: Int): [Resume!]!  
 }
 
 # See resolvers/Mutation.js

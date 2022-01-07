@@ -90,7 +90,6 @@ router.delete("/clear-db", async (_, res) => {
   res.send({ message: msg });
 });
 
-export default router;
 router.get("/session", loginRequired, async (req, res, next) => {
   res.status(200).send({
     userID: req.session.userID,
