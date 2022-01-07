@@ -13,8 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-const SignIn = ({ me, setMe, setSignedIn, displayStatus, setRegistered }) => (
+const SignIn = (props,{ me, setMe, setSignedIn, displayStatus, setRegistered }) => (
   <>
     <Title>
       <h1>NTU Tutor</h1>
@@ -46,7 +45,7 @@ const SignIn = ({ me, setMe, setSignedIn, displayStatus, setRegistered }) => (
               type: "error",
               msg: "Missing user name",
             });
-          else setSignedIn(true);
+          else props.navigate('/body')
         }}
       >
         Sign In

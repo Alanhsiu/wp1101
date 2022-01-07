@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { ScoreCardProvider} from "../hooks/useScoreCard";
 
 import { useStyles } from "../hooks";
 import axios from "../api";
@@ -38,7 +39,7 @@ const ContentPaper = styled(Paper)`
   overflow: auto;
 `;
 
-const Body = () => {
+const Body = (props) => {
   const classes = useStyles();
 
   const { messages, addCardMessage, addRegularMessage, addErrorMessage } =
@@ -51,12 +52,44 @@ const Body = () => {
   const [queryType, setQueryType] = useState("name");
   const [queryString, setQueryString] = useState("");
   const [tabType, setTab] = useState("Resume");
+  const [queries,setQueries] = useState([])
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
 
-  const handleChange = (func) => (event) => {
-    func(event.target.value);
+  const handleNumber = (func) => (event) => {
+    if(event.target.value>=0)
+      {func(event.target.value)}
+    else
+    {func(0);}
   };
+  const handleChange = (func) => (event) => {
+    func(event.target.value)
+  };
+
+  useEffect(() => {
+    // refresh();
+    const refresh = async () => {
+      if(tabType === "Resume")
+      {console.log(await axios.get("/api/query-all"));
+      const {
+        data: { message, data },
+      } = await axios.get("/api/query-all");
+      console.log(data)
+      console.log(message)
+      setQueries(data)
+    }
+      else
+      {console.log(await axios.get("/api/query-all"));
+      const {
+        data: { message, data },
+      } = await axios.get("/api/query-all");
+      console.log(data)
+      console.log(message)
+      setQueries(data)
+      }
+    };
+    refresh();
+  }, []);
 
   const handleAdd = async () => {
     const {
@@ -66,26 +99,37 @@ const Body = () => {
       subject,
       price,
     });
-
+    setQueries(card)
     if (!card) addErrorMessage(message);
     else addCardMessage(message); 
   };
 
   const handleQuery = async () => {
     const {
-      data: { messages, message },
+      data: { message },
     } = await axios.get("/api/query-cards", {
       params: {
         type: queryType,
         queryString,
       },
-    });
-
+    }
+    );
+    console.log(message)
+    setQueries(message)
     if (!messages) addErrorMessage(message);
     else addRegularMessage(...messages);
   };
   //subject price region
   return (
+    <ScoreCardProvider>
+    <div className="board-navbar">
+        <Button variant="contained" color="secondary" onClick={() => props.navigate('/publish')}>
+          Case Publish
+        </Button>
+        <Button variant="contained" color="secondary" onClick={() => props.navigate('/resume')}>
+          Edit Resume
+        </Button>
+    </div>
     <Wrapper>
       <Tabs
         variant="fullWidth"
@@ -98,7 +142,7 @@ const Body = () => {
         <Tab label="Find Cases" value="Find" id="query" />
       </Tabs>
       {tabType==="Resume"?
-      <Row style={{ height: "80px" }}>
+      <Row style={{ height: "30px" }}>
         <TextField
           className={classes.input}
           placeholder="Name"
@@ -116,7 +160,7 @@ const Body = () => {
           className={classes.input}
           placeholder="Lowest Price"
           value={price}
-          onChange={handleChange(setPrice)}
+          onChange={handleNumber(setPrice)}
           type="number"
         />
         <Button
@@ -166,14 +210,29 @@ const Body = () => {
           Query
         </Button>
       </Row>}
-      <ContentPaper variant="outlined">
-        {messages.map((m, i) => (
-          <Typography variant="body2" key={m + i} style={{ color: m.color }}>
-            {m.message}
-          </Typography>
-        ))}
-      </ContentPaper>
+      <div className="board-discuss-container">
+          <div className="articles-container">
+            {queries.map((post, i) => (
+              <div className="article-post" key={i} id={`pid-${i}`}>
+                <div className="article-prefix">
+                  <span className="each-tag">【queries】</span> &nbsp;
+                  <span
+                    className="each-id"
+                    id={`pid-${i}-title`}
+                    onClick={() => props.navigate('/publish')}
+                  >
+                    {post.name}
+                  </span>
+                </div>
+                
+              </div>
+            ))}
+          </div>
+      </div>
+
     </Wrapper>
+    </ScoreCardProvider> 
+
   );
 };
 

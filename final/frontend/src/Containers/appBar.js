@@ -4,7 +4,7 @@ import styled from 'styled-components';
 //import Typography from '@material-ui/core/Typography';
 import axios from '../api';
 import { useScoreCard } from '../hooks/useScoreCard';
-
+import Title from '../Components/Title';
 const Wrapper = styled.section`
   display: flex;
   align-items: center;
@@ -16,30 +16,13 @@ const Wrapper = styled.section`
 `;
 
 function Appbar(props) {
-  const { addRegularMessage } = useScoreCard();
-
-  // const handleClear = async () => {
-  //   const {
-  //     data: { message },
-  //   } = await axios.delete('/api/clear-db');
-  //   addRegularMessage(message);
-  // };
-
   return (
-    <AppBar position="sticky" color="inherit">
-      <Toolbar className="toolbar">
-        <div className="appbar-left">
-          <span className="app-name" onClick={() => props.navigate('/')}>
+    <AppBar position="fixed" color="inherit">
+      <Title >
+          <span onClick={() => props.navigate('/body')}>
           NTU Tutor Web
           </span>
-        </div>
-      </Toolbar>
-      <Button variant="contained" color="secondary" onClick={() => props.navigate('/publish')}>
-        Case Publish
-      </Button>
-      <Button variant="contained" color="secondary" onClick={() => props.navigate('/resume')}>
-        Edit Resume
-      </Button>
+    </Title>
     </AppBar>
   )
 }

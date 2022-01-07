@@ -21,8 +21,6 @@ function Post(props) {
       },
     });
     setData(data);
-    console.log(message);
-    console.log(data);
   };
 
   // TODO 5-(2): complete delPost function to delete a post from database
@@ -34,7 +32,14 @@ function Post(props) {
 
   // TODO 3-(2): fetch the full information of a post from database
   useEffect(() => {
-    getPostDetail();
+    const fetchPost = async () => {
+      const {data: {message, data}}= await instance.get('/postDetail')
+      
+      console.log(data)
+      console.log(message)
+      setData(data)
+    
+    fetchPost()
   }, [pid]);
   
   return (

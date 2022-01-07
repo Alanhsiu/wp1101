@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const TeacherSchema = new Schema({
   name: String,
   subject: Array,
-  price: Number,
+  Price: Number,
 });
 const Teacher = mongoose.model("Teacher", TeacherSchema);
 
-export default Teacher;
+export default Teacher; 

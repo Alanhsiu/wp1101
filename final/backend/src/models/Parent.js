@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 const ParentSchema = new Schema({
   name: String,
   subject: Array,
-  Price: Number,
+  price: Number,
+  experience : Number,
+  addition : String
 });
 const Parent = mongoose.model("Parent", ParentSchema);
 
