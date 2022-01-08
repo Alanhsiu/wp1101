@@ -3,8 +3,7 @@ import cors from "cors";
 import router from "./routes/index";
 import bodyParser from "body-parser";
 import db from "./mongo";
-import createResume from "./routes/api/createResume";
-import deleteDB from "./routes/api/deleteDB";
+import dataInit from "./upload"
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,14 +15,5 @@ app.listen(port, () => {
 });
 db.on("error", (err) => console.log(err));
 db.once("open", async () => {
-  await deleteDB();
-  await createResume("Alan", "Chinese", 100);
-  await createResume("Bob", "Math", 90);
-  await createResume("Candy", "English", 80);
-  await createResume("Alan1", "Chinese", 100);
-  await createResume("Bob1", "Math", 90);
-  await createResume("Candy1", "English", 80);
-  // await createResume("Alan2", "Chinese", 100);
-  // await createResume("Bob2", "Math", 90);
-  // await createResume("Candy2", "English", 80);
+  await dataInit();
 });

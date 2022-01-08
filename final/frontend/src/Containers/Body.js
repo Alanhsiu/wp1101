@@ -209,14 +209,17 @@ const Body = (props) => {
             {queries.map((post, i) => (
               <div className="article-post" key={i} id={`pid-${i}`}>
                 <div className="article-prefix">
-                  <span className="each-tag">【queries】</span> &nbsp;
+                  <span className="each-tag">{`[ ${post.subject} ]`}</span> 
+                  <hr/>
                   <span
                     className="each-id"
                     id={`pid-${i}-title`}
-                    onClick={() => props.navigate('/publish')}
+                    onClick={() => props.navigate('/')}
                   >
-                    {post.name}
+                  {post.name}
                   </span>
+                  <hr/>
+                  <span>Published date : 2022/01/08</span>
                 </div>
                 
               </div>

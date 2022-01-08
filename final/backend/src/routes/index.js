@@ -2,6 +2,7 @@ import express from "express";
 import createResume from "./api/createResume";
 import deleteDB from "./api/deleteDB";
 import Teacher from "../models/teacher";
+import ResumeModel from "../models/Resume";
 import Parent from "../models/Resume";
 import uuid from "node-uuid";
 import session from "express-session";
@@ -32,11 +33,11 @@ const sessionOptions = {
 sessionOptions.store.clear();
 
 router.get("/query-all", async (_, res) => {
-  const existing = await Teacher.find().sort({});
+  const existing = await ResumeModel.find().sort({});
   console.log(existing);
 
   try {
-    const existing = await Teacher.find().sort({});
+    const existing = await ResumeModel.find().sort({});
     if (existing) {
       res.status(200).send({
         message: "success",
@@ -64,18 +65,18 @@ router.get("/query-cards", async (req, res) => {
   const queryString = req.query.queryString;
   let query;
   if (queryType == "name") {
-    query = await Teacher.find({ name: queryString });
+    query = await ResumeModel.find({ name: queryString });
     console.log("ok");
     console.log(query);
   } else {
-    query = await Teacher.find({ subject: queryString });
+    query = await ResumeModel.find({ subject: queryString });
     console.log("ok");
     console.log(query);
   }
   if (query.length !== 0) res.send({ message: query });
   else res.send({ message: `${queryType} (${queryString}) not found!` });
-  if (queryType == "name") query = await Teacher.find({ name: queryString });
-  else query = await Teacher.find({ subject: queryString });
+  if (queryType == "name") query = await ResumeModel.find({ name: queryString });
+  else query = await ResumeModel.find({ subject: queryString });
   var results = new Array();
   for (let i = 0; i < query.length; i++)
     results[

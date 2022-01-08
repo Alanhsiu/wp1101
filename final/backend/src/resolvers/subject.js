@@ -7,7 +7,7 @@ const SubjectResolver = {
     Biology:"Biology",
     Geography:"Geography",
     History:"History",
-    Circuit:"Circuit",
+    Electronics:"Electronics",
     Pokemon:"Pokemon"
   };
   

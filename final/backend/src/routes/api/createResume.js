@@ -1,11 +1,12 @@
 import Teacher from "../../models/teacher";
+import ResumeModel from "../../models/Resume";
 
-const createResume = async (name, subject, price) => {
+const createResume = async (name, subject, content, price, timestamp) => {
   try {
-    const existing = await Teacher.findOne({ name, subject });
-    await Teacher.findOneAndUpdate(
+    const existing = await ResumeModel.findOne({ name, subject });
+    await ResumeModel.findOneAndUpdate(
       { name, subject },
-      { price },
+      { content, price, timestamp },
       {
         new: true,
         upsert: true,
@@ -21,6 +22,13 @@ const createResume = async (name, subject, price) => {
   } catch (e) {
     return { message: e, card: false };
   }
+  // try {
+  //   const newPost = new Post({ postId, title, content, timestamp });
+  //   console.log("Created ScoreCard", newPost);
+  //   return newPost.save();
+  // } catch (e) {
+  //   throw new Error("ScoreCard creation error: " + e);
+  // }
 };
 
 export default createResume;
