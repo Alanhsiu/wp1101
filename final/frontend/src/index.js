@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./Containers/App";
 import reportWebVitals from "./reportWebVitals";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import 'antd/dist/antd.css'
+
 
 const theme = createTheme({
   palette: {

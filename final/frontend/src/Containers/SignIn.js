@@ -7,47 +7,74 @@ import {
 import { UserOutlined } from "@ant-design/icons";
 import Title from "../Components/Title";
 import SignInBox from "../Components/SignInBox";
+import { useState, React } from "react";
 
-
-const SignIn = ({ me, setMe, setSignedIn, displayStatus, setRegistered, navigate }) => (
+const SignIn = ({
+  me,
+  setMe,
+  username,
+  setUserName,
+  password,
+  setPassword,
+  setSignedIn,
+  displayStatus,
+  setRegistered,
+  navigate,
+}) => (
   <>
     <Title>
       <h1>NTU Tutor</h1>
     </Title>
-    <SignInBox>
       <Space direction="vertical">
         <Input
           prefix={<UserOutlined />}
           value={me}
           enterButton="Sign In"
           onChange={(e) => setMe(e.target.value)}
-          placeholder="Enter your name"
+          placeholder="Username"
           size="large"
         />
-      </Space>
-      <Space direction="vertical">
+      {/* </Space>
+      <Space direction="vertical"> */}
         <Input.Password
           prefix={<LockOutlined />}
-          placeholder="input password"
+          value={password}
+          placeholder="Password"
+          size="large"
+          onChange={(e) => setPassword(e.target.value)}
           iconRender={(visible) =>
             visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
           }
         />
       </Space>
+    <SignInBox>
+
+    <Space>
       <Button
-        onClick={(me) => {
-          if (!me)
+        onClick={() => {
+          if (!username)
             displayStatus({
               type: "error",
-              msg: "Missing user name",
+              msg: "Missing Username",
             });
-          else navigate('/body')
+          else if (!password) {
+            displayStatus({
+              type: "error",
+              msg: "Missing Password",
+            });
+          } else {
+            navigate("/body");
+          }
         }}
       >
         Sign In
       </Button>
+    </Space>
+    <Space>
       <Button>Register</Button>
+    </Space>
     </SignInBox>
+
   </>
 );
 export default SignIn;

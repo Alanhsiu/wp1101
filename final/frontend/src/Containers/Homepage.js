@@ -20,7 +20,6 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 //width is important
-const LOCALSTORAGE_KEY = "save-me";
 
 const StyledPaper = styled(Paper)`
   padding: 2em;
@@ -30,6 +29,7 @@ const StyledPaper = styled(Paper)`
 function Homepage(props) {
   const navigate = useNavigate();
 
+  const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [me, setMe] = useState(savedMe || "");
   const [username, setUsername] = useState(me);
@@ -43,7 +43,7 @@ function Homepage(props) {
       const { type, msg } = payload;
       const content = {
         content: msg,
-        duration: 1,
+        duration: 3,
       };
       switch (type) {
         case "success":
@@ -76,8 +76,10 @@ function Homepage(props) {
               <SignIn
                 navigate={navigate}
                 me={me}
-                password={password}
                 setMe={setMe}
+                username={username}
+                setUserName={setUsername}
+                password={password}
                 setPassword={setPassword}
                 setSignedIn={setSignedIn}
                 setRegistered={setRegistered}

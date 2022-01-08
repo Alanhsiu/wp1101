@@ -9,7 +9,7 @@ const SignInBox = styled.div`
 
   Button {
     margin: 35px;
-    font-size: 1.5em;
+    font-size: 1em;
     color: blue;
   }
 `;
