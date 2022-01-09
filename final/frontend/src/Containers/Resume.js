@@ -4,30 +4,48 @@ import instance from "../api";
 import { Button, TextField } from "@material-ui/core";
 import { Delete as DeleteIcon, Send as SendIcon } from "@material-ui/icons";
 import { v4 as uuidv4 } from "uuid";
+import { Form, Input, Select } from "antd";
 
-const Resume = (props) => {
+const { Option } = Select;
+
+const Publish = (props) => {
+  const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [price, setPrice] = useState();
+  const [price1, setPrice1] = useState();
   const [content, setContent] = useState("");
-  const [name, setName] = useState("");
   const handleSubmit = async () => {
     const postId = uuidv4();
-    const trimmed_content = content.trim()
-    const timestamp = Math.floor(Date.now()/ 1000)
+    const trimmed_content = content.trim();
+    const timestamp = Math.floor(Date.now() / 1000);
     if (subject.length > 0 && price > 0) {
       await instance.post("/api/resume", {
         postId,
-        subject,
-        price,
-        trimmed_content,
         name,
-        timestamp
+        subject,
+        trimmed_content,
+        price,
+        timestamp,
       });
-    } 
+    }
 
     setTimeout(() => {
       props.navigate(-1);
     }, 300);
+  };
+  const onGenderChange = (value) => {
+    switch (value) {
+      case "Math":
+        setSubject("Math");
+        return;
+
+      case "English":
+        setSubject("English");
+        return;
+
+      default:
+        setSubject("Others");
+    }
   };
 
   return (
@@ -44,57 +62,94 @@ const Resume = (props) => {
           Edit Resume
         </div>
         <br />
-        <div
+        <Form
           className="post-subject"
           style={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "start",
+            // alignItems: "center",
             margin: "auto",
           }}
+          labelCol={{ span: 5 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
         >
-          <TextField
+          <Form.Item
             label="Name"
             variant="outlined"
             className="post-subject"
             id="pid-create-subject"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <TextField
+          >
+            <Input
+            style={{ width: "30%" }}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </Form.Item>
+          <Form.Item
             label="Subject"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+            onChange={(e) => {
+              setSubject(e.target.value);
+            }}
+          >
+            <Select
+              placeholder="select subject"
+              onChange={onGenderChange}
+              allowClear
+              style={{ width: "30%" }}
+            >
+              <Option value="Math">Math</Option>
+              <Option value="English">English</Option>
+              <Option value="Others">Others</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Wage (/hr)"
             variant="outlined"
             className="post-price"
             id="pid-create-price"
             multiline
             type="number"
-            onChange={(e) => {
-              setSubject(e.target.value);
-            }}
-          />
-          <TextField
-            label="Content"
+          >
+            <Input.Group compact>
+              <Input
+                style={{ width: "20%" }}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+                placeholder="Minimum"
+              />
+              &nbsp;&nbsp;
+              <Input
+                style={{ width: "20%" }}
+                onChange={(e) => {
+                  setPrice1(e.target.value);
+                }}
+                placeholder="Maximum"
+              />
+            </Input.Group>
+          </Form.Item>
+          <Form.Item
+            label="Description"
             variant="outlined"
             className="post-experience"
             id="pid-create-experience"
             multiline
-            onChange={(e) => {
-              setContent(e.target.value);
-            }}
-          />
-          <TextField
-            label="Price"
-            variant="outlined"
-            className="post-addition"
-            id="pid-create-addition"
-            multiline
-            type="number"
-            onChange={(e) => {
-              setPrice(e.target.value);
-            }}
-          />
-        </div>
+          >
+            <Input.TextArea
+              showCount
+              maxLength={100}
+              onChange={(e) => {
+                setContent(e.target.value);
+              }}
+            />
+          </Form.Item>
+        </Form>
         <br />
         <div
           className="post-btn-wrapper"
@@ -125,4 +180,4 @@ const Resume = (props) => {
   );
 };
 
-export default Resume;
+export default Publish;

@@ -52,7 +52,7 @@ const SignIn = ({
     <Space>
       <Button
         onClick={() => {
-          if (!username)
+          if (!me)
             displayStatus({
               type: "error",
               msg: "Missing Username",
@@ -63,6 +63,7 @@ const SignIn = ({
               msg: "Missing Password",
             });
           } else {
+            setSignedIn(true);
             navigate("/body");
           }
         }}

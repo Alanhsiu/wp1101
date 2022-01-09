@@ -32,6 +32,16 @@
   cursor: pointer;
 }
 
+.ant-message {
+	position: absolute;
+	width: fit-content;
+	bottom: 20px;
+	top: initial;
+	right: 20px;
+	left: initial;
+  z-index: 9999999;
+}
+
 .article-wrapper,
 .newboard-wrapper {
   width: 100%;

@@ -8,7 +8,7 @@ function Appbar(props) {
       <Toolbar className="toolbar">
         <div className="appbar-left">
           <img className="logo" src={Logo} alt="Logo" />
-          <span className="app-name" onClick={() => props.navigate("/")}>
+          <span className="app-name" onClick={() => props.navigate("/body")}>
             NTU TUTOR WEB
           </span>
         </div>
