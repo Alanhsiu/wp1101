@@ -4,6 +4,7 @@ import Appbar from "./appBar";
 import Body from "./Body";
 import Register from "./Register";
 import SignIn from "./SignIn";
+import Profile from "./Profile";
 import { message } from "antd";
 import { useState, useEffect, React } from "react";
 import { CssBaseline } from "@material-ui/core";
@@ -92,6 +93,7 @@ function Homepage(props) {
           <Route path="/body" element={<Body navigate={navigate} />} />
           <Route path="/resume" element={<Resume navigate={navigate} />} />
           <Route path="/publish" element={<Publish navigate={navigate} />} />
+          <Route path="/profile" element={<Profile navigate={navigate} />} />
         </Routes>
       </Wrapper>
     </>
