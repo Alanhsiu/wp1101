@@ -43,7 +43,7 @@ function Homepage(props) {
       const { type, msg } = payload;
       const content = {
         content: msg,
-        duration: 3,
+        duration: 30,
       };
       switch (type) {
         case "success":
@@ -66,7 +66,7 @@ function Homepage(props) {
 
   return (
     <>
-      <Appbar navigate={navigate} />
+      <Appbar navigate={navigate}/>
       <CssBaseline />
       <Wrapper>
         <Routes>
