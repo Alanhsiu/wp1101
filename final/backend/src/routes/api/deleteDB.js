@@ -1,6 +1,6 @@
-import Teacher from "../../models/teacher";
+import Teacher from "../../models/Teacher";
 
-const deleteDB = async() => {
+const deleteDB = async () => {
   try {
     await Teacher.deleteMany({});
     // console.log("Database cleared");

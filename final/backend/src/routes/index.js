@@ -1,9 +1,9 @@
 import express from "express";
 import createResume from "./api/createResume";
 import deleteDB from "./api/deleteDB";
-import Teacher from "../models/teacher";
 import ResumeModel from "../models/Resume";
-import CaseModel from "../models/Case"
+import CaseModel from "../models/Case";
+import Teacher from "../models/Teacher";
 import Parent from "../models/Resume";
 import uuid from "node-uuid";
 import session from "express-session";
@@ -12,8 +12,8 @@ import dotenv from "dotenv-defaults";
 dotenv.config();
 const MongoStore = require("connect-mongo");
 
+import { needLogin } from "./api/middleware";
 import { User } from "../models/User";
-//import { loginRequired } from "./api/middleware";
 
 const router = express.Router();
 const secret = uuid.v4();
@@ -36,7 +36,7 @@ sessionOptions.store.clear();
 router.get("/query_all_resume", async (_, res) => {
   try {
     const existing = await ResumeModel.find({}).sort({ timestamp: -1 });
-    console.log(existing)
+    console.log(existing);
     if (existing) {
       res.status(200).send({
         message: "success",
@@ -54,7 +54,7 @@ router.get("/query_all_resume", async (_, res) => {
 router.get("/query_all_cases", async (_, res) => {
   try {
     const existing = await CaseModel.find({}).sort({ timestamp: -1 });
-    console.log(existing)
+    console.log(existing);
     if (existing) {
       res.status(200).send({
         message: "success",
@@ -70,40 +70,41 @@ router.get("/query_all_cases", async (_, res) => {
 });
 
 router.post("/resume", async (req, res) => {
-  const a = await ResumeModel.find({postId : req.body.postId}).sort({ timestamp: -1 });
-  console.log(a)
-  if(a.length === 0){
-    console.log("ok")
+  const a = await ResumeModel.find({ postId: req.body.postId }).sort({
+    timestamp: -1,
+  });
+  console.log(a);
+  if (a.length === 0) {
+    console.log("ok");
     //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
     const msg = await ResumeModel.create({
-      postId : req.body.postId, 
-      name : req.body.name, 
-      subject : req.body.subject, 
-      content : req.body.trimmed_content, 
-      price : req.body.price,
-      timestamp : req.body.timestamp
-      });
-    console.log("done")
+      postId: req.body.postId,
+      name: req.body.name,
+      subject: req.body.subject,
+      content: req.body.trimmed_content,
+      price: req.body.price,
+      timestamp: req.body.timestamp,
+    });
+    console.log("done");
     res.send(msg);
-  }
-  else{
+  } else {
     res.send("msg");
   }
 });
 
 router.post("/publish", async (req, res) => {
-    console.log("ok")
-    //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
-    const msg = await CaseModel.create({
-      postId : req.body.postId, 
-      name : req.body.name, 
-      subject : req.body.subject, 
-      description : req.body.trimmed_content, 
-      price : req.body.price,
-      timestamp : req.body.timestamp
-      });
-    console.log("case_done")
-    res.send(msg);
+  console.log("ok");
+  //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
+  const msg = await CaseModel.create({
+    postId: req.body.postId,
+    name: req.body.name,
+    subject: req.body.subject,
+    description: req.body.trimmed_content,
+    price: req.body.price,
+    timestamp: req.body.timestamp,
+  });
+  console.log("case_done");
+  res.send(msg);
 });
 
 router.get("/query_resume", async (req, res) => {
@@ -121,7 +122,8 @@ router.get("/query_resume", async (req, res) => {
   }
   if (query.length !== 0) res.send({ message: query });
   else res.send({ message: `${queryType} (${queryString}) not found!` });
-  if (queryType == "name") query = await ResumeModel.find({ name: queryString });
+  if (queryType == "name")
+    query = await ResumeModel.find({ name: queryString });
   else query = await ResumeModel.find({ subject: queryString });
   var results = new Array();
   for (let i = 0; i < query.length; i++)
@@ -160,20 +162,19 @@ router.get("/query_case", async (req, res) => {
   else res.send({ message: `${queryType} (${queryString}) not found!` });
 });
 
-
 router.delete("/clear-db", async (_, res) => {
   const msg = await deleteDB();
   res.send({ message: msg });
 });
 
-router.get("/session", async (req, res, next) => {
+router.get("/session", needLogin, async (req, res, next) => {
   res.status(200).send({
     userID: req.session.userID,
   });
 });
 
 router.post(
-  "session",
+  "/session",
   express.urlencoded({ extended: false }),
   async (req, res, next) => {
     const { userID, password } = req.body;
@@ -201,9 +202,26 @@ router.post(
   }
 );
 
-router.delete("session", async (req, res, next) => {
+router.delete("/session", async (req, res, next) => {
   req.session = null;
   res.status(204).end();
+});
+
+router.post("/user", async (req, res, next) => {
+  const { userID, password, name } = req.body;
+  if (!userID || !password || !name) {
+    res.status(400).end();
+  }
+
+  const user = await User.findOne({ userID }).exec();
+  if (user) {
+    res.status(200).send("Existed User ID");
+    return;
+  }
+  const newUser = new User({ userID, password, name });
+  newUser.save();
+  res.status(204).send("Registered");
+  return;
 });
 
 export default router;
