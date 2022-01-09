@@ -40,10 +40,11 @@ const Body = (props) => {
 
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(0);
 
   const [queryType, setQueryType] = useState("name");
   const [queryString, setQueryString] = useState("");
+
   const [tabType, setTab] = useState("Resume");
   const [queries,setQueries] = useState([])
   const [order, setOrder] = useState("asc");
@@ -117,9 +118,9 @@ const Body = (props) => {
     const {
       data: { message },
     } = await axios.get("/api/query_case", {
-      params: {
-        type: queryType,
-        queryString,
+        params: {name,
+        subject,
+        price,
       },
     }
     );
@@ -216,8 +217,7 @@ const Body = (props) => {
           className={classes.button}
           variant="contained"
           color="primary"
-          disabled={!name || !subject}
-          onClick={handleAdd}
+          onClick={handleQueryCases}
         >
           SEARCH
         </Button>

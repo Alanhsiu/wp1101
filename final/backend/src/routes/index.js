@@ -136,30 +136,37 @@ router.get("/query_resume", async (req, res) => {
 });
 
 router.get("/query_case", async (req, res) => {
-  const queryType = req.query.type;
-  const queryString = req.query.queryString;
-  let query;
-  if (queryType == "name") {
-    query = await CaseModel.find({ name: queryString });
-    console.log("ok");
-    console.log(query);
-  } else {
-    query = await CaseModel.find({ subject: queryString });
-    console.log("ok");
-    console.log(query);
-  }
-  if (query.length !== 0) res.send({ message: query });
-  else res.send({ message: `${queryType} (${queryString}) not found!` });
-  if (queryType == "name") query = await CaseModel.find({ name: queryString });
-  else query = await CaseModel.find({ subject: queryString });
-  var results = new Array();
-  for (let i = 0; i < query.length; i++)
-    results[
-      i
-    ] = `Exist (${query[i].name}, ${query[i].subject}, ${query[i].price})`;
 
-  if (query.length !== 0) res.send({ messages: results });
-  else res.send({ message: `${queryType} (${queryString}) not found!` });
+  let query;
+  if(req.query.name.trim().length === 0 && req.query.subject.trim().length === 0 && req.query.price-0 === 0)
+  query = await CaseModel.find({})
+
+  else if(req.query.subject.trim().length === 0 && req.query.price-0 === 0)
+  query = await CaseModel.find({ name: req.query.name})
+
+  else if(req.query.name.trim().length === 0 && req.query.price-0 === 0)
+  query = await CaseModel.find({ subject: req.query.subject})
+
+  else if(req.query.subject.trim().length === 0 && req.query.name.trim().length === 0)
+  query = await CaseModel.find({ price: req.query.price});
+
+  else if(req.query.name.trim().length === 0)
+  query = await CaseModel.find({ subject: req.query.subject, price: req.query.price});
+
+  else if(req.query.price-0 === 0)
+  query = await CaseModel.find({ subject: req.query.subject, name: req.query.name});
+
+  else if(req.query.subject.trim().length === 0)
+  query = await CaseModel.find({ name: req.query.name, price: req.query.price});
+
+  else
+  query = await CaseModel.find({ name: req.query.name, subject: req.query.subject, price: req.query.price});
+
+
+  console.log(query);
+   
+  if (query !== []) res.send({ message: query });
+  else {query = {name : "we cant find anything"}}
 });
 
 router.delete("/clear-db", async (_, res) => {
