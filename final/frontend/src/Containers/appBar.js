@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "./logo.svg";
-import { AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar, Button } from "@material-ui/core";
+// import AccountCircle from '@mui/icons-material/AccountCircle';
 
 function Appbar(props) {
   return (
@@ -12,6 +13,22 @@ function Appbar(props) {
             NTU TUTOR WEB
           </span>
         </div>
+        <div className="appbar-left">
+          <span>
+            <Button color="inherit" onClick={() => props.navigate("/profile")}>Profile</Button>
+            <Button color="inherit" onClick={() => props.navigate("/")}>Log out</Button>
+          </span>
+        </div>
+
+        {/* <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <AccountCircle />
+          </IconButton> */}
       </Toolbar>
     </AppBar>
   );
