@@ -9,8 +9,7 @@ const ResumeSchema = new Schema({
   price: Number,
   timestamp: Date
 }, {
-  collection: 'post',
-  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+  collection: 'Resume',
 });
 const ResumeModel = mongoose.model("Resume", ResumeSchema);
 

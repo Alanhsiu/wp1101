@@ -59,8 +59,8 @@ const Body = (props) => {
     func(event.target.value)
   };
 
-  const refresh = async () => {
-    if(tabType === "Resume")
+  const refresh = async (Tab) => {
+    if(Tab === "Resume")
     {
     console.log("resume")
     const {
@@ -81,7 +81,7 @@ const Body = (props) => {
   useEffect(() => {
     // refresh();
     console.log("lesgoogogo")
-    refresh();
+    refresh(tabType);
   }, []);
 
   const handleAdd = async () => {
@@ -147,7 +147,7 @@ const Body = (props) => {
         value={tabType}
         onChange={(event, newTab) => {
           setTab(newTab);
-          refresh();
+          refresh(newTab);
         }}
       >
         <Tab label="Find Teachers" value="Resume" id="add" />
