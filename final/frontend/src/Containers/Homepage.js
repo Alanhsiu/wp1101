@@ -2,6 +2,7 @@ import Resume from "./Resume";
 import Publish from "./Publish";
 import Appbar from "./appBar";
 import Body from "./Body";
+import Register from "./Register";
 import SignIn from "./SignIn";
 import { message } from "antd";
 import { useState, useEffect, React } from "react";
@@ -66,7 +67,7 @@ function Homepage(props) {
 
   return (
     <>
-      <Appbar navigate={navigate}/>
+      <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
         <Routes>
@@ -87,6 +88,7 @@ function Homepage(props) {
               />
             }
           />
+          <Route path="/register" element={<Register navigate={navigate} />} />
           <Route path="/body" element={<Body navigate={navigate} />} />
           <Route path="/resume" element={<Resume navigate={navigate} />} />
           <Route path="/publish" element={<Publish navigate={navigate} />} />
