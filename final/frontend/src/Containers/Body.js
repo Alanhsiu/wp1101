@@ -59,28 +59,28 @@ const Body = (props) => {
     func(event.target.value)
   };
 
+  const refresh = async () => {
+    if(tabType === "Resume")
+    {
+    console.log("resume")
+    const {
+      data: { message, data },
+    } = await axios.get("/api/query_all_resume");
+    setQueries(data)
+  }
+    else
+    {
+    console.log("case")
+    const {
+      data: { message, data },
+    } = await axios.get("/api/query_all_cases");
+    setQueries(data)
+    }
+  };
+
   useEffect(() => {
     // refresh();
-    const refresh = async () => {
-      if(tabType === "Resume")
-      {console.log(await axios.get("/api/query-all"));
-      const {
-        data: { message, data },
-      } = await axios.get("/api/query-all");
-      console.log(data)
-      console.log(message)
-      setQueries(data)
-    }
-      else
-      {console.log(await axios.get("/api/query-all"));
-      const {
-        data: { message, data },
-      } = await axios.get("/api/query-all");
-      console.log(data)
-      console.log(message)
-      setQueries(data)
-      }
-    };
+    console.log("lesgoogogo")
     refresh();
   }, []);
 
@@ -97,10 +97,10 @@ const Body = (props) => {
     else addCardMessage(message); 
   };
 
-  const handleQuery = async () => {
+  const handleQueryResume = async () => {
     const {
       data: { message },
-    } = await axios.get("/api/query-cards", {
+    } = await axios.get("/api/query_resume", {
       params: {
         type: queryType,
         queryString,
@@ -112,6 +112,24 @@ const Body = (props) => {
     if (!messages) addErrorMessage(message);
     else addRegularMessage(...messages);
   };
+
+  const handleQueryCases = async () => {
+    const {
+      data: { message },
+    } = await axios.get("/api/query_case", {
+      params: {
+        type: queryType,
+        queryString,
+      },
+    }
+    );
+    console.log(message)
+    setQueries(message)
+    if (!messages) addErrorMessage(message);
+    else addRegularMessage(...messages);
+  };
+
+
   //subject price region
   return (
     <ScoreCardProvider>
@@ -129,43 +147,13 @@ const Body = (props) => {
         value={tabType}
         onChange={(event, newTab) => {
           setTab(newTab);
+          refresh();
         }}
       >
         <Tab label="Find Teachers" value="Resume" id="add" />
-        <Tab label="Find Cases" value="Find" id="query" />
+        <Tab label="Find Cases" value="Case" id="query" />
       </Tabs>
       {tabType==="Resume"?
-      <Row style={{ height: "50px" }}>
-        <TextField
-          className={classes.input}
-          placeholder="Name"
-          value={name}
-          onChange={handleChange(setName)}
-        />
-        <TextField
-          className={classes.input}
-          placeholder="Subject"
-          style={{ width: 240 }}
-          value={subject}
-          onChange={handleChange(setSubject)}
-        />
-        <TextField
-          className={classes.input}
-          placeholder="Lowest Price"
-          value={price}
-          onChange={handleNumber(setPrice)}
-          type="number"
-        />
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disabled={!name || !subject}
-          onClick={handleAdd}
-        >
-          SEARCH
-        </Button>
-      </Row>:
       <Row style={{ height: "50px" }}>
         <StyledFormControl>
           <FormControl component="fieldset">
@@ -198,9 +186,40 @@ const Body = (props) => {
           variant="contained"
           color="primary"
           disabled={!queryString}
-          onClick={handleQuery}
+          onClick={handleQueryResume}
         >
           Query
+        </Button>
+      </Row>:
+      <Row style={{ height: "50px" }}>
+        <TextField
+          className={classes.input}
+          placeholder="Name"
+          value={name}
+          onChange={handleChange(setName)}
+        />
+        <TextField
+          className={classes.input}
+          placeholder="Subject"
+          style={{ width: 240 }}
+          value={subject}
+          onChange={handleChange(setSubject)}
+        />
+        <TextField
+          className={classes.input}
+          placeholder="Lowest Price"
+          value={price}
+          onChange={handleNumber(setPrice)}
+          type="number"
+        />
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disabled={!name || !subject}
+          onClick={handleAdd}
+        >
+          SEARCH
         </Button>
       </Row>}
       <br/>
@@ -219,7 +238,7 @@ const Body = (props) => {
                   {post.name}
                   </span>
                   <hr/>
-                  <span>Published date : 2022/01/08</span>
+                  <span>{`Published date : ${post.timestamp}`}</span>
                 </div>
                 
               </div>

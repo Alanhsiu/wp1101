@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 const CaseSchema = new Schema({
+  postId: { type: String, unique: true },
   name: String,
   subject: String,
-  content: String,
+  description: String,
   price: Number,
-  dueDate: Date
+  timestamp: Date
 });
 const CaseModel = mongoose.model("Case", CaseSchema);
 

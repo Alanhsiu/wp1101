@@ -1,11 +1,12 @@
 import Teacher from "../../models/teacher";
 import ResumeModel from "../../models/Resume";
 
-const createResume = async (name, subject, content, price, timestamp) => {
+const createResume = async (id, name, subject, content, price) => {
   try {
+    timestamp = Date
     const existing = await ResumeModel.findOne({ name, subject });
     await ResumeModel.findOneAndUpdate(
-      { name, subject },
+      { id, name, subject },
       { content, price, timestamp },
       {
         new: true,

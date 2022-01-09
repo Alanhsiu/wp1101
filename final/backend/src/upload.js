@@ -41,6 +41,7 @@ const dataInit = async () => {
     await ResumeModel.deleteMany({});
     await ResumeModel.insertMany(example);
   }
+  console.log("success")
 };
 
 export { dataInit };

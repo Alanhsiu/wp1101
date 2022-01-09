@@ -14,6 +14,7 @@ app.listen(port, () => {
   console.log(`Server is up on port ${port}.`);
 });
 db.on("error", (err) => console.log(err));
-db.once("open", async () => {
-  await dataInit();
+db.once("open", async () =>  {
+  //await dataInit();
 });
+ 

@@ -6,19 +6,22 @@ import { Delete as DeleteIcon, Send as SendIcon } from "@material-ui/icons";
 import { v4 as uuidv4 } from "uuid";
 
 const Publish = (props) => {
+  const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [price, setPrice] = useState();
-  const [experience, setExperience] = useState("");
-  const [addition, setAddition] = useState("");
+  const [content, setContent] = useState("");
   const handleSubmit = async () => {
     const postId = uuidv4();
+    const trimmed_content = content.trim()
+    const timestamp = Math.floor(Date.now()/ 1000)
     if (subject.length > 0 && price > 0) {
-      await instance.post("/publish", {
+      await instance.post("/api/publish", {
         postId,
+        name,
         subject,
+        trimmed_content,
         price,
-        experience,
-        addition,
+        timestamp
       });
     } 
 
@@ -51,6 +54,15 @@ const Publish = (props) => {
           }}
         >
           <TextField
+            label="Name"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <TextField
             label="Subject"
             variant="outlined"
             className="post-subject"
@@ -71,24 +83,13 @@ const Publish = (props) => {
             }}
           />
           <TextField
-            label="Experience"
+            label="Description"
             variant="outlined"
             className="post-experience"
             id="pid-create-experience"
             multiline
             onChange={(e) => {
-              setExperience(e.target.value);
-            }}
-          />
-          <TextField
-            label="Addition"
-            variant="outlined"
-            className="post-addition"
-            id="pid-create-addition"
-            multiline
-            type="number"
-            onChange={(e) => {
-              setAddition(e.target.value);
+              setContent(e.target.value);
             }}
           />
         </div>

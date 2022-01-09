@@ -3,6 +3,7 @@ import createResume from "./api/createResume";
 import deleteDB from "./api/deleteDB";
 import Teacher from "../models/teacher";
 import ResumeModel from "../models/Resume";
+import CaseModel from "../models/Case"
 import Parent from "../models/Resume";
 import uuid from "node-uuid";
 import session from "express-session";
@@ -32,12 +33,10 @@ const sessionOptions = {
 
 sessionOptions.store.clear();
 
-router.get("/query-all", async (_, res) => {
-  const existing = await ResumeModel.find().sort({});
-  console.log(existing);
-
+router.get("/query_all_resume", async (_, res) => {
   try {
-    const existing = await ResumeModel.find().sort({});
+    const existing = await ResumeModel.find({}).sort({ timestamp: -1 });
+    console.log(existing)
     if (existing) {
       res.status(200).send({
         message: "success",
@@ -52,15 +51,62 @@ router.get("/query-all", async (_, res) => {
   }
 });
 
-router.post("/create-card", async (req, res) => {
-  const name = req.body.name;
-  const subject = req.body.subject;
-  const price = req.body.price;
-  const msg = await createResume(name, subject, price);
-  res.send(msg);
+router.get("/query_all_cases", async (_, res) => {
+  try {
+    const existing = await CaseModel.find({}).sort({ timestamp: -1 });
+    console.log(existing)
+    if (existing) {
+      res.status(200).send({
+        message: "success",
+        data: existing,
+      });
+    }
+  } catch (e) {
+    res.status(403).send({
+      message: "error",
+      data: null,
+    });
+  }
 });
 
-router.get("/query-cards", async (req, res) => {
+router.post("/resume", async (req, res) => {
+  const a = await ResumeModel.find({postId : req.body.postId}).sort({ timestamp: -1 });
+  console.log(a)
+  if(a.length === 0){
+    console.log("ok")
+    //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
+    const msg = await ResumeModel.create({
+      postId : req.body.postId, 
+      name : req.body.name, 
+      subject : req.body.subject, 
+      content : req.body.trimmed_content, 
+      price : req.body.price,
+      timestamp : req.body.timestamp
+      });
+    console.log("done")
+    res.send(msg);
+  }
+  else{
+    res.send("msg");
+  }
+});
+
+router.post("/publish", async (req, res) => {
+    console.log("ok")
+    //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
+    const msg = await CaseModel.create({
+      postId : req.body.postId, 
+      name : req.body.name, 
+      subject : req.body.subject, 
+      description : req.body.trimmed_content, 
+      price : req.body.price,
+      timestamp : req.body.timestamp
+      });
+    console.log("case_done")
+    res.send(msg);
+});
+
+router.get("/query_resume", async (req, res) => {
   const queryType = req.query.type;
   const queryString = req.query.queryString;
   let query;
@@ -86,6 +132,35 @@ router.get("/query-cards", async (req, res) => {
   if (query.length !== 0) res.send({ messages: results });
   else res.send({ message: `${queryType} (${queryString}) not found!` });
 });
+
+router.get("/query_case", async (req, res) => {
+  const queryType = req.query.type;
+  const queryString = req.query.queryString;
+  let query;
+  if (queryType == "name") {
+    query = await CaseModel.find({ name: queryString });
+    console.log("ok");
+    console.log(query);
+  } else {
+    query = await CaseModel.find({ subject: queryString });
+    console.log("ok");
+    console.log(query);
+  }
+  if (query.length !== 0) res.send({ message: query });
+  else res.send({ message: `${queryType} (${queryString}) not found!` });
+  if (queryType == "name") query = await CaseModel.find({ name: queryString });
+  else query = await CaseModel.find({ subject: queryString });
+  var results = new Array();
+  for (let i = 0; i < query.length; i++)
+    results[
+      i
+    ] = `Exist (${query[i].name}, ${query[i].subject}, ${query[i].price})`;
+
+  if (query.length !== 0) res.send({ messages: results });
+  else res.send({ message: `${queryType} (${queryString}) not found!` });
+});
+
+
 router.delete("/clear-db", async (_, res) => {
   const msg = await deleteDB();
   res.send({ message: msg });
