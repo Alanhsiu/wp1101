@@ -3,8 +3,6 @@ import createResume from "./api/createResume";
 import deleteDB from "./api/deleteDB";
 import ResumeModel from "../models/Resume";
 import CaseModel from "../models/Case";
-import Teacher from "../models/Teacher";
-import Parent from "../models/Resume";
 import uuid from "node-uuid";
 import session from "express-session";
 import bcrypt from "bcrypt";
@@ -81,8 +79,9 @@ router.post("/resume", async (req, res) => {
       postId: req.body.postId,
       name: req.body.name,
       subject: req.body.subject,
-      content: req.body.trimmed_content,
-      price: req.body.price,
+      description: req.body.trimmed_content,
+      lowPrice: req.body.lowPrice,
+      highPrice: req.body.highPrice,
       timestamp: req.body.timestamp,
     });
     console.log("done");
@@ -100,7 +99,8 @@ router.post("/publish", async (req, res) => {
     name: req.body.name,
     subject: req.body.subject,
     description: req.body.trimmed_content,
-    price: req.body.price,
+    lowPrice: req.body.lowPrice,
+    highPrice: req.body.highPrice,
     timestamp: req.body.timestamp,
   });
   console.log("case_done");
@@ -168,6 +168,35 @@ router.get("/query_case", async (req, res) => {
   if (query !== []) res.send({ message: query });
   else {query = {name : "we cant find anything"}}
 });
+
+router.get('/resumeDetail',async (req, res) => {
+  console.log(`my boiiii ${req.query.pid}`)
+  const all = await ResumeModel.find({postId: req.query.pid});
+  console.log(all)
+
+  if(!all){
+    res.status(403).send({message: "error", resume : null})
+}
+else{
+  res.status(200).send({message: "success", resume: all})
+}
+  
+
+})
+
+router.get('/caseDetail',async (req, res) => {
+  const filter =  req.query.pid;
+  const all = await CaseModel.find({postId: filter});
+  console.log(all)
+  if(!all){
+    res.status(403).send({message: "error", cases : null})
+}
+else{
+  res.status(200).send({message: "success", cases: all})
+}
+  
+
+})
 
 router.delete("/clear-db", async (_, res) => {
   const msg = await deleteDB();

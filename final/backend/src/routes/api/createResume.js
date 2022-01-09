@@ -1,5 +1,4 @@
 import ResumeModel from "../../models/Resume";
-import Teacher from "../../models/Teacher";
 
 const createResume = async (id, name, subject, content, price) => {
   try {

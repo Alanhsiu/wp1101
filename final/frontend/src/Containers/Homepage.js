@@ -5,6 +5,8 @@ import Body from "./Body";
 import Register from "./Register";
 import SignIn from "./SignIn";
 import Profile from "./Profile";
+import ResumeDetail from "./resumeDetail";
+import CaseDetail from "./caseDetail";
 import { message } from "antd";
 import { useState, useEffect, React } from "react";
 import { CssBaseline } from "@material-ui/core";
@@ -94,6 +96,9 @@ function Homepage(props) {
           <Route path="/resume" element={<Resume navigate={navigate} />} />
           <Route path="/publish" element={<Publish navigate={navigate} />} />
           <Route path="/profile" element={<Profile navigate={navigate} />} />
+          <Route path="/resumeDetail/:pid" element={<ResumeDetail navigate={navigate} />} />
+          <Route path="/caseDetail/:pid" element={<CaseDetail navigate={navigate} />} />
+
         </Routes>
       </Wrapper>
     </>

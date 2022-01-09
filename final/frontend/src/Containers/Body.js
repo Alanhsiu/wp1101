@@ -232,12 +232,12 @@ const Body = (props) => {
                   <span
                     className="each-id"
                     id={`pid-${i}-title`}
-                    onClick={() => props.navigate('/')}
+                    onClick={() => tabType==="Resume"?props.navigate(`/resumeDetail/${post.postId}`) : props.navigate(`/caseDetail/${post.postId}`)}
                   >
                   {post.name}
                   </span>
                   <hr/>
-                  <span>{`Published date : ${post.timestamp}`}</span>
+                  <span>{`ideal wage: ${post.lowPrice} ~ ${post.highPrice}`}</span>
                 </div>
                 
               </div>

@@ -11,20 +11,21 @@ const { Option } = Select;
 const Publish = (props) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
-  const [price, setPrice] = useState();
-  const [price1, setPrice1] = useState();
+  const [lowPrice, setLowPrice] = useState();
+  const [highPrice, setHighPrice] = useState();
   const [content, setContent] = useState("");
   const handleSubmit = async () => {
     const postId = uuidv4();
     const trimmed_content = content.trim();
     const timestamp = Math.floor(Date.now() / 1000);
-    if (subject.length > 0 && price > 0) {
+    if (subject.length > 0 && lowPrice > 0 && highPrice > lowPrice) {
       await instance.post("/api/resume", {
         postId,
         name,
         subject,
         trimmed_content,
-        price,
+        lowPrice,
+        highPrice,
         timestamp,
       });
     }
@@ -38,11 +39,18 @@ const Publish = (props) => {
       case "Math":
         setSubject("Math");
         return;
-
       case "English":
         setSubject("English");
+        return;  
+      case "Physics":
+        setSubject("Physics");
         return;
-
+      case "Chemistry":
+        setSubject("Chemistry");
+        return;   
+      case "Geography":
+        setSubject("Geography");
+        return;
       default:
         setSubject("Others");
     }
@@ -105,6 +113,9 @@ const Publish = (props) => {
             >
               <Option value="Math">Math</Option>
               <Option value="English">English</Option>
+              <Option value="Physics">Physics</Option>
+              <Option value="Chemistry">Chemistry</Option>
+              <Option value="Geogrphy">Geography</Option>
               <Option value="Others">Others</Option>
             </Select>
           </Form.Item>
@@ -120,7 +131,7 @@ const Publish = (props) => {
               <Input
                 style={{ width: "20%" }}
                 onChange={(e) => {
-                  setPrice(e.target.value);
+                  setLowPrice(e.target.value);
                 }}
                 placeholder="Minimum"
               />
@@ -128,7 +139,7 @@ const Publish = (props) => {
               <Input
                 style={{ width: "20%" }}
                 onChange={(e) => {
-                  setPrice1(e.target.value);
+                  setHighPrice(e.target.value);
                 }}
                 placeholder="Maximum"
               />

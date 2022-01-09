@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 const ResumeSchema = new Schema({
   postId: { type: String, unique: true },
   name: String,
-  subject: String,
-  content: String,
-  price: Number,
+  subject: {
+    type : String,
+    enum : ['Math','English','Physics','Chemistry','Geography','Others'],
+  },
+  description: String,
+  lowPrice: Number,
+  highPrice: Number,
   timestamp: Date
 }, {
   collection: 'Resume',

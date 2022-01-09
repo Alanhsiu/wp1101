@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 const CaseSchema = new Schema({
   postId: { type: String, unique: true },
   name: String,
-  subject: String,
+  subject: {
+    type : String,
+    enum : ['Math','English','Physics','Chemistry','Geography','Others'],
+  },
   description: String,
-  price: Number,
+  lowPrice: Number,
+  highPrice: Number,
   timestamp: Date
 });
 const CaseModel = mongoose.model("Case", CaseSchema);
