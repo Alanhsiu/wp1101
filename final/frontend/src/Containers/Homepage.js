@@ -95,7 +95,6 @@ function Homepage(props) {
           <Route path="/body" element={<Body navigate={navigate} />} />
           <Route path="/resume" element={<Resume navigate={navigate} />} />
           <Route path="/publish" element={<Publish navigate={navigate} />} />
-          <Route path="/profile" element={<Profile navigate={navigate} />} />
           <Route
             path="/resumeDetail/:pid"
             element={<ResumeDetail navigate={navigate} />}
@@ -105,7 +104,7 @@ function Homepage(props) {
             element={<CaseDetail navigate={navigate} />}
           />
           <Route exact path="/profile">
-            {loggedIn ? <Profile navigate={navigate} /> : <Redirect to="/" />}{" "}
+            {signedIn ? <Profile navigate={navigate} /> : <Redirect to="/" />}{" "}
           </Route>
         </Routes>
       </Wrapper>
