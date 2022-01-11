@@ -69,8 +69,11 @@ function Homepage(props) {
       <CssBaseline />
       <Wrapper>
         <Routes>
+          <Route exact path="/">
+            {signedIn ? <Redirect to="/body" /> : <Redirect to="signIn" />}
+          </Route>
           <Route
-            path="/"
+            path="/signIn"
             element={
               <SignIn
                 navigate={navigate}
