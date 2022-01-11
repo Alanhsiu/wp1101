@@ -12,10 +12,10 @@ import { useState, useEffect, React } from "react";
 import { CssBaseline } from "@material-ui/core";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { MainRoute } from '../Components/routes/mainRoute.js";
-import { PrivateRoute } from '../Components/routes/privateRoute.js";
-import { LoginRoute } from '../Components/routes/loginRoute.js";
+import { useNavigate, Switch } from "react-router-dom";
+import { MainRoute } from "../Components/routes/mainRoute.js";
+import { PrivateRoute } from "../Components/routes/privateRoute.js";
+import { LoginRoute } from "../Components/routes/loginRoute.js";
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -76,43 +76,35 @@ function Homepage(props) {
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
-        <Routes>
-          <Route exact path="/">
-            {signedIn ? <Redirect to="/body" /> : <Redirect to="signIn" />}
-          </Route>
-          <Route
-            path="/signIn"
-            element={
-              <SignIn
-                navigate={navigate}
-                me={me}
-                setMe={setMe}
-                username={username}
-                setUserName={setUsername}
-                password={password}
-                setPassword={setPassword}
-                setSignedIn={setSignedIn}
-                setRegistered={setRegistered}
-                displayStatus={displayStatus}
-              />
-            }
-          />
-          <Route path="/register" element={<Register navigate={navigate} />} />
-          <Route path="/body" element={<Body navigate={navigate} />} />
-          <Route path="/resume" element={<Resume navigate={navigate} />} />
-          <Route path="/publish" element={<Publish navigate={navigate} />} />
-          <Route
-            path="/resumeDetail/:pid"
-            element={<ResumeDetail navigate={navigate} />}
-          />
-          <Route
-            path="/caseDetail/:pid"
-            element={<CaseDetail navigate={navigate} />}
-          />
-          <Route exact path="/profile">
-            {signedIn ? <Profile navigate={navigate} /> : <Redirect to="/" />}{" "}
-          </Route>
-        </Routes>
+        <Switch>
+          <MainRoute exact path="/">
+            <Main navigate={navigate} />
+          </MainRoute>
+          <MainRoute exact path="/register">
+            <Register navigate={navigate} />
+          </MainRoute>
+          <LoginRoute exact path="/login">
+            <SignIn navigate={navigate} />
+          </LoginRoute>
+          <PrivateRoute exact path="/body">
+            <Body navigate={navigate} />
+          </PrivateRoute>
+          <PrivateRoute exact path="/resume">
+            <Resume navigate={navigate} />
+          </PrivateRoute>
+          <PrivateRoute exact path="/publish">
+            <Publish navigate={navigate} />
+          </PrivateRoute>
+          <PrivateRoute exact path="/resumeDetail/:pid">
+            <ResumeDetail navigate={navigate} />
+          </PrivateRoute>
+          <PrivateRoute exact path="/caseDetail/:pid">
+            <CaseDetail navigate={navigate} />
+          </PrivateRoute>
+          <PrivateRoute exact path="/profile">
+            <Profile navigate={navigate} />
+          </PrivateRoute>
+        </Switch>
       </Wrapper>
     </>
   );
