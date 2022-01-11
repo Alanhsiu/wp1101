@@ -13,6 +13,9 @@ import { CssBaseline } from "@material-ui/core";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { MainRoute } from '../Components/routes/mainRoute.js";
+import { PrivateRoute } from '../Components/routes/privateRoute.js";
+import { LoginRoute } from '../Components/routes/loginRoute.js";
 
 const Wrapper = styled.div`
   margin-top: 30px;
