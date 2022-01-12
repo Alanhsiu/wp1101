@@ -25,6 +25,7 @@ const wsLink = new WebSocketLink({
   uri: `ws://localhost:5000/`,
   options: { reconnect: true },
 });
+import { BrowserRouter } from "react-router-dom";
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
@@ -59,7 +60,9 @@ const theme = createTheme({
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ApolloProvider>
   </MuiThemeProvider>,
   document.getElementById("root")
