@@ -25,11 +25,6 @@ const Wrapper = styled.div`
 `;
 //width is important
 
-const StyledPaper = styled(Paper)`
-  padding: 2em;
-  width: 60%;
-`;
-
 function Homepage(props) {
   const navigate = useNavigate();
 
@@ -47,7 +42,7 @@ function Homepage(props) {
       const { type, msg } = payload;
       const content = {
         content: msg,
-        duration: 30,
+        duration: 2,
       };
       switch (type) {
         case "success":
@@ -103,9 +98,9 @@ function Homepage(props) {
             path="/caseDetail/:pid"
             element={<CaseDetail navigate={navigate} />}
           />
-          <Route exact path="/profile">
-            {signedIn ? <Profile navigate={navigate} /> : <Redirect to="/" />}{" "}
-          </Route>
+          {/* <Route exact path="/profile">
+            {signedIn ? <Profile navigate={navigate} /> : <Navigate replace to="/" />}
+          </Route> */}
         </Routes>
       </Wrapper>
     </>
