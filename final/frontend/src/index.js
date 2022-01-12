@@ -4,8 +4,8 @@ import "./index.css";
 import App from "./Containers/App";
 import reportWebVitals from "./reportWebVitals";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import 'antd/dist/antd.css'
-
+import "antd/dist/antd.css";
+import { BrowserRouter } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -20,7 +20,9 @@ const theme = createTheme({
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </MuiThemeProvider>,
   document.getElementById("root")
 );

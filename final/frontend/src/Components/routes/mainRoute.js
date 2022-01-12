@@ -1,14 +1,6 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-export default function MainRoute({ children, path }) {
-  return (
-    <Route
-      exact
-      path={path}
-      render={() => {
-        return children;
-      }}
-    />
-  );
+export default function MainRoute() {
+  return <Outlet />;
 }

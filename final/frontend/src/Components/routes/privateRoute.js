@@ -1,7 +1,8 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import instance from "../../api";
 
-export default function PrivateRoute({ children, path }) {
+export default function PrivateRoute({ element, path }) {
   let isAuth = false;
   instance
     .get("/session")
@@ -14,13 +15,5 @@ export default function PrivateRoute({ children, path }) {
       }
     })
     .catch(async (error) => console.log(error));
-  return (
-    <Route
-      path={path}
-      render={() => {
-        if (!isAuth) return <Redirect to="/login" />;
-        return children;
-      }}
-    />
-  );
+  return isAuth ? <Outlet /> : <Navigate to="/login" />;
 }

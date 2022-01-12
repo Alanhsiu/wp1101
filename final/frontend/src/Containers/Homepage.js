@@ -12,10 +12,10 @@ import { useState, useEffect, React } from "react";
 import { CssBaseline } from "@material-ui/core";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
-import { useNavigate, Switch } from "react-router-dom";
-import { MainRoute } from "../Components/routes/mainRoute.js";
-import { PrivateRoute } from "../Components/routes/privateRoute.js";
-import { LoginRoute } from "../Components/routes/loginRoute.js";
+import { useNavigate, Routes, Route } from "react-router-dom";
+import MainRoute from "../Components/routes/mainRoute.js";
+import PrivateRoute from "../Components/routes/privateRoute.js";
+import LoginRoute from "../Components/routes/loginRoute.js";
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -76,35 +76,48 @@ function Homepage(props) {
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
-        <Switch>
-          <MainRoute exact path="/">
-            <Main navigate={navigate} />
-          </MainRoute>
-          <MainRoute exact path="/register">
-            <Register navigate={navigate} />
-          </MainRoute>
-          <LoginRoute exact path="/login">
-            <SignIn navigate={navigate} />
-          </LoginRoute>
-          <PrivateRoute exact path="/body">
-            <Body navigate={navigate} />
-          </PrivateRoute>
-          <PrivateRoute exact path="/resume">
-            <Resume navigate={navigate} />
-          </PrivateRoute>
-          <PrivateRoute exact path="/publish">
-            <Publish navigate={navigate} />
-          </PrivateRoute>
-          <PrivateRoute exact path="/resumeDetail/:pid">
-            <ResumeDetail navigate={navigate} />
-          </PrivateRoute>
-          <PrivateRoute exact path="/caseDetail/:pid">
-            <CaseDetail navigate={navigate} />
-          </PrivateRoute>
-          <PrivateRoute exact path="/profile">
-            <Profile navigate={navigate} />
-          </PrivateRoute>
-        </Switch>
+        <Routes>
+          <MainRoute
+            exact
+            path="/register"
+            element={<Register navigate={navigate} />}
+          />
+          <LoginRoute
+            exact
+            path="/login"
+            element={<SignIn navigate={navigate} />}
+          />
+          <PrivateRoute
+            exact
+            path="/body"
+            element={<Body navigate={navigate} />}
+          />
+          <PrivateRoute
+            exact
+            path="/resume"
+            element={<Resume navigate={navigate} />}
+          />
+          <PrivateRoute
+            exact
+            path="/publish"
+            element={<Publish navigate={navigate} />}
+          />
+          <PrivateRoute
+            exact
+            path="/resumeDetail/:pid"
+            element={<ResumeDetail navigate={navigate} />}
+          />
+          <PrivateRoute
+            exact
+            path="/caseDetail/:pid"
+            element={<CaseDetail navigate={navigate} />}
+          />
+          <PrivateRoute
+            exact
+            path="/profile"
+            element={<Profile navigate={navigate} />}
+          />
+        </Routes>
       </Wrapper>
     </>
   );
