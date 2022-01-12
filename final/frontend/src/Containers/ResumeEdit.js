@@ -8,7 +8,7 @@ import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-const ResumeEdit = (props,setEdit) => {
+const ResumeEdit = (props) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [lowPrice, setLowPrice] = useState();
@@ -29,7 +29,6 @@ const ResumeEdit = (props,setEdit) => {
         timestamp,
       });
     }
-    setEdit(false);
     setTimeout(() => {
       props.navigate(-1);
     }, 300);
@@ -67,7 +66,7 @@ const ResumeEdit = (props,setEdit) => {
             justifyContent: "center",
           }}
         >
-          Resume
+          ResumeEdit
           
         </div>
         <br />
@@ -182,7 +181,7 @@ const ResumeEdit = (props,setEdit) => {
             color="secondary"
             className="post-cancel-btn"
             endIcon={<DeleteIcon />}
-            onClick={()=>setEdit(false)}
+            onClick={      props.navigate(-1)}
           >
             Cancel
           </Button>

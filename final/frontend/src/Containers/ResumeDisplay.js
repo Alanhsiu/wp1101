@@ -8,7 +8,7 @@ import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-const ResumeDisplay = (props,setEdit) => {
+const ResumeDisplay = (props) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [lowPrice, setLowPrice] = useState();
@@ -67,7 +67,7 @@ const ResumeDisplay = (props,setEdit) => {
             justifyContent: "center",
           }}
         >
-          Resume
+          ResumeDisplay
           <Edit 
           style={{
             fontWeight: "Bold",
@@ -77,7 +77,7 @@ const ResumeDisplay = (props,setEdit) => {
             paddingLeft:"15px",
             cursor: "pointer"
           }}
-          onClick={()=>setEdit(true)}/>
+          onClick={ props.navigate("/resumeEdit")}/>
         </div>
         <br />
         <Form

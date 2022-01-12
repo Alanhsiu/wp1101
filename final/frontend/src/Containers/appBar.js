@@ -23,7 +23,7 @@ function Appbar(props) {
               Case Publish
             </Button>
 
-            <Button color="inherit" onClick={() => props.navigate("/profile")}>
+            <Button color="inherit" onClick={() => props.navigate("/resumeDisplay")}>
               Profile
             </Button>
             <Button color="inherit" onClick={() => props.navigate("/")}>

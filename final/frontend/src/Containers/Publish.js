@@ -9,7 +9,6 @@ import { Form, Input, Select } from "antd";
 const { Option } = Select;
 
 const Publish = (props) => {
-  const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [lowPrice, setLowPrice] = useState();
   const [highPrice, setHighPrice] = useState();
@@ -21,7 +20,6 @@ const Publish = (props) => {
     if (subject.length > 0 && lowPrice > 0 && highPrice > lowPrice) {
       await instance.post("/api/publish", {
         postId,
-        name,
         subject,
         trimmed_content,
         lowPrice,
@@ -58,6 +56,9 @@ const Publish = (props) => {
 
   return (
     <div className="post-wrapper">
+      <div id="goback-btn">
+        <Button variant="contained" color="primary" id="goback-reply-btn" onClick={() => props.navigate(-1)}>Back</Button>
+      </div>
       <div className="post-text-container">
         <div
           style={{
@@ -83,19 +84,6 @@ const Publish = (props) => {
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
         >
-          <Form.Item
-            label="Name"
-            variant="outlined"
-            className="post-subject"
-            id="pid-create-subject"
-          >
-            <Input
-              style={{ width: "30%" }}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-          </Form.Item>
           <Form.Item
             label="Subject"
             variant="outlined"

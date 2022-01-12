@@ -68,10 +68,17 @@ router.get("/query_all_cases", async (_, res) => {
 });
 
 router.post("/resume", async (req, res) => {
-  const a = await ResumeModel.find({ postId: req.body.postId }).sort({
-    timestamp: -1,
-  });
-  console.log(a);
+  const a = await ResumeModel.findOneAndUpdate({ 
+    postId: req.body.postId },
+    {      
+      name: req.body.name,
+      subject: req.body.subject,
+      description: req.body.trimmed_content,
+      lowPrice: req.body.lowPrice,
+      highPrice: req.body.highPrice,
+    }
+    )
+
   if (a.length === 0) {
     console.log("ok");
     //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
@@ -84,9 +91,10 @@ router.post("/resume", async (req, res) => {
       highPrice: req.body.highPrice,
       timestamp: req.body.timestamp,
     });
-    console.log("done");
+    console.log("create");
     res.send(msg);
   } else {
+    console.log("update");
     res.send("msg");
   }
 });
@@ -101,6 +109,8 @@ router.post("/publish", async (req, res) => {
     description: req.body.trimmed_content,
     lowPrice: req.body.lowPrice,
     highPrice: req.body.highPrice,
+    mail: req.body.mail,
+    education: req.body.education,
     timestamp: req.body.timestamp,
   });
   console.log("case_done");

@@ -47,16 +47,19 @@
 }
 
 .article-wrapper #goback-btn {
-  width: 60%;
-  padding: 25px 0 0 0;
+  width: 10%;
   display: flex;
-  justify-content: space-between;
+  left: 0px;
   align-items: center;
+  text-align: center;
+  height: 20px;
+  position: absolute;
+  padding: 0 0 0 0;
 }
 
 .article-wrapper #goback-reply-btn,
 .newboard-wrapper #goback-reply-btn {
-  width: 60%;
+  width: 10%;
   padding: 25px 0 0 0;
   display: flex;
   justify-content: space-between;
@@ -79,8 +82,8 @@
 .article-title {
   padding: 20px 30px 10px 30px;
   font-weight: bold;
-  font-size: 32px;
-  text-align: center;
+  font-size: 12px;
+  text-align: left;
 }
 
 .post-delete {

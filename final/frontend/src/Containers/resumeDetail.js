@@ -4,19 +4,17 @@ import instance from "../api";
 
 import { useParams } from 'react-router-dom'
 import { IconButton, Button, Typography } from '@material-ui/core'
-import { Delete as DeleteIcon } from '@material-ui/icons'
+import { Mail as MailIcon } from '@material-ui/icons'
 
 function ResumeDetail(props) {
   const { pid } = useParams()
   const [resume, setResume] = useState(null)
 
-  // TODO 3-(2): complete getPostDetail function to get the full information of a post from database
   const getResumeDetail = async() => {
     const {data: {message, resume}}= await instance.get("/api/resumeDetail",{params: {pid,}})
     setResume(resume)   
   }
 
-  // TODO 3-(2): fetch the full information of a post from database
   useEffect(() => {
     console.log("ok")
     getResumeDetail()  
@@ -31,12 +29,13 @@ function ResumeDetail(props) {
       {resume ?
         <div className="article-container">
           <div className="article-title" id="pid-detail-title">
-            {`${resume[0].subject}: ${resume[0].lowPrice} ~ ${resume[0].highPrice}`}
-
-            {/* TODO 5-(2): add property to IconButton to trigger the delPost function when click */}
+            {`tutoring Subject : ${resume[0].subject}`}
             <IconButton className="post-delete" size="small" id="pid-detail-del-btn">
-              <DeleteIcon fontSize="inherit" />
+              <MailIcon fontSize="inherit" />
             </IconButton>
+          </div>
+          <div className="article-title" id="pid-detail-title">
+            {`wage : ${resume[0].lowPrice} ~ ${resume[0].highPrice}`}
           </div>
           <div className="article-time">
             <span id="pid-detail-time">{moment(resume.timestamp).format('YYYY-MM-DD HH:mm:ss')}</span>

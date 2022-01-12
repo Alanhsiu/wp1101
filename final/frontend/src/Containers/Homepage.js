@@ -6,6 +6,8 @@ import Register from "./Register";
 import SignIn from "./SignIn";
 import Profile from "./Profile";
 import ResumeDetail from "./resumeDetail";
+import ResumeDisplay from "./ResumeDisplay";
+import ResumeEdit from "./ResumeEdit";
 import CaseDetail from "./caseDetail";
 import { message } from "antd";
 import { useState, useEffect, React } from "react";
@@ -26,7 +28,6 @@ const Wrapper = styled.div`
 
 function Homepage(props) {
   const navigate = useNavigate();
-
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [me, setMe] = useState(savedMe || "");
@@ -87,7 +88,8 @@ function Homepage(props) {
           />
           <Route path="/register" element={<Register navigate={navigate} />} />
           <Route path="/body" element={<Body navigate={navigate} />} />
-          <Route path="/resume" element={<Resume navigate={navigate} />} />
+          <Route path="/resumeDisplay" element={<ResumeDisplay navigate={navigate} />} />
+          <Route path="/resumeEdit" element={<ResumeEdit navigate={navigate} />} />
           <Route path="/publish" element={<Publish navigate={navigate} />} />
           <Route
             path="/resumeDetail/:pid"
