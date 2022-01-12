@@ -11,7 +11,6 @@ import { message } from "antd";
 import { useState, useEffect, React } from "react";
 import { CssBaseline } from "@material-ui/core";
 import styled from "styled-components";
-import Paper from "@material-ui/core/Paper";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -98,9 +97,7 @@ function Homepage(props) {
             path="/caseDetail/:pid"
             element={<CaseDetail navigate={navigate} />}
           />
-          {/* <Route exact path="/profile">
-            {signedIn ? <Profile navigate={navigate} /> : <Navigate replace to="/" />}
-          </Route> */}
+          <Route path="/profile" element={<Profile navigate={navigate} />} />
         </Routes>
       </Wrapper>
     </>

@@ -16,7 +16,7 @@ import { useScoreCard } from "../hooks/useScoreCard";
 
 const Wrapper = styled.section`
   position: absolute;
-  top: 70px;
+  top: 100px;
 `;
 
 const Row = styled.div`
@@ -124,7 +124,7 @@ const Body = (props) => {
   //subject price region
   return (
     <ScoreCardProvider>
-      <div className="board-navbar">
+      {/* <div className="board-navbar">
         <Button
           variant="contained"
           color="secondary"
@@ -139,7 +139,7 @@ const Body = (props) => {
         >
           Edit Resume
         </Button>
-      </div>
+      </div> */}
       <Wrapper>
         <Tabs
           variant="fullWidth"

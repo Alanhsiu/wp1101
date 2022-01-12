@@ -1,11 +1,9 @@
-import React from 'react'
+import ResumeDisplay from "./ResumeDisplay";
+import ResumeEdit from "./ResumeEdit";
+import { useState } from "react";
+const Profile = (props) => {
+  const [edit, setEdit] = useState(false);
+  return { edit } ? <ResumeEdit setEdit={setEdit}/> : <ResumeDisplay setEdit={setEdit}/>;
+};
 
-const Profile = () => {
-    return (
-        <div>
-            hello
-        </div>
-    )
-}
-
-export default Profile
+export default Profile;
