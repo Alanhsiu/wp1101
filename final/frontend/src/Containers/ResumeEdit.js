@@ -30,7 +30,7 @@ const ResumeEdit = (props) => {
       });
     }
     setTimeout(() => {
-      props.navigate(-1);
+      props.navigate("/body");
     }, 300);
   };
   const onGenderChange = (value) => {
@@ -181,7 +181,7 @@ const ResumeEdit = (props) => {
             color="secondary"
             className="post-cancel-btn"
             endIcon={<DeleteIcon />}
-            onClick={      props.navigate(-1)}
+            onClick={() =>props.navigate("/body")}
           >
             Cancel
           </Button>

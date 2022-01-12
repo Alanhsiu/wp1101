@@ -77,7 +77,7 @@ const ResumeDisplay = (props) => {
             paddingLeft:"15px",
             cursor: "pointer"
           }}
-          onClick={ props.navigate("/resumeEdit")}/>
+          onClick={() => props.navigate("/resumeEdit")}/>
         </div>
         <br />
         <Form

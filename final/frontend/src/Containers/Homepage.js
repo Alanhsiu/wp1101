@@ -1,4 +1,3 @@
-import Resume from "./Resume";
 import Publish from "./Publish";
 import Appbar from "./appBar";
 import Body from "./Body";
