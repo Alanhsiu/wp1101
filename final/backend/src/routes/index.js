@@ -7,7 +7,7 @@ import uuid from "node-uuid";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv-defaults";
-import {UserModel} from "../db";
+import { UserModel } from "../db";
 dotenv.config();
 const MongoStore = require("connect-mongo");
 
@@ -29,6 +29,7 @@ const sessionOptions = {
 };
 
 sessionOptions.store.clear();
+const SALT_ROUNDS = 12;
 
 router.get("/query_all_resume", async (_, res) => {
   try {
@@ -67,16 +68,18 @@ router.get("/query_all_cases", async (_, res) => {
 });
 
 router.post("/resume", async (req, res) => {
-  const a = await ResumeModel.findOneAndUpdate({ 
-    postId: req.body.postId },
-    {      
+  const a = await ResumeModel.findOneAndUpdate(
+    {
+      postId: req.body.postId,
+    },
+    {
       name: req.body.name,
       subject: req.body.subject,
       description: req.body.trimmed_content,
       lowPrice: req.body.lowPrice,
       highPrice: req.body.highPrice,
     }
-    )
+  );
 
   if (a.length === 0) {
     console.log("ok");
@@ -145,67 +148,74 @@ router.get("/query_resume", async (req, res) => {
 });
 
 router.get("/query_case", async (req, res) => {
-
   let query;
-  if(req.query.name.trim().length === 0 && req.query.subject.trim().length === 0 && req.query.price-0 === 0)
-  query = await CaseModel.find({})
-
-  else if(req.query.subject.trim().length === 0 && req.query.price-0 === 0)
-  query = await CaseModel.find({ name: req.query.name})
-
-  else if(req.query.name.trim().length === 0 && req.query.price-0 === 0)
-  query = await CaseModel.find({ subject: req.query.subject})
-
-  else if(req.query.subject.trim().length === 0 && req.query.name.trim().length === 0)
-  query = await CaseModel.find({ price: req.query.price});
-
-  else if(req.query.name.trim().length === 0)
-  query = await CaseModel.find({ subject: req.query.subject, price: req.query.price});
-
-  else if(req.query.price-0 === 0)
-  query = await CaseModel.find({ subject: req.query.subject, name: req.query.name});
-
-  else if(req.query.subject.trim().length === 0)
-  query = await CaseModel.find({ name: req.query.name, price: req.query.price});
-
+  if (
+    req.query.name.trim().length === 0 &&
+    req.query.subject.trim().length === 0 &&
+    req.query.price - 0 === 0
+  )
+    query = await CaseModel.find({});
+  else if (req.query.subject.trim().length === 0 && req.query.price - 0 === 0)
+    query = await CaseModel.find({ name: req.query.name });
+  else if (req.query.name.trim().length === 0 && req.query.price - 0 === 0)
+    query = await CaseModel.find({ subject: req.query.subject });
+  else if (
+    req.query.subject.trim().length === 0 &&
+    req.query.name.trim().length === 0
+  )
+    query = await CaseModel.find({ price: req.query.price });
+  else if (req.query.name.trim().length === 0)
+    query = await CaseModel.find({
+      subject: req.query.subject,
+      price: req.query.price,
+    });
+  else if (req.query.price - 0 === 0)
+    query = await CaseModel.find({
+      subject: req.query.subject,
+      name: req.query.name,
+    });
+  else if (req.query.subject.trim().length === 0)
+    query = await CaseModel.find({
+      name: req.query.name,
+      price: req.query.price,
+    });
   else
-  query = await CaseModel.find({ name: req.query.name, subject: req.query.subject, price: req.query.price});
-
+    query = await CaseModel.find({
+      name: req.query.name,
+      subject: req.query.subject,
+      price: req.query.price,
+    });
 
   console.log(query);
-   
+
   if (query !== []) res.send({ message: query });
-  else {query = {name : "we cant find anything"}}
+  else {
+    query = { name: "we cant find anything" };
+  }
 });
 
-router.get('/resumeDetail',async (req, res) => {
-  console.log(`my boiiii ${req.query.pid}`)
-  const all = await ResumeModel.find({postId: req.query.pid});
-  console.log(all)
+router.get("/resumeDetail", async (req, res) => {
+  console.log(`my boiiii ${req.query.pid}`);
+  const all = await ResumeModel.find({ postId: req.query.pid });
+  console.log(all);
 
-  if(!all){
-    res.status(403).send({message: "error", resume : null})
-}
-else{
-  res.status(200).send({message: "success", resume: all})
-}
-  
+  if (!all) {
+    res.status(403).send({ message: "error", resume: null });
+  } else {
+    res.status(200).send({ message: "success", resume: all });
+  }
+});
 
-})
-
-router.get('/caseDetail',async (req, res) => {
-  const filter =  req.query.pid;
-  const all = await CaseModel.find({postId: filter});
-  console.log(all)
-  if(!all){
-    res.status(403).send({message: "error", cases : null})
-}
-else{
-  res.status(200).send({message: "success", cases: all})
-}
-  
-
-})
+router.get("/caseDetail", async (req, res) => {
+  const filter = req.query.pid;
+  const all = await CaseModel.find({ postId: filter });
+  console.log(all);
+  if (!all) {
+    res.status(403).send({ message: "error", cases: null });
+  } else {
+    res.status(200).send({ message: "success", cases: all });
+  }
+});
 
 router.delete("/clear-db", async (_, res) => {
   const msg = await deleteDB();
@@ -253,7 +263,7 @@ router.delete("/session", async (req, res, next) => {
 });
 
 router.post("/user", async (req, res, next) => {
-  const { userID, password, name } = req.body;
+  const { userID, password, userName } = req.body;
   if (!userID || !password || !name) {
     res.status(400).end();
   }
@@ -263,7 +273,10 @@ router.post("/user", async (req, res, next) => {
     res.status(200).send("Existed User ID");
     return;
   }
-  const newUser = new UserModel({ userID, password, name });
+
+  const salt = await bcrypt.genSalt(SALT_ROUNDS);
+  const newpasswordHash = await bcrypt.hash(password, salt);
+  const newUser = new UserModel({ userID, newpasswordHash, name });
   newUser.save();
   res.status(204).send("Registered");
   return;

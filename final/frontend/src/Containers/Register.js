@@ -8,10 +8,12 @@ import { UserOutlined } from "@ant-design/icons";
 import Title from "../Components/Title";
 import SignInBox from "../Components/SignInBox";
 import { useState, React } from "react";
+import userAPI from "../utils/userAPI";
 
 const Register = (props) => {
   const [newUserName, setNewUserName] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [newUserID, setNewUserID] = useState("");
   const [registered, setRegistered] = useState(false);
   const [back, setBack] = useState(false);
   return (
@@ -22,10 +24,10 @@ const Register = (props) => {
       <Space direction="vertical">
         <Input
           prefix={<UserOutlined />}
-          value={newUserName}
+          value={newUserID}
           enterButton="Sign In"
-          onChange={(e) => setNewUserName(e.target.value)}
-          placeholder="Username"
+          onChange={(e) => setNewUserID(e.target.value)}
+          placeholder="UserID"
           size="large"
         />
         {/* </Space>
@@ -40,28 +42,39 @@ const Register = (props) => {
             visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
           }
         />
+        <Input
+          value={newUserName}
+          onChange={(e) => setNewUserName(e.target.value)}
+          placeholder="UserName"
+          size="large"
+        />
       </Space>
       <SignInBox>
-      <Space>
-        <Button
-        //這邊要註冊然後檢查有沒有重複
-          onClick={() => {
+        <Space>
+          <Button
+            //這邊要註冊然後檢查有沒有重複
+            onClick={() => {
+              userAPI.postUser({
+                userID: newUserID,
+                password: newPassword,
+                name: newUserName,
+              });
               props.navigate("/");
-          }}
-        >
-          Register
-        </Button>
-      </Space>
-      <Space>
-        <Button
-          onClick={() => {
-            props.navigate("/");
-        }}
-        >
-          Back
-        </Button>
-      </Space>
-    </SignInBox>
+            }}
+          >
+            Register
+          </Button>
+        </Space>
+        <Space>
+          <Button
+            onClick={() => {
+              props.navigate("/");
+            }}
+          >
+            Back
+          </Button>
+        </Space>
+      </SignInBox>
     </>
   );
 };

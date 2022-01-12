@@ -89,6 +89,24 @@ function App(props) {
               element={<CaseDetail navigate={navigate} />}
             />
             <Route path="/profile" element={<Profile navigate={navigate} />} />
+            <Route
+              path="/resumeDisplay"
+              element={<ResumeDisplay navigate={navigate} />}
+            />
+            <Route
+              path="/resumeEdit"
+              element={<ResumeEdit navigate={navigate} />}
+            />
+            <Route
+              path="/chatroom"
+              element={
+                <ChatRoom
+                  navigate={navigate}
+                  username={me}
+                  displayStatus={displayStatus}
+                />
+              }
+            />
           </Route>
         </Routes>
       </Wrapper>
