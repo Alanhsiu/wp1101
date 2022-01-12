@@ -1,44 +1,17 @@
-import CaseModel from "../models/Case";
-import ResumeModel from "../models/Resume";
+import {
+  makeName,
+  checkChatBox,
+} from "./utility";
 
 const Query = {
-    cases(parent, {name, subject, price}, { db }, info) {
-      if (!name && !subject && !price) {
-        return CaseModel;
-      }
-      else if (!name && !subject){
-        const a = db.Cases.filter((cases) => {
-            return cases.price().includes(price)
-          });
-      
-          return a.filter( (cases) => {
-            return cases.id.includes(id)
-          })
-      }
-      else if(!name && !price){
-        const a = db.cases.filter((cases) => {
-            return cases.price().includes(price)
-          });
-      
-          return a.filter( (cases) => {
-            return cases.id.includes(id)
-          })
-      }
-      
-      
-    },
-    teacher(parent, args, { db }, info) {
-      if (!args.query) {
-        console.log(query)
-        return db.users;
-      }
-  
-      return db.users.filter((user) => {
-        return user.name.toLowerCase().includes(args.query)
-      });
-    },
-  
-  };
-  
-  export { Query as default };
-  
+  async ChatBox(parent, { name1, name2 }, { db }, info) {
+    const chatBoxName = makeName(name1, name2);
+    let chatBox = await checkChatBox(db, chatBoxName, "queryChatBox");
+    if(!chatBox) {
+      throw new Error(`ChatBox ${chatBoxName} is not exist.`);
+    }
+    return chatBox;
+  },
+};
+
+export { Query as default };

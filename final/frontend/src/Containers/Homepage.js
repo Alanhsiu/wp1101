@@ -4,6 +4,7 @@ import Body from "./Body";
 import Register from "./Register";
 import SignIn from "./SignIn";
 import Profile from "./Profile";
+import ChatRoom from "./ChatRoom";
 import ResumeDetail from "./resumeDetail";
 import ResumeDisplay from "./ResumeDisplay";
 import ResumeEdit from "./ResumeEdit";
@@ -87,9 +88,25 @@ function Homepage(props) {
           />
           <Route path="/register" element={<Register navigate={navigate} />} />
           <Route path="/body" element={<Body navigate={navigate} />} />
-          <Route path="/resumeDisplay" element={<ResumeDisplay navigate={navigate} />} />
-          <Route path="/resumeEdit" element={<ResumeEdit navigate={navigate} />} />
+          <Route
+            path="/resumeDisplay"
+            element={<ResumeDisplay navigate={navigate} />}
+          />
+          <Route
+            path="/resumeEdit"
+            element={<ResumeEdit navigate={navigate} />}
+          />
           <Route path="/publish" element={<Publish navigate={navigate} />} />
+          <Route
+            path="/chatroom"
+            element={
+              <ChatRoom
+                navigate={navigate}
+                username={me}
+                displayStatus={displayStatus}
+              />
+            }
+          />
           <Route
             path="/resumeDetail/:pid"
             element={<ResumeDetail navigate={navigate} />}

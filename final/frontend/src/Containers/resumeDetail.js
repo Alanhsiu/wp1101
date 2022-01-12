@@ -1,36 +1,49 @@
-import React, { useState, useEffect } from 'react'
-import moment from 'moment'
+import React, { useState, useEffect } from "react";
+import moment from "moment";
 import instance from "../api";
 
-import { useParams } from 'react-router-dom'
-import { IconButton, Button, Typography } from '@material-ui/core'
-import { Mail as MailIcon } from '@material-ui/icons'
+import { useParams } from "react-router-dom";
+import { IconButton, Button, Typography } from "@material-ui/core";
+import { Mail as MailIcon } from "@material-ui/icons";
 
 function ResumeDetail(props) {
-  const { pid } = useParams()
-  const [resume, setResume] = useState(null)
+  const { pid } = useParams();
+  const [resume, setResume] = useState(null);
 
-  const getResumeDetail = async() => {
-    const {data: {message, resume}}= await instance.get("/api/resumeDetail",{params: {pid,}})
-    setResume(resume)   
-  }
+  const getResumeDetail = async () => {
+    const {
+      data: { message, resume },
+    } = await instance.get("/api/resumeDetail", { params: { pid } });
+    setResume(resume);
+  };
 
   useEffect(() => {
-    console.log("ok")
-    getResumeDetail()  
-  }, [pid])
-  
+    console.log("ok");
+    getResumeDetail();
+  }, [pid]);
+
   return (
     <div className="article-wrapper">
       <div id="goback-btn">
-        <Button variant="contained" color="primary" id="goback-reply-btn" onClick={() => props.navigate(-1)}>Back</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          id="goback-reply-btn"
+          onClick={() => props.navigate(-1)}
+        >
+          Back
+        </Button>
       </div>
 
-      {resume ?
+      {resume ? (
         <div className="article-container">
           <div className="article-title" id="pid-detail-title">
             {`tutoring Subject : ${resume[0].subject}`}
-            <IconButton className="post-delete" size="small" id="pid-detail-del-btn">
+            <IconButton
+              className="post-delete"
+              size="small"
+              id="pid-detail-del-btn"
+            >
               <MailIcon fontSize="inherit" />
             </IconButton>
           </div>
@@ -38,17 +51,23 @@ function ResumeDetail(props) {
             {`wage : ${resume[0].lowPrice} ~ ${resume[0].highPrice}`}
           </div>
           <div className="article-time">
-            <span id="pid-detail-time">{moment(resume.timestamp).format('YYYY-MM-DD HH:mm:ss')}</span>
+            <span>
+              {moment(resume.timestamp).format("YYYY-MM-DD HH:mm:ss")}
+            </span>
           </div>
           <div className="article-content-container">
-            <Typography component={'span'} id="pid-detail-content">
+            <Typography component={"span"} id="pid-detail-content">
               {resume[0].description}
             </Typography>
           </div>
-        </div> : <div className="article-container"><h1>No such Resume</h1></div>
-      }
+        </div>
+      ) : (
+        <div className="article-container">
+          <h1>No such Resume</h1>
+        </div>
+      )}
     </div>
   );
 }
 
-export default ResumeDetail
+export default ResumeDetail;

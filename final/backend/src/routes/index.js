@@ -7,12 +7,11 @@ import uuid from "node-uuid";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv-defaults";
+import {UserModel} from "../db";
 dotenv.config();
 const MongoStore = require("connect-mongo");
 
 import { needLogin } from "./api/middleware";
-import { User } from "../models/User";
-
 const router = express.Router();
 const secret = uuid.v4();
 const sessionOptions = {
@@ -259,12 +258,12 @@ router.post("/user", async (req, res, next) => {
     res.status(400).end();
   }
 
-  const user = await User.findOne({ userID }).exec();
+  const user = await UserModel.findOne({ userID }).exec();
   if (user) {
     res.status(200).send("Existed User ID");
     return;
   }
-  const newUser = new User({ userID, password, name });
+  const newUser = new UserModel({ userID, password, name });
   newUser.save();
   res.status(204).send("Registered");
   return;

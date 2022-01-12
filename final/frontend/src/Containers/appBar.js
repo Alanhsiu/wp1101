@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "./logo.svg";
 import { AppBar, Toolbar, Button } from "@material-ui/core";
-import { Instagram, Mail, Facebook } from "@material-ui/icons";
+import { Mail } from "@material-ui/icons";
 // import AccountCircle from '@mui/icons-material/AccountCircle';
 
 function Appbar(props) {
@@ -15,21 +15,30 @@ function Appbar(props) {
           </span>
         </div>
         <div className="appbar-left">
-          <span>
-            <Instagram />
-            <Mail onClick={() => props.navigate("/profile")} />
-            <Facebook />
+            <Mail
+              onClick={() => props.navigate("/chatroom")}
+              style={{
+                fontWeight: "Bold",
+                fontSize: 30,
+                display: "flex",
+                justifyContent: "center",
+                cursor: "pointer",
+                paddingRight:"5px"
+              }}
+            />
             <Button color="inherit" onClick={() => props.navigate("/publish")}>
               Case Publish
             </Button>
 
-            <Button color="inherit" onClick={() => props.navigate("/resumeDisplay")}>
+            <Button
+              color="inherit"
+              onClick={() => props.navigate("/resumeDisplay")}
+            >
               Profile
             </Button>
             <Button color="inherit" onClick={() => props.navigate("/")}>
               Log out
             </Button>
-          </span>
         </div>
 
         {/* <IconButton

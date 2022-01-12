@@ -16,7 +16,7 @@ const Publish = (props) => {
   const handleSubmit = async () => {
     const postId = uuidv4();
     const trimmed_content = content.trim();
-    const timestamp = Math.floor(Date.now() / 1000);
+    const timestamp = Date.now();
     if (subject.length > 0 && lowPrice > 0 && highPrice > lowPrice) {
       await instance.post("/api/publish", {
         postId,
@@ -24,7 +24,7 @@ const Publish = (props) => {
         trimmed_content,
         lowPrice,
         highPrice,
-        timestamp,
+        timestamp
       });
     }
 
