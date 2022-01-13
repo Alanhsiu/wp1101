@@ -4,8 +4,8 @@ const userAPI = {
   getUser: (userID) => {
     return instance.get("/api/user:userID");
   },
-  postUser: async ({ userID, password, userName }) => {
-    await instance.post("/api/user", { userID, password, userName });
+  postUser: async (payload) => {
+    await instance.post("/api/user", payload);
     return;
   },
 };

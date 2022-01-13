@@ -61,7 +61,7 @@ const Register = (props) => {
               userAPI.postUser({
                 userID: newUserID,
                 password: newPassword,
-                name: newUserName,
+                userName: newUserName,
               });
               props.navigate("/");
             }}

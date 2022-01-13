@@ -12,7 +12,6 @@ import Message from "./resolvers/Message";
 import ChatBox from "./resolvers/ChatBox";
 import connection from "./mongo";
 
-
 const pubsub = new PubSub();
 connection();
 
@@ -26,7 +25,7 @@ app.listen(port, () => {
 });
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: "./src/schema.graphql",
   resolvers: {
     Query,
     Mutation,
@@ -43,3 +42,4 @@ const server = new GraphQLServer({
 server.start({ port: process.env.PORT | 5000 }, () => {
   console.log(`The server is up on port ${process.env.PORT | 5000}!`);
 });
+
