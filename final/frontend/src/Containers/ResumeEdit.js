@@ -15,12 +15,10 @@ const ResumeEdit = (props) => {
   const [highPrice, setHighPrice] = useState();
   const [content, setContent] = useState("");
   const handleSubmit = async () => {
-    const postId = uuidv4();
     const trimmed_content = content.trim();
     const timestamp = Math.floor(Date.now() / 1000);
     if (subject.length > 0 && lowPrice > 0 && highPrice > lowPrice) {
       await instance.post("/api/resume", {
-        postId,
         name,
         subject,
         trimmed_content,
@@ -30,7 +28,7 @@ const ResumeEdit = (props) => {
       });
     }
     setTimeout(() => {
-      props.navigate("/body");
+      props.navigate(-1);
     }, 300);
   };
   const onGenderChange = (value) => {

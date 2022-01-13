@@ -33,14 +33,12 @@ function CaseDetail(props) {
           <div className="article-title" id="pid-detail-title">
           {`Subject : ${cases[0].subject}`}
             <IconButton className="post-delete" size="small" id="pid-detail-del-btn">
-              <MailIcon fontSize="inherit" />
+              <MailIcon fontSize="20px" />
+              Contact Parent
             </IconButton>
           </div>
           <div className="article-title" id="pid-detail-title">
           {` offer : ${cases[0].lowPrice} ~ ${cases[0].highPrice} per hour`}
-          </div>
-          <div className="article-time">
-            <span id="pid-detail-time">{moment(cases.timestamp).format('YYYY-MM-DD HH:mm:ss')}</span>
           </div>
           <div className="article-content-container">
             <Typography component={'span'} id="pid-detail-content">
