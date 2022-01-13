@@ -12,6 +12,9 @@ import PrimaryPinkButton from "../Components/primary-pink-button";
 import OutlineGrayButton from "../Components/outline-gray-button";
 import projectStyles from "../style.module.css";
 import styles from "./home.module.css";
+import Border from "../Components/Border";
+
+
 const SignIn = ({
   me,
   setMe,
@@ -34,29 +37,33 @@ const SignIn = ({
         NTU Tutor
       </h1>
     </Title>
-    <Space direction="vertical" class="bodrer">
-      <Input
-        prefix={<UserOutlined />}
-        value={me}
-        onChange={(e) => setMe(e.target.value)}
-        placeholder="Username"
-        size="large"
-        font-weight="bold"
-        outline="none"
-      />
-      <Input.Password
-        prefix={<LockOutlined />}
-        value={password}
-        placeholder="Password"
-        size="large"
-        onChange={(e) => setPassword(e.target.value)}
-        iconRender={(visible) =>
-          visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-        }
-        font-weight="bold"
-      />
-    </Space>
     <SignInBox>
+      <Space direction="vertical" class="bodrer">
+        <Border>
+        <Input
+          prefix={<UserOutlined />}
+          value={me}
+          onChange={(e) => setMe(e.target.value)}
+          placeholder="Username"
+          size="large"
+          font-weight="bold"
+          outline="none"
+        />
+        </Border>
+        <Border>
+        <Input.Password
+          prefix={<LockOutlined />}
+          value={password}
+          placeholder="Password"
+          size="large"
+          onChange={(e) => setPassword(e.target.value)}
+          iconRender={(visible) =>
+            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+          }
+          font-weight="bold"
+        />
+        </Border>
+      </Space>
       <Space>
         <div
           className={styles["container03"]}
@@ -88,7 +95,7 @@ const SignIn = ({
             navigate("/register");
           }}
         >
-          <OutlineGrayButton button="Register"/>
+          <OutlineGrayButton button="Register" />
         </div>
       </Space>
     </SignInBox>
