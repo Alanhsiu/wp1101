@@ -46,6 +46,7 @@ function App(props) {
   const [me, setMe] = useState(savedMe || "");
   const [password, setPassword] = useState("");
   const [signIn, setSignedIn] = useState(false);
+  const [registered,setRegistered]=useState(false);
 
   const displayStatus = (payload) => {
     if (payload.msg) {
@@ -89,13 +90,13 @@ function App(props) {
                   setPassword={setPassword}
                   displayStatus={displayStatus}
                   setSignedIn={setSignedIn}
+                  setRegistered={setRegistered}
                 />
               }
             />
           </Route>
           <Route path="" element={<PrivateRoute />}>
             <Route path="/body" element={<Body navigate={navigate} />} />
-            <Route path="/resume" element={<Resume navigate={navigate} />} />
             <Route path="/publish" element={<Publish navigate={navigate} />} />
             <Route
               path="/resumeDetail/:pid"
