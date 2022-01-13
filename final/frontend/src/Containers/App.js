@@ -21,6 +21,7 @@ import LoginRoute from "../Components/routes/loginRoute.js";
 import ResumeDisplay from "./ResumeDisplay";
 import ResumeEdit from "./ResumeEdit";
 import ChatRoom from "./ChatRoom";
+import Home from "./Home";
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -72,6 +73,7 @@ function App(props) {
       <CssBaseline />
       <Wrapper>
         <Routes>
+        <Route path="/" element={<Home navigate={navigate} />} />
           <Route path="" element={<MainRoute />}>
             <Route
               path="/register"
