@@ -67,7 +67,7 @@ function Homepage(props) {
     }
   }, [signedIn, me]);
 
-  return (</>);
+  return;
 }
 
 export default Homepage;

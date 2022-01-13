@@ -18,6 +18,9 @@ import CaseDetail from "./caseDetail";
 import MainRoute from "../Components/routes/mainRoute.js";
 import PrivateRoute from "../Components/routes/privateRoute.js";
 import LoginRoute from "../Components/routes/loginRoute.js";
+import ResumeDisplay from "./ResumeDisplay";
+import ResumeEdit from "./ResumeEdit";
+import ChatRoom from "./ChatRoom";
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -41,6 +44,8 @@ function App(props) {
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [me, setMe] = useState(savedMe || "");
+  const [password, setPassword] = useState("");
+  const [signIn, setSignedIn] = useState(false);
 
   const displayStatus = (payload) => {
     if (payload.msg) {
@@ -60,7 +65,6 @@ function App(props) {
       }
     }
   };
-
   return (
     <>
       <Appbar navigate={navigate} />
@@ -74,7 +78,20 @@ function App(props) {
             />
           </Route>
           <Route path="" element={<LoginRoute />}>
-            <Route path="/login" element={<SignIn navigate={navigate} />} />
+            <Route
+              path="/login"
+              element={
+                <SignIn
+                  navigate={navigate}
+                  me={me}
+                  setMe={setMe}
+                  password={password}
+                  setPassword={setPassword}
+                  displayStatus={displayStatus}
+                  setSignedIn={setSignedIn}
+                />
+              }
+            />
           </Route>
           <Route path="" element={<PrivateRoute />}>
             <Route path="/body" element={<Body navigate={navigate} />} />

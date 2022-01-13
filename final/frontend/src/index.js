@@ -14,6 +14,8 @@ import {
 import { split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
+import { BrowserRouter } from "react-router-dom";
+
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -25,7 +27,6 @@ const wsLink = new WebSocketLink({
   uri: `ws://localhost:5000/`,
   options: { reconnect: true },
 });
-import { BrowserRouter } from "react-router-dom";
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
