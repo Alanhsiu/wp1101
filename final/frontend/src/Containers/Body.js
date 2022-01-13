@@ -17,6 +17,7 @@ import { useScoreCard } from "../hooks/useScoreCard";
 const Wrapper = styled.section`
   position: absolute;
   top: 100px;
+  background-image: url("https://egoldenyears.com/wp-content/uploads/2018/09/201800926_a0312.jpg.jpg");
 `;
 
 const Row = styled.div`

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const SignInBox = styled.div`
+
   Input {
     font-size: 1.5em;
     align-items: center;
@@ -10,7 +11,6 @@ const SignInBox = styled.div`
   Button {
     margin: 35px;
     font-size: 1em;
-    color: blue;
   }
 `;
 

@@ -33,11 +33,6 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const StyledPaper = styled(Paper)`
-  padding: 2em;
-  width: 60%;
-`;
-
 function App(props) {
   document.title = "110-1 wpfinal";
   const navigate = useNavigate();
@@ -47,14 +42,14 @@ function App(props) {
   const [me, setMe] = useState(savedMe || "");
   const [password, setPassword] = useState("");
   const [signIn, setSignedIn] = useState(false);
-  const [registered,setRegistered]=useState(false);
+  const [registered, setRegistered] = useState(false);
 
   const displayStatus = (payload) => {
     if (payload.msg) {
       const { type, msg } = payload;
       const content = {
         content: msg,
-        duration: 30,
+        duration: 3,
       };
       switch (type) {
         case "success":
@@ -68,12 +63,20 @@ function App(props) {
     }
   };
   return (
-    <>
+    <div
+      style={{
+        // backgroundImage:
+        //   "url(https://egoldenyears.com/wp-content/uploads/2018/09/201800926_a0312.jpg.jpg)",
+        // backgroundSize: "100% 100%",
+        backgroundColor:"PowderBlue"
+        // opacity:0.7,
+      }}
+    >
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
         <Routes>
-        <Route path="/" element={<Home navigate={navigate} />} />
+          <Route path="/" element={<Home navigate={navigate} />} />
           <Route path="" element={<MainRoute />}>
             <Route
               path="/register"
@@ -130,7 +133,7 @@ function App(props) {
           </Route>
         </Routes>
       </Wrapper>
-    </>
+    </div>
   );
 }
 

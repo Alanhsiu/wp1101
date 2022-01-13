@@ -86,6 +86,27 @@
   text-align: left;
 }
 
+/* .ant-input {
+  color: var(--dl-color-gray-white);
+  outline: none;
+  background: linear-gradient(310deg, #7928ca, #ff0080);
+  box-shadow: 0 4px 7px -1px rgb(0 0 0 / 11%), 0 2px 4px -1px rgb(0 0 0 / 7%);
+  transition: all 0.15s ease-in;
+  border: none;
+  border-radius: 3em;
+  color: #080808;
+} */
+.ant-input:hover {
+  border: 50px solid #000;
+  cursor: pointer;
+  transform: scale(1.02);
+  border: none;
+  border-radius: 30px;
+}
+.border {
+  /* border: none; */
+  border-radius: 300px;
+}
 .post-delete {
   float: right;
   position: relative;

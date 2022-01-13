@@ -1,9 +1,7 @@
 import React from "react";
-import { Form, Modal, Input } from "antd";
-import { useState } from "react";
+import { Modal } from "antd";
 
 const ContactModal = ({ visible, onOk, onCancel }) => {
-  const [name, setName] = useState("");
 
   return (
     <Modal
@@ -14,7 +12,9 @@ const ContactModal = ({ visible, onOk, onCancel }) => {
       onOk={onOk}
       onCancel={onCancel}
     >
-      Please Call: 0974147414.
+      Please Call 0974147414
+      or 
+      Email to b09907414@ntu.edu.tw
     </Modal>
   )
 };

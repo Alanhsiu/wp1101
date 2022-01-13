@@ -10,7 +10,12 @@ const Title = styled.div`
   h1 {
     margin: 20px;
     font-size: 5em;
+    font-weight: bold;
     color: blue;
+  }
+  h1:hover {
+    cursor: pointer;
+    transform: scale(1.02);
   }
 `;
 

@@ -3,8 +3,9 @@ import {
   EyeInvisibleOutlined,
   EyeTwoTone,
   LockOutlined,
+  UserOutlined,
+  GlobalOutlined,
 } from "@ant-design/icons";
-import { UserOutlined } from "@ant-design/icons";
 import Title from "../Components/Title";
 import SignInBox from "../Components/SignInBox";
 import { useState, React } from "react";
@@ -19,9 +20,11 @@ const Register = (props) => {
   return (
     <>
       <Title>
-        <h1>NTU Tutor</h1>
+        <h1 onClick={() => {
+          props.navigate("/");
+        }}>NTU Tutor</h1>
       </Title>
-      <Space direction="vertical">
+      <Space direction="vertical" class="bodrer">
         <Input
           prefix={<UserOutlined />}
           value={newUserID}
@@ -43,9 +46,10 @@ const Register = (props) => {
           }
         />
         <Input
+          prefix={<GlobalOutlined/>}
           value={newUserName}
           onChange={(e) => setNewUserName(e.target.value)}
-          placeholder="UserName"
+          placeholder="Your Real Name"
           size="large"
         />
       </Space>

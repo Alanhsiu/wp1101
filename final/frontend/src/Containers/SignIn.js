@@ -8,7 +8,10 @@ import { UserOutlined } from "@ant-design/icons";
 import Title from "../Components/Title";
 import SignInBox from "../Components/SignInBox";
 import { useState, React } from "react";
-
+import PrimaryPinkButton from "../Components/primary-pink-button";
+import OutlineGrayButton from "../Components/outline-gray-button";
+import projectStyles from "../style.module.css";
+import styles from "./home.module.css";
 const SignIn = ({
   me,
   setMe,
@@ -23,19 +26,24 @@ const SignIn = ({
 }) => (
   <>
     <Title>
-      <h1>NTU Tutor</h1>
+      <h1
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        NTU Tutor
+      </h1>
     </Title>
-    <Space direction="vertical">
+    <Space direction="vertical" class="bodrer">
       <Input
         prefix={<UserOutlined />}
         value={me}
-        enterButton="Sign In"
         onChange={(e) => setMe(e.target.value)}
         placeholder="Username"
         size="large"
+        font-weight="bold"
+        outline="none"
       />
-      {/* </Space>
-      <Space direction="vertical"> */}
       <Input.Password
         prefix={<LockOutlined />}
         value={password}
@@ -45,11 +53,13 @@ const SignIn = ({
         iconRender={(visible) =>
           visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
         }
+        font-weight="bold"
       />
     </Space>
     <SignInBox>
       <Space>
-        <Button
+        <div
+          className={styles["container03"]}
           onClick={() => {
             if (!me)
               displayStatus({
@@ -67,18 +77,19 @@ const SignIn = ({
             }
           }}
         >
-          Sign In
-        </Button>
+          <PrimaryPinkButton button="Sign In" />
+        </div>
       </Space>
       <Space>
-        <Button
+        <div
+          className={styles["container03"]}
           onClick={() => {
             setRegistered(true);
             navigate("/register");
           }}
         >
-          Register
-        </Button>
+          <OutlineGrayButton button="Register"/>
+        </div>
       </Space>
     </SignInBox>
   </>
