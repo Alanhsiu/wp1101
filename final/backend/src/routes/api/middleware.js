@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const needLogin = async (req, res, next) => {
-  if (!req.session.userID) {
+  if (!req.sessionID) {
     res.status(403).end();
     return;
   }

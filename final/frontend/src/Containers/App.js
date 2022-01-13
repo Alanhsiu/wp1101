@@ -68,7 +68,7 @@ function App(props) {
         // backgroundImage:
         //   "url(https://egoldenyears.com/wp-content/uploads/2018/09/201800926_a0312.jpg.jpg)",
         // backgroundSize: "100% 100%",
-        backgroundColor:"PowderBlue"
+        backgroundColor: "PowderBlue",
         // opacity:0.7,
       }}
     >

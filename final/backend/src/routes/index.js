@@ -30,6 +30,7 @@ const sessionOptions = {
 
 sessionOptions.store.clear();
 const SALT_ROUNDS = 12;
+router.use(session(sessionOptions));
 
 router.get("/query_all_resume", async (_, res) => {
   try {
@@ -222,39 +223,35 @@ router.delete("/clear-db", async (_, res) => {
 });
 
 router.get("/session", needLogin, async (req, res, next) => {
-  res.status(200).send({
-    userID: req.session.userID,
-  });
+  res.status(200).end();
+  return;
 });
 
-router.post(
-  "/session",
-  express.urlencoded({ extended: false }),
-  async (req, res, next) => {
-    const { userID, password } = req.body;
-    if (!userID || !password) {
-      res.status(400).end();
-      return;
-    }
-    const user = await User.findOne({ userID }).exec();
-    if (!user) {
-      res.status(400).end();
-      return;
-    }
-    const hashedPwd = user.password;
-    const { name } = user;
-
-    const match = await bcrypt.compare(password, hashedPwd);
-    if (!match) {
-      res.status(401).end();
-      return;
-    }
-
-    req.session.userID;
-    req.session.name = name;
-    res.status(200).send({ userID });
+router.post("/session", async (req, res, next) => {
+  const { userID, password } = req.body;
+  if (!userID || !password) {
+    res.status(400).end();
+    return;
   }
-);
+  const user = await UserModel.findOne({ userID }).exec();
+  if (!user) {
+    res.status(400).end();
+    return;
+  }
+  const hashedPwd = user.password;
+  const { userName } = user;
+
+  const match = await bcrypt.compare(password, hashedPwd);
+  if (!match) {
+    res.status(401).end();
+    return;
+  }
+
+  req.session.userID = userID;
+  req.session.name = userName;
+  console.log(req.session);
+  res.status(200).send({ userID, userName });
+});
 
 router.delete("/session", async (req, res, next) => {
   req.session = null;
@@ -263,19 +260,24 @@ router.delete("/session", async (req, res, next) => {
 
 router.post("/user", async (req, res, next) => {
   const { userID, password, userName } = req.body;
-  if (!userID || !password || !name) {
+  if (!userID || !password || !userName) {
     res.status(400).end();
+    return;
   }
 
   const user = await UserModel.findOne({ userID }).exec();
   if (user) {
-    res.status(200).send("Existed User ID");
+    res.status(403).send("Existed User ID");
     return;
   }
 
   const salt = await bcrypt.genSalt(SALT_ROUNDS);
   const newpasswordHash = await bcrypt.hash(password, salt);
-  const newUser = new UserModel({ userID, newpasswordHash, name });
+  const newUser = new UserModel({
+    userID,
+    password: newpasswordHash,
+    userName,
+  });
   newUser.save();
   res.status(204).send("Registered");
   return;

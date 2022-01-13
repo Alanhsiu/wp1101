@@ -5,9 +5,9 @@ import instance from "../../api";
 export default function LoginRoute({ element, path }) {
   let isAuth = false;
   instance
-    .get("/session")
-    .then(async (response) => {
-      const status = await response.status;
+    .get("/api/session")
+    .then((response) => {
+      const status = response.status;
       if (status === 200) {
         isAuth = true;
       } else {
