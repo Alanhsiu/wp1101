@@ -85,7 +85,6 @@ router.post("/resume", async (req, res) => {
     console.log("ok");
     //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
     const msg = await ResumeModel.create({
-      postId: req.body.postId,
       name: req.body.name,
       subject: req.body.subject,
       description: req.body.trimmed_content,

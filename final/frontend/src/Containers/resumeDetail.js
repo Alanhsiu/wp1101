@@ -50,11 +50,6 @@ function ResumeDetail(props) {
           <div className="article-title" id="pid-detail-title">
             {`wage : ${resume[0].lowPrice} ~ ${resume[0].highPrice}`}
           </div>
-          <div className="article-time">
-            <span>
-              {moment(resume.timestamp).format("YYYY-MM-DD HH:mm:ss")}
-            </span>
-          </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-content">
               {resume[0].description}

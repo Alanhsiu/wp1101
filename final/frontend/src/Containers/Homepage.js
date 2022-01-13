@@ -67,7 +67,46 @@ function Homepage(props) {
     }
   }, [signedIn, me]);
 
-  return (</>);
+  return (
+    <>
+      <Appbar navigate={navigate} />
+      <CssBaseline />
+      <Wrapper>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <SignIn
+                navigate={navigate}
+                me={me}
+                setMe={setMe}
+                username={username}
+                setUserName={setUsername}
+                password={password}
+                setPassword={setPassword}
+                setSignedIn={setSignedIn}
+                setRegistered={setRegistered}
+                displayStatus={displayStatus}
+              />
+            }
+          />
+          <Route path="/register" element={<Register navigate={navigate} />} />
+          <Route path="/body" element={<Body navigate={navigate} />} />
+          <Route path="/resumeDisplay" element={<ResumeDisplay navigate={navigate} />} />
+          <Route path="/resumeEdit" element={<ResumeEdit navigate={navigate} />} />
+          <Route path="/publish" element={<Publish navigate={navigate} />} />
+          <Route
+            path="/resumeDetail/:pid"
+            element={<ResumeDetail navigate={navigate} />}
+          />
+          <Route
+            path="/caseDetail/:pid"
+            element={<CaseDetail navigate={navigate} />}
+          />
+        </Routes>
+      </Wrapper>
+    </>
+  );
 }
 
 export default Homepage;
