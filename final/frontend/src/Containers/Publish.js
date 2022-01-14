@@ -8,11 +8,12 @@ import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-const Publish = (props) => {
+const Publish = ({me,navigate,id}) => {
   const [subject, setSubject] = useState("");
   const [lowPrice, setLowPrice] = useState();
   const [highPrice, setHighPrice] = useState();
   const [content, setContent] = useState("");
+  const [area, setArea] = useState("");
   const handleSubmit = async () => {
     const postId = uuidv4();
     const trimmed_content = content.trim();
@@ -20,7 +21,10 @@ const Publish = (props) => {
     if (subject.length > 0 && lowPrice > 0 && highPrice > lowPrice) {
       await instance.post("/api/publish", {
         postId,
+        id,
+        me,
         subject,
+        area,
         trimmed_content,
         lowPrice,
         highPrice,
@@ -29,7 +33,7 @@ const Publish = (props) => {
     }
 
     setTimeout(() => {
-      props.navigate(-1);
+      navigate("/body");
     }, 300);
   };
   const onGenderChange = (value) => {
@@ -54,10 +58,30 @@ const Publish = (props) => {
     }
   };
 
+  const onAreaChange = (value) => {
+    switch (value) {
+      case "Taipei":
+        setArea("Taipei");
+        return;
+      case "New Taipei":
+        setArea("New Taipei");
+        return;
+      case "Tainan":
+        setArea("Tainan");
+        return;
+      case "Taichung":
+        setArea("Taichung");
+        return;
+      default:
+        setArea("Others");
+        return;
+    }
+  };
+
   return (
     <div className="post-wrapper">
       <div id="goback-btn">
-        <Button variant="contained" color="primary" id="goback-reply-btn" onClick={() => props.navigate(-1)}>Back</Button>
+        <Button variant="contained" color="primary" id="goback-reply-btn" onClick={() => navigate(-1)}>Back</Button>
       </div>
       <div className="post-text-container">
         <div
@@ -108,11 +132,32 @@ const Publish = (props) => {
             </Select>
           </Form.Item>
           <Form.Item
+            label="Area"
+            variant="outlined"
+            className="post-area"
+            id="pid-create-area"
+            onChange={(e) => {
+              setArea(e.target.value);
+            }}
+          >
+            <Select
+              placeholder="select area"
+              onChange={onAreaChange}
+              allowClear
+              style={{ width: "30%" }}
+            >
+              <Option value="Taipei">Taipei</Option>
+              <Option value="New Taipei">New Taipei</Option>
+              <Option value="Taichung">台中</Option>
+              <Option value="Tainan">台南</Option>
+              <Option value="Others">Others</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
             label="Wage (/hr)"
             variant="outlined"
             className="post-price"
             id="pid-create-price"
-            multiline
             type="number"
           >
             <Input.Group compact>
@@ -138,7 +183,6 @@ const Publish = (props) => {
             variant="outlined"
             className="post-experience"
             id="pid-create-experience"
-            multiline
           >
             <Input.TextArea
               showCount
@@ -169,7 +213,7 @@ const Publish = (props) => {
             color="secondary"
             className="post-cancel-btn"
             endIcon={<DeleteIcon />}
-            onClick={(e) => props.navigate(-1)}
+            onClick={(e) => navigate(-1)}
           >
             Cancel
           </Button>

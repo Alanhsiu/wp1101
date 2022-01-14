@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import instance from "../api";
-
+import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import { Delete as DeleteIcon, Send as SendIcon } from "@material-ui/icons";
 import { v4 as uuidv4 } from "uuid";
@@ -8,52 +8,171 @@ import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-const ResumeEdit = (props) => {
-  const [name, setName] = useState("");
-  const [subject, setSubject] = useState("");
+const Wrapper = styled.section`
+  position: absolute;
+  top: 100px;
+`;
+const ResumeEdit = ({id,me,navigate}) => {
+  const [subject5, setSubject5] = useState("");
+  const [subject4, setSubject4] = useState("");
+  const [subject3, setSubject3] = useState("");
+  const [subject2, setSubject2] = useState("");
+  const [subject1, setSubject1] = useState("");
   const [lowPrice, setLowPrice] = useState();
   const [highPrice, setHighPrice] = useState();
+  const [education, setEducation] = useState("")
   const [content, setContent] = useState("");
+  const handleQueryResume = async () => {
+    const {data: {result} 
+    } = await instance.get("/api/query_resume", {
+      params: {
+        type: "userId",
+        id,
+      },
+    });
+    setSubject1(result.result[0]);
+    setSubject2(result.result[1]);
+    setSubject3(result.result[2]);
+    setSubject4(result.result[3]);
+    setSubject5(result.result[4]);
+    setLowPrice(result.result[5])
+    setHighPrice(result.result[6])
+    setEducation(result.result[7])
+    setContent(result.result[8])
+  };
   const handleSubmit = async () => {
     const trimmed_content = content.trim();
+    const postId = uuidv4();
     const timestamp = Math.floor(Date.now() / 1000);
-    if (subject.length > 0 && lowPrice > 0 && highPrice > lowPrice) {
+    if (lowPrice > 0 && highPrice > lowPrice) {
       await instance.post("/api/resume", {
-        name,
-        subject,
+        postId,
+        id,
+        me,
+        subject1,
+        subject2,
+        subject3,
+        subject4,
+        subject5,
         trimmed_content,
+        education,
         lowPrice,
         highPrice,
         timestamp,
       });
     }
     setTimeout(() => {
-      props.navigate(-1);
+      navigate("/body");
     }, 300);
   };
-  const onGenderChange = (value) => {
+  useEffect(() => {
+    handleQueryResume();
+  }, []);
+  const onGenderChange1 = (value) => {
     switch (value) {
       case "Math":
-        setSubject("Math");
+        setSubject1("Math");
         return;
       case "English":
-        setSubject("English");
+        setSubject1("English");
         return;  
       case "Physics":
-        setSubject("Physics");
+        setSubject1("Physics");
         return;
       case "Chemistry":
-        setSubject("Chemistry");
+        setSubject1("Chemistry");
         return;   
       case "Geography":
-        setSubject("Geography");
+        setSubject1("Geography");
         return;
       default:
-        setSubject("Others");
+        setSubject1("Others");
+    }
+  };
+  const onGenderChange2 = (value) => {
+    switch (value) {
+      case "Math":
+        setSubject2("Math");
+        return;
+      case "English":
+        setSubject2("English");
+        return;  
+      case "Physics":
+        setSubject2("Physics");
+        return;
+      case "Chemistry":
+        setSubject2("Chemistry");
+        return;   
+      case "Geography":
+        setSubject2("Geography");
+        return;
+      default:
+        setSubject2("Others");
+    }
+  };  const onGenderChange3 = (value) => {
+    switch (value) {
+      case "Math":
+        setSubject3("Math");
+        return;
+      case "English":
+        setSubject3("English");
+        return;  
+      case "Physics":
+        setSubject3("Physics");
+        return;
+      case "Chemistry":
+        setSubject3("Chemistry");
+        return;   
+      case "Geography":
+        setSubject3("Geography");
+        return;
+      default:
+        setSubject3("Others");
+    }
+  };  const onGenderChange4 = (value) => {
+    switch (value) {
+      case "Math":
+        setSubject4("Math");
+        return;
+      case "English":
+        setSubject4("English");
+        return;  
+      case "Physics":
+        setSubject4("Physics");
+        return;
+      case "Chemistry":
+        setSubject4("Chemistry");
+        return;   
+      case "Geography":
+        setSubject4("Geography");
+        return;
+      default:
+        setSubject4("Others");
+    }
+  };  const onGenderChange5 = (value) => {
+    switch (value) {
+      case "Math":
+        setSubject5("Math");
+        return;
+      case "English":
+        setSubject5("English");
+        return;  
+      case "Physics":
+        setSubject5("Physics");
+        return;
+      case "Chemistry":
+        setSubject5("Chemistry");
+        return;   
+      case "Geography":
+        setSubject5("Geography");
+        return;
+      default:
+        setSubject5("Others");
     }
   };
 
   return (
+    <Wrapper>
     <div className="post-wrapper">
       <div className="post-text-container">
         <div
@@ -87,26 +206,118 @@ const ResumeEdit = (props) => {
             className="post-subject"
             id="pid-create-subject"
           >
-            <Input
-            style={{ width: "30%" }}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
+            {me}
           </Form.Item>
           <Form.Item
-            label="Subject"
+            label="Subject1"
             variant="outlined"
             className="post-subject"
             id="pid-create-subject"
             onChange={(e) => {
-              setSubject(e.target.value);
+              setSubject1(e.target.value);
             }}
           >
             <Select
               placeholder="select subject"
-              onChange={onGenderChange}
+              onChange={onGenderChange1}
               allowClear
+              value={subject1}
+              style={{ width: "30%" }}
+            >
+              <Option value="Math">Math</Option>
+              <Option value="English">English</Option>
+              <Option value="Physics">Physics</Option>
+              <Option value="Chemistry">Chemistry</Option>
+              <Option value="Geogrphy">Geography</Option>
+              <Option value="Others">Others</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Subject2"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+            onChange={(e) => {
+              setSubject2(e.target.value);
+            }}
+          >
+            <Select
+              placeholder="select subject"
+              onChange={onGenderChange2}
+              allowClear
+              value={subject2}
+              style={{ width: "30%" }}
+            >
+              <Option value="Math">Math</Option>
+              <Option value="English">English</Option>
+              <Option value="Physics">Physics</Option>
+              <Option value="Chemistry">Chemistry</Option>
+              <Option value="Geogrphy">Geography</Option>
+              <Option value="Others">Others</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Subject3"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+            onChange={(e) => {
+              setSubject3(e.target.value);
+            }}
+          >
+            <Select
+              placeholder="select subject"
+              onChange={onGenderChange3}
+              allowClear
+              value={subject3}
+              style={{ width: "30%" }}
+            >
+              <Option value="Math">Math</Option>
+              <Option value="English">English</Option>
+              <Option value="Physics">Physics</Option>
+              <Option value="Chemistry">Chemistry</Option>
+              <Option value="Geogrphy">Geography</Option>
+              <Option value="Others">Others</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Subject4"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+            onChange={(e) => {
+              setSubject4(e.target.value);
+            }}
+          >
+            <Select
+              placeholder="select subject"
+              onChange={onGenderChange4}
+              allowClear
+              value={subject4}
+              style={{ width: "30%" }}
+            >
+              <Option value="Math">Math</Option>
+              <Option value="English">English</Option>
+              <Option value="Physics">Physics</Option>
+              <Option value="Chemistry">Chemistry</Option>
+              <Option value="Geogrphy">Geography</Option>
+              <Option value="Others">Others</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Subject5"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+            onChange={(e) => {
+              setSubject5(e.target.value);
+            }}
+          >
+            <Select
+              placeholder="select subject"
+              onChange={onGenderChange5}
+              allowClear
+              value={subject5}
               style={{ width: "30%" }}
             >
               <Option value="Math">Math</Option>
@@ -122,7 +333,6 @@ const ResumeEdit = (props) => {
             variant="outlined"
             className="post-price"
             id="pid-create-price"
-            multiline
             type="number"
           >
             <Input.Group compact>
@@ -131,6 +341,7 @@ const ResumeEdit = (props) => {
                 onChange={(e) => {
                   setLowPrice(e.target.value);
                 }}
+                value={lowPrice}
                 placeholder="Minimum"
               />
               &nbsp;&nbsp;
@@ -139,19 +350,33 @@ const ResumeEdit = (props) => {
                 onChange={(e) => {
                   setHighPrice(e.target.value);
                 }}
+                value={highPrice}
                 placeholder="Maximum"
               />
             </Input.Group>
+          </Form.Item>
+          <Form.Item
+            label="Acedemic Degree"
+            variant="outlined"
+            className="post-education"
+            id="pid-create-education"
+          >
+            <Input.TextArea
+              value={education}
+              onChange={(e) => {
+                setEducation(e.target.value);
+              }}
+            />
           </Form.Item>
           <Form.Item
             label="Description"
             variant="outlined"
             className="post-experience"
             id="pid-create-experience"
-            multiline
           >
             <Input.TextArea
               showCount
+              value={content}
               maxLength={100}
               onChange={(e) => {
                 setContent(e.target.value);
@@ -179,13 +404,14 @@ const ResumeEdit = (props) => {
             color="secondary"
             className="post-cancel-btn"
             endIcon={<DeleteIcon />}
-            onClick={() =>props.navigate("/body")}
+            onClick={() =>navigate("/body")}
           >
             Cancel
           </Button>
         </div>
       </div>
     </div>
+    </Wrapper>
   );
 };
 

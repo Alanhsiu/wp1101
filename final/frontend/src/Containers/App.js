@@ -10,7 +10,6 @@ import Appbar from "./appBar";
 import Body from "./Body";
 import Register from "./Register";
 import SignIn from "./SignIn";
-import Profile from "./Profile";
 import ResumeDetail from "./resumeDetail";
 import CaseDetail from "./caseDetail";
 import MainRoute from "../Components/routes/mainRoute.js";
@@ -37,7 +36,8 @@ function App(props) {
 
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
-  const [me, setMe] = useState(savedMe || "");
+  const [id, setId] = useState(savedMe || "");
+  const [me, setMe] = useState("")
   const [password, setPassword] = useState("");
   const [signIn, setSignedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
@@ -70,7 +70,7 @@ function App(props) {
           <Route path="" element={<MainRoute />}>
             <Route
               path="/register"
-              element={<Register navigate={navigate} />}
+              element={<Register navigate={navigate} me={me}/>}
             />
           </Route>
           <Route path="" element={<LoginRoute />}>
@@ -81,39 +81,37 @@ function App(props) {
                   navigate={navigate}
                   me={me}
                   setMe={setMe}
-                  password={password}
-                  setPassword={setPassword}
+                  id={id}
+                  setId={setId}
                   displayStatus={displayStatus}
-                  setSignedIn={setSignedIn}
-                  setRegistered={setRegistered}
                 />
               }
             />
-          </Route>
-          <Route path="" element={<PrivateRoute />}>
-            <Route path="/body" element={<Body navigate={navigate} />} />
-            <Route path="/publish" element={<Publish navigate={navigate} />} />
+          {/* </Route>
+          <Route path="" element={<PrivateRoute />}> */}
+            <Route path="/body" element={<Body navigate={navigate}  me={me} id={id}/>} />
+            <Route path="/publish" element={<Publish navigate={navigate} me={me} id={id}/>} />
             <Route
               path="/resumeDetail/:pid"
-              element={<ResumeDetail navigate={navigate} />}
+              element={<ResumeDetail navigate={navigate} me={me} id={id}/>}
             />
             <Route
               path="/caseDetail/:pid"
-              element={<CaseDetail navigate={navigate} />}
+              element={<CaseDetail navigate={navigate} me={me} id={id}/>}
             />
-            <Route path="/profile" element={<Profile navigate={navigate} />} />
             <Route
               path="/resumeDisplay"
-              element={<ResumeDisplay navigate={navigate} />}
+              element={<ResumeDisplay navigate={navigate} me={me} id={id}/>}
             />
             <Route
               path="/resumeEdit"
-              element={<ResumeEdit navigate={navigate} />}
+              element={<ResumeEdit navigate={navigate} me={me} id={id}/>}
             />
             <Route
               path="/chatroom"
               element={
                 <ChatRoom
+                  id={id}
                   navigate={navigate}
                   username={me}
                   displayStatus={displayStatus}

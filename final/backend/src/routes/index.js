@@ -69,65 +69,123 @@ router.get("/query_all_cases", async (_, res) => {
 });
 
 router.post("/resume", async (req, res) => {
+  console.log("resume")
   const a = await ResumeModel.findOneAndUpdate(
     {
-      postId: req.body.postId,
+      userId: req.body.id,
     },
     {
-      name: req.body.name,
-      subject: req.body.subject,
+      subject1: req.body.subject1,
+      subject2: req.body.subject2,
+      subject3: req.body.subject3,
+      subject4: req.body.subject4,
+      subject5: req.body.subject5,
       description: req.body.trimmed_content,
+      education: req.body.education,
+      mail :  req.body.mail,
       lowPrice: req.body.lowPrice,
       highPrice: req.body.highPrice,
     }
   );
-
-  if (a.length === 0) {
+  console.log(a)
+  if (a === null) { 
     console.log("ok");
     //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
-    const msg = await ResumeModel.create({
-      name: req.body.name,
-      subject: req.body.subject,
-      description: req.body.trimmed_content,
-      lowPrice: req.body.lowPrice,
-      highPrice: req.body.highPrice,
-      timestamp: req.body.timestamp,
-    });
-    console.log("create");
-    res.send(msg);
+    try {const msg = await ResumeModel.create({
+        postId: req.body.postId,
+        userId: req.body.id,
+        userName: req.body.me,
+        subject1: req.body.subject1,
+        subject2: req.body.subject2,
+        subject3: req.body.subject3,
+        subject4: req.body.subject4,
+        subject5: req.body.subject5,
+        description: req.body.trimmed_content,
+        education: req.body.education,
+        mail :  req.body.mail,
+        lowPrice: req.body.lowPrice,
+        highPrice: req.body.highPrice,
+        timestamp: req.body.timestamp,
+      });
+      console.log("create");
+      res.status(200).send({
+        message: "success",
+        data: msg,
+      });}
+    catch(e){
+      console.log(e)
+      res.status(403).send({
+        message: "error",
+        data: null,
+      });
+    }
   } else {
     console.log("update");
-    res.send("msg");
+    res.send(a);
   }
 });
 
 router.post("/publish", async (req, res) => {
-  console.log("ok");
+  console.log(req.body.id);
+  const highPrice = parseInt(req.body.highPrice,10)
+  const lowPrice = parseInt(req.body.lowPrice,10)
+  console.log(typeof(req.body.trimmed_content))
   //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
+  try {
   const msg = await CaseModel.create({
     postId: req.body.postId,
-    name: req.body.name,
+    userId: req.body.id,
+    userName: req.body.me,
     subject: req.body.subject,
+    area: req.body.area,
     description: req.body.trimmed_content,
-    lowPrice: req.body.lowPrice,
-    highPrice: req.body.highPrice,
-    mail: req.body.mail,
-    education: req.body.education,
-    timestamp: req.body.timestamp,
+    lowPrice: lowPrice,
+    highPrice: highPrice,
+    //timestamp: req.body.timestamp,
   });
   console.log("case_done");
-  res.send(msg);
+  res.status(200).send({
+    message: "success",
+    data: msg,
+  });
+}
+catch(e){
+  console.log(e)
+  res.status(403).send({
+    message: "error",
+    data: e,
+  });
+}
+
+
 });
 
 router.get("/query_resume", async (req, res) => {
   const queryType = req.query.type;
   const queryString = req.query.queryString;
+
   let query;
+   
+  if (queryType == "userId"){
+    let result = []
+    const a = await ResumeModel.find({ userId: queryString });
+    if (a.length === 0){
+      console.log("DID")
+      result = ["","","","","","","","",""]
+    }
+    else {   
+      result = [a[0].subject1, a[0].subject2, a[0].subject3, a[0].subject4, a[0].subject5,  a[0].lowPrice, a[0].highPrice, a[0].education,a[0].description, ]
+    }
+    res.send({result: {result}})
+    console.log(result)
+  }
+  else{
   if (queryType == "name") {
-    query = await ResumeModel.find({ name: queryString });
+    query = await ResumeModel.find({ userName: queryString });
     console.log("ok");
     console.log(query);
-  } else {
+  }
+  else {
     query = await ResumeModel.find({ subject: queryString });
     console.log("ok");
     console.log(query);
@@ -145,43 +203,22 @@ router.get("/query_resume", async (req, res) => {
 
   if (query.length !== 0) res.send({ messages: results });
   else res.send({ message: `${queryType} (${queryString}) not found!` });
-});
+}});
 
 router.get("/query_case", async (req, res) => {
   let query;
-  if (
-    req.query.name.trim().length === 0 &&
-    req.query.subject.trim().length === 0 &&
-    req.query.price - 0 === 0
-  )
+  if (req.query.subject.trim().length === 0 && req.query.price - 0 === 0)
     query = await CaseModel.find({});
-  else if (req.query.subject.trim().length === 0 && req.query.price - 0 === 0)
-    query = await CaseModel.find({ name: req.query.name });
-  else if (req.query.name.trim().length === 0 && req.query.price - 0 === 0)
-    query = await CaseModel.find({ subject: req.query.subject });
-  else if (
-    req.query.subject.trim().length === 0 &&
-    req.query.name.trim().length === 0
-  )
-    query = await CaseModel.find({ price: req.query.price });
-  else if (req.query.name.trim().length === 0)
-    query = await CaseModel.find({
-      subject: req.query.subject,
-      price: req.query.price,
-    });
   else if (req.query.price - 0 === 0)
     query = await CaseModel.find({
       subject: req.query.subject,
-      name: req.query.name,
     });
   else if (req.query.subject.trim().length === 0)
     query = await CaseModel.find({
-      name: req.query.name,
       price: req.query.price,
     });
   else
     query = await CaseModel.find({
-      name: req.query.name,
       subject: req.query.subject,
       price: req.query.price,
     });

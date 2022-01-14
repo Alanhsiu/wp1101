@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import instance from "../api";
 import axios from "../api";
+import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import { Delete as DeleteIcon, Send as SendIcon, Edit } from "@material-ui/icons";
 import { v4 as uuidv4 } from "uuid";
@@ -8,29 +9,24 @@ import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-const ResumeDisplay = (props) => {
-  const [name, setName] = useState("");
-  const [subject, setSubject] = useState("");
-  const [lowPrice, setLowPrice] = useState();
-  const [highPrice, setHighPrice] = useState();
-  const [content, setContent] = useState("");
-  const username = "temp"
+const Wrapper = styled.section`
+  position: absolute;
+  top: 100px;
+`;
+
+const ResumeDisplay = ({id,me,navigate}) => {
+  const [show,setShow] = useState([])
 
   const handleQueryResume = async () => {
-    const {
-      data: { message },
+    const {data: {result} 
     } = await axios.get("/api/query_resume", {
       params: {
-        type: "name",
-        username,
+        type: "userId",
+        id,
       },
     });
-    const query = message;
-    setName(query.name);
-    setSubject(query.subject);
-    setLowPrice(query.lowPrice);
-    setHighPrice(query.highPrice);
-    setContent(query.content);
+    setShow(result.result);
+
 
 
   };
@@ -38,11 +34,8 @@ const ResumeDisplay = (props) => {
     handleQueryResume();
   }, []);
 
-
- 
-
-
   return (
+    <Wrapper>
     <div className="post-wrapper">
       <div className="post-text-container">
         <div
@@ -63,7 +56,7 @@ const ResumeDisplay = (props) => {
             paddingLeft:"15px",
             cursor: "pointer"
           }}
-          onClick={() => props.navigate("/resumeEdit")}/>
+          onClick={() => navigate("/resumeEdit")}/>
         </div>
         <br />
         <Form
@@ -85,39 +78,78 @@ const ResumeDisplay = (props) => {
             className="post-subject"
             id="pid-create-subject"
           >
-            {name}
+            {me}
           </Form.Item>
           <Form.Item
-            label="Subject"
+            label="Subject1"
             variant="outlined"
             className="post-subject"
             id="pid-create-subject"
           >
-            {subject}
+            {show[0]}
+          </Form.Item>
+          <Form.Item
+            label="Subject2"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+          >
+            {show[1]}
+          </Form.Item>
+          <Form.Item
+            label="Subject3"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+          >
+            {show[2]}
+          </Form.Item>
+          <Form.Item
+            label="Subject4"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+          >
+            {show[3]}
+          </Form.Item>
+          <Form.Item
+            label="Subject5"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+          >
+            {show[4]}
           </Form.Item>
           <Form.Item
             label="Wage (/hr)"
             variant="outlined"
             className="post-price"
             id="pid-create-price"
-            multiline
             type="number"
           >
-            {`${lowPrice} ~  ${highPrice} `}
+            {`${show[5]} ~  ${show[6]} `}
+          </Form.Item>
+          <Form.Item
+            label="Acedemic Degree"
+            variant="outlined"
+            className="post-experience"
+            id="pid-create-experience"
+          >
+           {show[7]} 
           </Form.Item>
           <Form.Item
             label="Description"
             variant="outlined"
             className="post-experience"
             id="pid-create-experience"
-            multiline
           >
-           {content} 
+           {show[8]} 
           </Form.Item>
         </Form>
 
       </div>
     </div>
+    </Wrapper>
   );
 };
 
