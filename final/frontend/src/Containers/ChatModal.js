@@ -1,8 +1,8 @@
 import { Modal, Input } from "antd";
 import { useState } from "react";
 
-const ChatModal = ({ visible, onCreate, onCancel }) => {
-  const [name, setName] = useState("");
+const ChatModal = ({ visible, onCreate, onCancel,  chatPersonID}) => {
+  const [name, setName] = useState(chatPersonID);
 
   const handleOk = () => {
     onCreate(name);
@@ -26,7 +26,7 @@ const ChatModal = ({ visible, onCreate, onCancel }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter a name to start..."
+          placeholder={chatPersonID}
       />
     </Modal>
   );

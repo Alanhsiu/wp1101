@@ -1,12 +1,12 @@
-import { Button, Input, Tabs } from 'antd';
-import { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { Button, Input, Tabs } from "antd";
+import { useState, useEffect } from "react";
+import { useMutation } from "@apollo/client";
 import { CREATE_CHATBOX_MUTATION, CREATE_MESSAGE_MUTATION } from "../graphql";
 import styled from "styled-components";
-import Title from '../Components/Title';
+import Title from "../Components/Title";
 import ChatBox from "./ChatBox";
 import ChatModal from "./ChatModal";
-import useChatBox from '../hooks/useChatBox';
+import useChatBox from "../hooks/useChatBox";
 
 const Wrapper = styled(Tabs)`
   width: 100%;
@@ -18,11 +18,11 @@ const Wrapper = styled(Tabs)`
   display: flex;
 `;
 
-const ChatRoom = ({ username, displayStatus }) => {
+const ChatRoom = ({ me, displayStatus, chatPersonID, setChatPersonID }) => {
   const [messageInput, setMessageInput] = useState("");
   const [activeKey, setActiveKey] = useState("");
   const { chatBoxes, createChatBox, removeChatBox } = useChatBox();
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
 
   const [startChat] = useMutation(CREATE_CHATBOX_MUTATION);
   const [sendMessage] = useMutation(CREATE_MESSAGE_MUTATION);
@@ -31,10 +31,20 @@ const ChatRoom = ({ username, displayStatus }) => {
     setModalVisible(true);
   };
 
+  const loadChatPerson = async (chatPersonID) => {
+    await startChat({
+      variables: {
+        name1: me,
+        name2: chatPersonID,
+      },
+    });
+    setActiveKey(createChatBox(chatPersonID));
+  };
+
   return (
     <>
       <Title>
-        <h2>{username}'s Chat Room</h2>
+        <h2>Chat Room</h2>
         {/* <Button type="primary" danger >
           onClick={clearMessages}
           Clear
@@ -49,33 +59,27 @@ const ChatRoom = ({ username, displayStatus }) => {
             setActiveKey(key);
           }}
           onEdit={(targetKey, action) => {
-            if(action === "add") {
+            if (action === "add") {
               addChatBox();
-            }
-            else if(action === "remove") {
+            } else if (action === "remove") {
               setActiveKey(removeChatBox(targetKey, activeKey));
             }
           }}
         >
           {chatBoxes.map((friend) => (
-            <Tabs.TabPane
-                tab={friend}
-                closable={true}
-                key={friend} >
-              <ChatBox
-                username={username}
-                friend={friend}
-                key={friend} />
+            <Tabs.TabPane tab={friend} closable={true} key={friend}>
+              <ChatBox username={me} friend={friend} key={friend} />
             </Tabs.TabPane>
           ))}
         </Wrapper>
         <ChatModal
+          chatPersonID={chatPersonID}
           visible={modalVisible}
           onCreate={async (name) => {
             console.log(name);
             await startChat({
               variables: {
-                name1: username,
+                name1: me,
                 name2: name,
               },
             });
@@ -94,25 +98,25 @@ const ChatRoom = ({ username, displayStatus }) => {
         enterButton="Send"
         placeholder="Type a message here..."
         onSearch={(msg) => {
-          if(!msg) {
+          if (!msg) {
             displayStatus({
               type: "error",
-              msg: "Please enter a username and a message body."
-            })
+              msg: "Please enter a username and a message body.",
+            });
             return;
           }
           sendMessage({
             variables: {
-              from: username, 
+              from: me,
               to: activeKey,
-              message: msg
-            }
+              message: msg,
+            },
           });
-          setMessageInput('');
+          setMessageInput("");
         }}
       ></Input.Search>
     </>
-  )
+  );
 };
 
 export default ChatRoom;

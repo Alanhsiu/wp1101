@@ -96,16 +96,19 @@
   border-radius: 3em;
   color: #080808;
 } */
-.ant-input:hover {
-  border: 50px solid #000;
+.ant-input:focus{
+  /* border: 50px solid #000; */
   cursor: pointer;
-  transform: scale(1.02);
-  border: none;
-  border-radius: 30px;
+  /* transform: scale(1.02); */
+  /* border-radius: 5px; */
+  /* background-color: "PowderBlue"; */
+  outline:none;
 }
-.border {
-  /* border: none; */
-  border-radius: 300px;
+.ant-space-item {
+  background-color: "PowderBlue";
+  outline:none;
+  /* border: none; 
+  border-radius: 300px; */
 }
 .post-delete {
   float: right;
@@ -144,11 +147,11 @@
   position: relative;
   padding: 20px;
   margin: 0 auto;
-  border-radius: 3px;
+  /* border-radius: 3px;
   border-top: 3px solid #1976d2;
   border-left: 1px solid #1976d2;
   border-right: 1px solid #1976d2;
-  border-bottom: 1px solid #1976d2;
+  border-bottom: 1px solid #1976d2; */
 }
 
 .post-title,

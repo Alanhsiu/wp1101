@@ -14,94 +14,94 @@ import projectStyles from "../style.module.css";
 import styles from "./home.module.css";
 import Border from "../Components/Border";
 
-import sessionAPI from "../utils/sessionAPI"
+import sessionAPI from "../utils/sessionAPI";
 
-const SignIn = ({
-  me,
-  setMe,
-  id,
-  setId,
-  displayStatus,
-  navigate,
-}) => {
+const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
   const [password, setPassword] = useState("");
   const [userID, setUserID] = useState("");
-  return(
-  <div className="signin">
-    <Title>
-      <h1
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        NTU Tutor
-      </h1>
-    </Title>
-    <SignInBox>
-      <Space direction="vertical" class="bodrer">
-        <Border>
-        <Input
-          prefix={<UserOutlined />}
-          value={me}
-          onChange={(e) => setMe(e.target.value)}
-          placeholder="Username"
-          size="large"
-          font-weight="bold"
-          outline="none"
-        />
-        </Border>
-        <Border>
-        <Input.Password
-          prefix={<LockOutlined />}
-          value={password}
-          placeholder="Password"
-          size="large"
-          onChange={(e) => setPassword(e.target.value)}
-          iconRender={(visible) =>
-            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-          }
-          font-weight="bold"
-        />
-        </Border>
-      </Space>
-      <Space>
-        <div
-          className={styles["container03"]}
+  return (
+    <>
+      <Title>
+        <h1
           onClick={() => {
-            if (!me)
-              displayStatus({
-                type: "error",
-                msg: "Missing Username",
-              });
-            else if (!password) {
-              displayStatus({
-                type: "error",
-                msg: "Missing Password",
-              });
-            } else {
-              console.log("go")
-              const {tuserId ,userName } = sessionAPI.postSession({userID, password})          
-              setId("tuserId");
-              setMe("userName");
-              navigate("/body");
-            }
+            navigate("/");
           }}
         >
-          <PrimaryPinkButton button="Sign In" />
-        </div>
-      </Space>
-      <Space>
-        <div
-          className={styles["container03"]}
-          onClick={() => {
-            navigate("/register");
-          }}
+          NTU Tutor
+        </h1>
+      </Title>
+      <SignInBox>
+        <Space
+          direction="vertical"
+          class="bodrer"
+          // style={{ backgroundColor: "PowderBlue" }}
         >
-          <OutlineGrayButton button="Register" />
-        </div>
-      </Space>
-    </SignInBox>
-  </div>
-);
-}
+          <Border>
+            <Input
+              prefix={<UserOutlined />}
+              value={me}
+              onChange={(e) => setMe(e.target.value)}
+              placeholder="UserID (帳號)"
+              size="large"
+              font-weight="bold"
+              outline="none"
+            />
+          </Border>
+          <Border>
+            <Input.Password
+              prefix={<LockOutlined />}
+              value={password}
+              placeholder="Password (密碼)"
+              size="large"
+              onChange={(e) => setPassword(e.target.value)}
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              font-weight="bold"
+            />
+          </Border>
+        </Space>
+        <Space>
+          <div
+            className={styles["container03"]}
+            onClick={() => {
+              if (!me)
+                displayStatus({
+                  type: "error",
+                  msg: "Missing Username",
+                });
+              else if (!password) {
+                displayStatus({
+                  type: "error",
+                  msg: "Missing Password",
+                });
+              } else {
+                console.log("go");
+                const { tuserId, userName } = sessionAPI.postSession({
+                  userID,
+                  password,
+                });
+                setId(tuserId);
+                setMe(me);
+                navigate("/body");
+              }
+            }}
+          >
+            <PrimaryPinkButton button="Sign In" />
+          </div>
+        </Space>
+        <Space>
+          <div
+            className={styles["container03"]}
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            <OutlineGrayButton button="Register" />
+          </div>
+        </Space>
+      </SignInBox>
+    </>
+  );
+};
 export default SignIn;

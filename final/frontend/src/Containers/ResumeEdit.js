@@ -53,8 +53,6 @@ const ResumeEdit = ({ id, me, navigate }) => {
         subject1,
         subject2,
         subject3,
-        subject4,
-        subject5,
         trimmed_content,
         education,
         lowPrice,
@@ -63,7 +61,7 @@ const ResumeEdit = ({ id, me, navigate }) => {
       });
     }
     setTimeout(() => {
-      navigate("/body");
+      navigate(-1);
     }, 300);
   };
   useEffect(() => {
@@ -319,7 +317,7 @@ const ResumeEdit = ({ id, me, navigate }) => {
               color="secondary"
               className="post-cancel-btn"
               endIcon={<DeleteIcon />}
-              onClick={() => navigate("/body")}
+              onClick={() => navigate(-1)}
             >
               Cancel
             </Button>

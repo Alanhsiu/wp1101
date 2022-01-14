@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { IconButton, Button, Typography } from "@material-ui/core";
 import { Mail as MailIcon } from "@material-ui/icons";
 
-function ResumeDetail({me,navigate}) {
+function ResumeDetail(props) {
   const { pid } = useParams();
   const [resume, setResume] = useState(null);
 
@@ -15,6 +15,8 @@ function ResumeDetail({me,navigate}) {
       data: { message, resume },
     } = await instance.get("/api/resumeDetail", { params: { pid } });
     setResume(resume);
+    console.log("here"+resume);
+    props.setChatPersonID(resume[1]);
   };
 
   useEffect(() => {
@@ -29,7 +31,7 @@ function ResumeDetail({me,navigate}) {
           variant="contained"
           color="primary"
           id="goback-reply-btn"
-          onClick={() =>navigate(-1)}
+          onClick={() => props.navigate(-1)}
         >
           Back
         </Button>
@@ -37,18 +39,21 @@ function ResumeDetail({me,navigate}) {
 
       {resume ? (
         <div className="article-container">
-        <div className="article-title" id="pid-detail-title">
-            {`Tutor's name : ${resume[0].userName}`}
-          </div>
           <div className="article-title" id="pid-detail-title">
-            {`tutoring Subject : ${resume[0].subject1} / ${resume[0].subject2} / ${resume[0].subject3} / ${resume[0].subject4} / ${resume[0].subject5}`}
+            {`Tutor's name : ${resume[0].userName}`}
             <IconButton
               className="post-delete"
               size="small"
               id="pid-detail-del-btn"
             >
-              <MailIcon fontSize="inherit" />
+              <MailIcon
+                fontSize="inherit"
+                onClick={() => props.navigate("/chatroom")}
+              />
             </IconButton>
+          </div>
+          <div className="article-title" id="pid-detail-title">
+            {`tutoring Subject : ${resume[0].subject1} / ${resume[0].subject2} / ${resume[0].subject3} / ${resume[0].subject4} / ${resume[0].subject5}`}
           </div>
           <div className="article-title" id="pid-detail-title">
             {`highest degree : ${resume[0].education}`}

@@ -5,7 +5,7 @@ import {
   LockOutlined,
   UserOutlined,
   GlobalOutlined,
-  CarOutlined
+  SmileOutlined
 } from "@ant-design/icons";
 import Title from "../Components/Title";
 import SignInBox from "../Components/SignInBox";
@@ -40,7 +40,7 @@ const Register = ({me,navigate}) => {
             value={newUserID}
             enterButton="Sign In"
             onChange={(e) => setNewUserID(e.target.value)}
-            placeholder="UserID"
+            placeholder="UserID (帳號)"
             size="large"
           />
         </Border>
@@ -48,7 +48,7 @@ const Register = ({me,navigate}) => {
           <Input.Password
             prefix={<LockOutlined />}
             value={newPassword}
-            placeholder="Password"
+            placeholder="Password (密碼)"
             size="large"
             onChange={(e) => setNewPassword(e.target.value)}
             iconRender={(visible) =>
@@ -61,16 +61,16 @@ const Register = ({me,navigate}) => {
             prefix={<GlobalOutlined />}
             value={newUserName}
             onChange={(e) => setNewUserName(e.target.value)}
-            placeholder="Real Name"
+            placeholder="Real Name (中文姓名)"
             size="large"
           />
         </Border>
         <Border>
           <Input
-            prefix={<CarOutlined />}
+            prefix={<SmileOutlined />}
             value={studentID}
             onChange={(e) => setStudentID(e.target.value)}
-            placeholder="Student ID"
+            placeholder="NTU Student ID (家長不必填)"
             size="large"
           />
         </Border>
