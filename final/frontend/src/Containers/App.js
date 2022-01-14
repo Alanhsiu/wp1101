@@ -1,6 +1,7 @@
 import "./App.css";
-import { useState, React } from "react";
+import { useState, React, useEffect} from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
 import { CssBaseline } from "@material-ui/core";
 import styled from "styled-components";
@@ -19,6 +20,9 @@ import ResumeDisplay from "./ResumeDisplay";
 import ResumeEdit from "./ResumeEdit";
 import ChatRoom from "./ChatRoom";
 import Home from "./Home";
+import Loading from "../Components/Loading";
+
+import { init, selectSession } from "../Components/slices/sessionSlice";
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -35,6 +39,7 @@ const Wrapper = styled.div`
 function App(props) {
   document.title = "110-1 wpfinal";
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);

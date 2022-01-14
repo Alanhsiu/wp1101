@@ -2,9 +2,13 @@ import React from "react";
 import Logo from "./logo.svg";
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 import { Mail } from "@material-ui/icons";
+import sessionAPI from "../utils/sessionAPI";
+import { logout } from "../Components/slices/sessionSlice";
+import { useDispatch } from "react-redux";
 // import AccountCircle from '@mui/icons-material/AccountCircle';
 
 function Appbar(props) {
+  const dispatch = useDispatch();
   return (
     <AppBar position="fixed" color="inherit">
       <Toolbar className="toolbar">
@@ -41,7 +45,13 @@ function Appbar(props) {
           >
             Profile
           </Button>
-          <Button color="inherit" onClick={() => props.navigate("/")}>
+          <Button
+            color="inherit"
+            onClick={() => {
+              props.navigate("/");
+              dispatch(logout());
+            }}
+          >
             Log out
           </Button>
         </div>

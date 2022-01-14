@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./Containers/App";
 import reportWebVitals from "./reportWebVitals";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import { Provider } from "react-redux";
 import "antd/dist/antd.css";
 import {
   ApolloClient,
@@ -15,6 +16,7 @@ import { split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import { BrowserRouter } from "react-router-dom";
+import store from "./store";
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -58,11 +60,14 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-  < MuiThemeProvider theme={theme} >
+
+  <MuiThemeProvider theme={theme}>
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <App/>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </ApolloProvider>
   </MuiThemeProvider>,
   document.getElementById("root")

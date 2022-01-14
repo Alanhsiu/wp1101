@@ -1,19 +1,8 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import instance from "../../api";
+import { useSelector } from "react-redux";
+import { Outlet, Navigate } from "react-router-dom";
+import { selectSession } from "../slices/sessionSlice";
 
 export default function LoginRoute({ element, path }) {
-  let isAuth = false;
-  instance
-    .get("/api/session")
-    .then((response) => {
-      const status = response.status;
-      if (status === 200) {
-        isAuth = true;
-      } else {
-        isAuth = false;
-      }
-    })
-    .catch(async (error) => console.log(error));
-  return isAuth ? <Navigate to="/profile" /> : <Outlet />;
+  return <Outlet />;
 }

@@ -7,9 +7,10 @@ import uuid from "node-uuid";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv-defaults";
-import { UserModel } from "../db";
+import { UserModel, TokenModel } from "../db";
 dotenv.config();
 const MongoStore = require("connect-mongo");
+import nodemailer from "nodemailer";
 
 import { needLogin } from "./api/middleware";
 const router = express.Router();
@@ -31,6 +32,14 @@ const sessionOptions = {
 sessionOptions.store.clear();
 const SALT_ROUNDS = 12;
 router.use(session(sessionOptions));
+
+const SMTPTransport = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: process.env.EMAILACCOUNT,
+    pass: process.env.EMAILPASSWORD,
+  },
+});
 
 router.get("/query_all_resume", async (_, res) => {
   try {
@@ -260,7 +269,9 @@ router.delete("/clear-db", async (_, res) => {
 });
 
 router.get("/session", needLogin, async (req, res, next) => {
-  res.status(200).end();
+  res
+    .status(200)
+    .send({ userID: req.session.userID, isVerified: req.session.isVerified });
   return;
 });
 
@@ -276,7 +287,7 @@ router.post("/session", async (req, res, next) => {
     return;
   }
   const hashedPwd = user.password;
-  const { userName } = user;
+  const { userName, isVerified } = user;
 
   const match = await bcrypt.compare(password, hashedPwd);
   if (!match) {
@@ -286,8 +297,8 @@ router.post("/session", async (req, res, next) => {
 
   req.session.userID = userID;
   req.session.name = userName;
-  console.log(req.session);
-  res.status(200).send({ userID, userName });
+  req.session.isVerified = isVerified;
+  res.status(200).send({ userID, userName, isVerified });
 });
 
 router.delete("/session", async (req, res, next) => {
@@ -318,6 +329,45 @@ router.post("/user", async (req, res, next) => {
   newUser.save();
   res.status(204).send("Registered");
   return;
+});
+
+router.post("/verify", async (req, res, next) => {
+  const { userID } = req.body;
+  const user = UserModel.find({ userID });
+  let token = new TokenModel({
+    _userId: user._id,
+    token: crypto.randomBytes(16).toString("hex"),
+  });
+  let mailOptions = {
+    from: process.env.EMAILACCOUNT,
+    to: user.email,
+    subject: "Account Verification Link",
+    text:
+      "Hello " +
+      req.body.name +
+      ",\n\n" +
+      "Please verify your account by clicking the link: \nhttp://" +
+      req.headers.host +
+      "/confirmation/" +
+      user.email +
+      "/" +
+      token.token +
+      "\n\nThank You!\n",
+  };
+  transporter.sendMail(mailOptions, function (err) {
+    if (err) {
+      return res.status(500).send({
+        msg: "Technical Issue!, Please click on resend for verify your Email.",
+      });
+    }
+    return res
+      .status(200)
+      .send(
+        "A verification email has been sent to " +
+          user.email +
+          ". It will be expire after one day. If you not get verification Email click on resend token."
+      );
+  });
 });
 
 export default router;

@@ -18,6 +18,10 @@ const UserSchema = new Schema({
     required: true,
     immutable: false,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const ChatBoxSchema = new Schema({
@@ -44,9 +48,19 @@ const MessageSchema = new Schema({
   },
 });
 
+const TokenSchema = new Schema({
+  _userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
+  token: { type: String, required: true },
+  expireAt: { type: Date, default: Date.now, index: { expires: 86400000 } },
+});
+
 const UserModel = mongoose.model("User", UserSchema);
 const ChatBoxModel = mongoose.model("ChatBox", ChatBoxSchema);
 const MessageModel = mongoose.model("Message", MessageSchema);
+const TokenModel = mongoose.model("Token", TokenSchema);
 
-export { UserModel, ChatBoxModel, MessageModel };
-
+export { UserModel, ChatBoxModel, MessageModel, TokenModel };
