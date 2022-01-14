@@ -16,7 +16,6 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import { BrowserRouter } from "react-router-dom";
 
-
 // Create an http link:
 const httpLink = new HttpLink({
   uri: "http://localhost:5000/",
@@ -59,7 +58,7 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
+  < MuiThemeProvider theme={theme}>
     <ApolloProvider client={client}>
       <BrowserRouter>
         <App />

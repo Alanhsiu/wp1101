@@ -31,7 +31,10 @@ function CaseDetail(props) {
       {cases ?
         <div className="article-container">
           <div className="article-title" id="pid-detail-title">
-          {`Subject : ${cases[0].subject}`}
+            {`Parent's name : ${cases[0].userName} `}
+          </div>
+          <div className="article-title" id="pid-detail-title">
+            {`Subject : ${cases[0].subject}`}
             <IconButton className="post-delete" size="small" id="pid-detail-del-btn">
               <MailIcon fontSize="20px" />
               Contact Parent
@@ -39,6 +42,9 @@ function CaseDetail(props) {
           </div>
           <div className="article-title" id="pid-detail-title">
           {` offer : ${cases[0].lowPrice} ~ ${cases[0].highPrice} per hour`}
+          </div>
+          <div className="article-title" id="pid-detail-title">
+          {` area : ${cases[0].area} `}
           </div>
           <div className="article-content-container">
             <Typography component={'span'} id="pid-detail-content">

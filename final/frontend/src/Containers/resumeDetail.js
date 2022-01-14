@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { IconButton, Button, Typography } from "@material-ui/core";
 import { Mail as MailIcon } from "@material-ui/icons";
 
-function ResumeDetail(props) {
+function ResumeDetail({me,navigate}) {
   const { pid } = useParams();
   const [resume, setResume] = useState(null);
 
@@ -29,7 +29,7 @@ function ResumeDetail(props) {
           variant="contained"
           color="primary"
           id="goback-reply-btn"
-          onClick={() => props.navigate(-1)}
+          onClick={() =>navigate(-1)}
         >
           Back
         </Button>
@@ -37,8 +37,11 @@ function ResumeDetail(props) {
 
       {resume ? (
         <div className="article-container">
+        <div className="article-title" id="pid-detail-title">
+            {`Tutor's name : ${resume[0].userName}`}
+          </div>
           <div className="article-title" id="pid-detail-title">
-            {`tutoring Subject : ${resume[0].subject}`}
+            {`tutoring Subject : ${resume[0].subject1} / ${resume[0].subject2} / ${resume[0].subject3} / ${resume[0].subject4} / ${resume[0].subject5}`}
             <IconButton
               className="post-delete"
               size="small"
@@ -48,11 +51,14 @@ function ResumeDetail(props) {
             </IconButton>
           </div>
           <div className="article-title" id="pid-detail-title">
+            {`highest degree : ${resume[0].education}`}
+          </div>
+          <div className="article-title" id="pid-detail-title">
             {`wage : ${resume[0].lowPrice} ~ ${resume[0].highPrice}`}
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-content">
-              {resume[0].description}
+              {`description: ${resume[0].description}`}
             </Typography>
           </div>
         </div>

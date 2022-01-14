@@ -14,19 +14,19 @@ import projectStyles from "../style.module.css";
 import styles from "./home.module.css";
 import Border from "../Components/Border";
 
+import sessionAPI from "../utils/sessionAPI"
 
 const SignIn = ({
   me,
   setMe,
-  username,
-  setUserName,
-  password,
-  setPassword,
-  setSignedIn,
+  id,
+  setId,
   displayStatus,
-  setRegistered,
   navigate,
-}) => (
+}) => {
+  const [password, setPassword] = useState("");
+  const [userID, setUserID] = useState("");
+  return(
   <>
     <Title>
       <h1
@@ -79,7 +79,10 @@ const SignIn = ({
                 msg: "Missing Password",
               });
             } else {
-              setSignedIn(true);
+              console.log("go")
+              const {tuserId ,userName } = sessionAPI.postSession({userID, password})          
+              setId("tuserId");
+              setMe("userName");
               navigate("/body");
             }
           }}
@@ -91,7 +94,6 @@ const SignIn = ({
         <div
           className={styles["container03"]}
           onClick={() => {
-            setRegistered(true);
             navigate("/register");
           }}
         >
@@ -101,4 +103,5 @@ const SignIn = ({
     </SignInBox>
   </>
 );
+}
 export default SignIn;

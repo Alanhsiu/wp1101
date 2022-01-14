@@ -15,7 +15,7 @@ import Border from "../Components/Border";
 import PrimaryPinkButton from "../Components/primary-pink-button";
 import OutlineGrayButton from "../Components/outline-gray-button";
 
-const Register = (props) => {
+const Register = ({me,navigate}) => {
   const [newUserName, setNewUserName] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newUserID, setNewUserID] = useState("");
@@ -27,7 +27,7 @@ const Register = (props) => {
       <Title>
         <h1
           onClick={() => {
-            props.navigate("/");
+            navigate("/");
           }}
         >
           NTU Tutor
@@ -84,7 +84,7 @@ const Register = (props) => {
                 password: newPassword,
                 userName: newUserName,
               });
-              props.navigate("/");
+              navigate("/");
             }}
           >
             <PrimaryPinkButton button="Register" />
@@ -93,7 +93,7 @@ const Register = (props) => {
         <Space>
           <div
             onClick={() => {
-              props.navigate(-1);
+              navigate("/");
             }}
           >
             <OutlineGrayButton button="Back" />

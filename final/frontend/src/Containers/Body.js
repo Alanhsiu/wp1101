@@ -31,7 +31,7 @@ const StyledFormControl = styled(FormControl)`
   min-width: 120px;
 `;
 
-const Body = (props) => {
+const Body = ({navigate, me,id}) => {
   const classes = useStyles();
 
   const { messages, addCardMessage, addRegularMessage, addErrorMessage } =
@@ -86,7 +86,6 @@ const Body = (props) => {
     const {
       data: { message, card },
     } = await axios.post("/api/create-card", {
-      name,
       subject,
       price,
     });
@@ -114,7 +113,7 @@ const Body = (props) => {
     const {
       data: { message },
     } = await axios.get("/api/query_case", {
-      params: { name, subject, price },
+      params: {subject, price },
     });
     console.log(message);
     setQueries(message);
@@ -195,12 +194,6 @@ const Body = (props) => {
           <Row style={{ height: "50px" }}>
             <TextField
               className={classes.input}
-              placeholder="Name"
-              value={name}
-              onChange={handleChange(setName)}
-            />
-            <TextField
-              className={classes.input}
               placeholder="Subject"
               style={{ width: 240 }}
               value={subject}
@@ -226,7 +219,25 @@ const Body = (props) => {
         <br />
         <div className="board-discuss-container">
           <div className="articles-container">
-            {queries.map((post, i) => (
+            {(tabType === "Resume")?
+              queries.map((post, i) => (
+              <div className="article-post" key={i} id={`pid-${i}`}>
+                <div className="article-prefix">
+                  <span className="each-tag">{`[ ${post.userName} ]`}</span>
+                  <hr />
+                  <span
+                    className="each-id"
+                    id={`pid-${i}-title`}
+                    onClick={() =>navigate(`/resumeDetail/${post.postId}`)}
+                  >
+                    for more information.....
+                  </span>
+                  <hr />
+                  <span>{`ideal wage: ${post.lowPrice} ~ ${post.highPrice}`}</span>
+                </div>
+              </div>))
+              :
+              queries.map((post, i) => (
               <div className="article-post" key={i} id={`pid-${i}`}>
                 <div className="article-prefix">
                   <span className="each-tag">{`[ ${post.subject} ]`}</span>
@@ -234,19 +245,15 @@ const Body = (props) => {
                   <span
                     className="each-id"
                     id={`pid-${i}-title`}
-                    onClick={() =>
-                      tabType === "Resume"
-                        ? props.navigate(`/resumeDetail/${post.postId}`)
-                        : props.navigate(`/caseDetail/${post.postId}`)
-                    }
+                    onClick={() =>navigate(`/caseDetail/${post.postId}`)}
                   >
-                    {post.name}
+                    for more information.....
                   </span>
                   <hr />
-                  <span>{`ideal wage: ${post.lowPrice} ~ ${post.highPrice}`}</span>
+                  <span>{`offering: ${post.lowPrice} ~ ${post.highPrice}`}</span>
                 </div>
-              </div>
-            ))}
+              </div>))
+            }
           </div>
         </div>
       </Wrapper>

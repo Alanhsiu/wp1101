@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const ResumeSchema = new Schema({
   postId: { type: String, unique: true },
-  name: String,
+  userId: String,
+  userName: String,
   subject1: {
     type : String,
     enum : ['Math','English','Physics','Chemistry','Geography','Others'],
