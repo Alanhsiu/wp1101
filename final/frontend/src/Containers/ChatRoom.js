@@ -34,11 +34,11 @@ const ChatRoom = ({ username, displayStatus }) => {
   return (
     <>
       <Title>
-        <h1>{username}'s Chat Room</h1>
-        <Button type="primary" danger >
-          {/* onClick={clearMessages} */}
+        <h2>{username}'s Chat Room</h2>
+        {/* <Button type="primary" danger >
+          onClick={clearMessages}
           Clear
-        </Button>
+        </Button> */}
       </Title>
       <>
         <Wrapper

@@ -13,6 +13,12 @@ const Title = styled.div`
     font-weight: bold;
     color: blue;
   }
+  h2 {
+    margin: 20px;
+    font-size: 3em;
+    font-weight: bold;
+    color: blue;
+  }
   h1:hover {
     cursor: pointer;
     transform: scale(1.02);

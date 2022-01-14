@@ -33,7 +33,7 @@ function CaseDetail(props) {
           <div className="article-title" id="pid-detail-title">
           {`Subject : ${cases[0].subject}`}
             <IconButton className="post-delete" size="small" id="pid-detail-del-btn">
-              <MailIcon fontSize="20px" />
+              <MailIcon fontSize="20px" onClick={() => props.navigate("/chatroom")}/>
               Contact Parent
             </IconButton>
           </div>
