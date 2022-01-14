@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, React } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
 import { CssBaseline } from "@material-ui/core";
 import styled from "styled-components";
@@ -19,6 +20,9 @@ import ResumeDisplay from "./ResumeDisplay";
 import ResumeEdit from "./ResumeEdit";
 import ChatRoom from "./ChatRoom";
 import Home from "./Home";
+import Loading from "../Components/Loading";
+
+import { init, selectSession } from "../Components/slices/sessionSlice";
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -33,11 +37,12 @@ const Wrapper = styled.div`
 function App(props) {
   document.title = "110-1 wpfinal";
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [id, setId] = useState(savedMe || "");
-  const [me, setMe] = useState("")
+  const [me, setMe] = useState("");
   const [password, setPassword] = useState("");
   const [signIn, setSignedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
@@ -60,8 +65,22 @@ function App(props) {
       }
     }
   };
-  return (
-    <div style={{ backgroundColor: "PowderBlue" }}>
+  useEffect(() => {
+    dispatch(init());
+  }, []);
+  const initialized = useSelector(selectSession);
+  return !initialized ? (
+    <Loading />
+  ) : (
+    <div
+      style={{
+        // backgroundImage:
+        //   "url(https://egoldenyears.com/wp-content/uploads/2018/09/201800926_a0312.jpg.jpg)",
+        // backgroundSize: "100% 100%",
+        backgroundColor: "PowderBlue",
+        // opacity:0.7,
+      }}
+    >
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
@@ -70,7 +89,7 @@ function App(props) {
           <Route path="" element={<MainRoute />}>
             <Route
               path="/register"
-              element={<Register navigate={navigate} me={me}/>}
+              element={<Register navigate={navigate} me={me} />}
             />
           </Route>
           <Route path="" element={<LoginRoute />}>
@@ -87,25 +106,31 @@ function App(props) {
                 />
               }
             />
-          {/* </Route>
+            {/* </Route>
           <Route path="" element={<PrivateRoute />}> */}
-            <Route path="/body" element={<Body navigate={navigate}  me={me} id={id}/>} />
-            <Route path="/publish" element={<Publish navigate={navigate} me={me} id={id}/>} />
+            <Route
+              path="/body"
+              element={<Body navigate={navigate} me={me} id={id} />}
+            />
+            <Route
+              path="/publish"
+              element={<Publish navigate={navigate} me={me} id={id} />}
+            />
             <Route
               path="/resumeDetail/:pid"
-              element={<ResumeDetail navigate={navigate} me={me} id={id}/>}
+              element={<ResumeDetail navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/caseDetail/:pid"
-              element={<CaseDetail navigate={navigate} me={me} id={id}/>}
+              element={<CaseDetail navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/resumeDisplay"
-              element={<ResumeDisplay navigate={navigate} me={me} id={id}/>}
+              element={<ResumeDisplay navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/resumeEdit"
-              element={<ResumeEdit navigate={navigate} me={me} id={id}/>}
+              element={<ResumeEdit navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/chatroom"

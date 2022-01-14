@@ -1,17 +1,9 @@
-import { React } from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import instance from "../../api";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Outlet, Navigate } from "react-router-dom";
+import { selectSession } from "../slices/sessionSlice";
 
 export default function PrivateRoute({ element, path }) {
-  let isAuth = true;
-  instance.get("/api/session").then(async (response) => {
-    const status = await response.status;
-    if (status === 200) {
-      isAuth = true;
-    } else {
-      isAuth = false;
-    }
-  });
-  if (isAuth) return <Outlet />;
-  else return <Navigate to="/login" />;
+  const { isLogin } = useSelector(selectSession);
+  return isLogin ? <Outlet /> : <Navigate to="/login" />;
 }
