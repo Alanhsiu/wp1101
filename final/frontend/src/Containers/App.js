@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, React } from "react";
+import { useState, React, useEffect} from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
@@ -106,8 +106,8 @@ function App(props) {
                 />
               }
             />
-            {/* </Route>
-          <Route path="" element={<PrivateRoute />}> */}
+            </Route>
+          <Route path="" element={<PrivateRoute />}> 
             <Route
               path="/body"
               element={<Body navigate={navigate} me={me} id={id} />}
