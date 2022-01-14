@@ -28,6 +28,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: pink;
+  background-attachment:scroll;
 `;
 
 function App(props) {
@@ -37,7 +39,7 @@ function App(props) {
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [id, setId] = useState(savedMe || "");
-  const [me, setMe] = useState("")
+  const [me, setMe] = useState("");
   const [password, setPassword] = useState("");
   const [signIn, setSignedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
@@ -61,7 +63,7 @@ function App(props) {
     }
   };
   return (
-    <div style={{ backgroundColor: "PowderBlue" }}>
+    <>
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
@@ -70,7 +72,7 @@ function App(props) {
           <Route path="" element={<MainRoute />}>
             <Route
               path="/register"
-              element={<Register navigate={navigate} me={me}/>}
+              element={<Register navigate={navigate} me={me} />}
             />
           </Route>
           <Route path="" element={<LoginRoute />}>
@@ -87,25 +89,31 @@ function App(props) {
                 />
               }
             />
-          {/* </Route>
+            {/* </Route>
           <Route path="" element={<PrivateRoute />}> */}
-            <Route path="/body" element={<Body navigate={navigate}  me={me} id={id}/>} />
-            <Route path="/publish" element={<Publish navigate={navigate} me={me} id={id}/>} />
+            <Route
+              path="/body"
+              element={<Body navigate={navigate} me={me} id={id} />}
+            />
+            <Route
+              path="/publish"
+              element={<Publish navigate={navigate} me={me} id={id} />}
+            />
             <Route
               path="/resumeDetail/:pid"
-              element={<ResumeDetail navigate={navigate} me={me} id={id}/>}
+              element={<ResumeDetail navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/caseDetail/:pid"
-              element={<CaseDetail navigate={navigate} me={me} id={id}/>}
+              element={<CaseDetail navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/resumeDisplay"
-              element={<ResumeDisplay navigate={navigate} me={me} id={id}/>}
+              element={<ResumeDisplay navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/resumeEdit"
-              element={<ResumeEdit navigate={navigate} me={me} id={id}/>}
+              element={<ResumeEdit navigate={navigate} me={me} id={id} />}
             />
             <Route
               path="/chatroom"
@@ -121,7 +129,7 @@ function App(props) {
           </Route>
         </Routes>
       </Wrapper>
-    </div>
+    </>
   );
 }
 

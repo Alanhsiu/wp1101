@@ -27,7 +27,7 @@ const SignIn = ({
   const [password, setPassword] = useState("");
   const [userID, setUserID] = useState("");
   return(
-  <>
+  <div className="signin">
     <Title>
       <h1
         onClick={() => {
@@ -101,7 +101,7 @@ const SignIn = ({
         </div>
       </Space>
     </SignInBox>
-  </>
+  </div>
 );
 }
 export default SignIn;

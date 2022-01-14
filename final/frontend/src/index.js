@@ -58,10 +58,10 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-  < MuiThemeProvider theme={theme}>
+  < MuiThemeProvider theme={theme} >
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <App />
+        <App/>
       </BrowserRouter>
     </ApolloProvider>
   </MuiThemeProvider>,
