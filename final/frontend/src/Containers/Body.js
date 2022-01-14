@@ -178,7 +178,7 @@ const Body = (props) => {
               placeholder="Type here..."
               value={queryString}
               onChange={handleChange(setQueryString)}
-              style={{ flex: 1 }}
+              style={{ width: 240 }}
             />
             <Button
               className={classes.button}

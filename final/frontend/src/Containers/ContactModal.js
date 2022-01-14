@@ -12,10 +12,10 @@ const ContactModal = ({ visible, onOk, onCancel }) => {
       onOk={onOk}
       onCancel={onCancel}
     >
-      <PhoneOutlined />
-      &nbsp;:&nbsp;0974147414
+      <PhoneOutlined /> &nbsp;:&nbsp;0974147414
       <br />
-      <MailOutlined />&nbsp;:&nbsp;b09907414@ntu.edu.tw
+      <MailOutlined />
+      &nbsp;:&nbsp;b09907414@ntu.edu.tw
     </Modal>
   );
 };
