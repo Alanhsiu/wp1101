@@ -39,8 +39,8 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
           <Border>
             <Input
               prefix={<UserOutlined />}
-              value={me}
-              onChange={(e) => setMe(e.target.value)}
+              value={userID}
+              onChange={(e) => setUserID(e.target.value)}
               placeholder="UserID (帳號)"
               size="large"
               font-weight="bold"
@@ -77,12 +77,12 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
                 });
               } else {
                 console.log("go");
-                const { tuserId, userName } = sessionAPI.postSession({
+                const { userName } = sessionAPI.postSession({
                   userID,
                   password,
                 });
-                setId(tuserId);
-                setMe(me);
+                setId(userID);
+                setMe(userName);
                 navigate("/body");
               }
             }}

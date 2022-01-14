@@ -78,7 +78,7 @@ router.get("/query_all_cases", async (_, res) => {
 });
 
 router.post("/resume", async (req, res) => {
-  console.log("resume")
+  console.log("resume");
   const a = await ResumeModel.findOneAndUpdate(
     {
       userId: req.body.id,
@@ -91,16 +91,17 @@ router.post("/resume", async (req, res) => {
       subject5: req.body.subject5,
       description: req.body.trimmed_content,
       education: req.body.education,
-      mail :  req.body.mail,
+      mail: req.body.mail,
       lowPrice: req.body.lowPrice,
       highPrice: req.body.highPrice,
     }
   );
-  console.log(a)
-  if (a === null) { 
+  console.log(a);
+  if (a === null) {
     console.log("ok");
     //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
-    try {const msg = await ResumeModel.create({
+    try {
+      const msg = await ResumeModel.create({
         postId: req.body.postId,
         userId: req.body.id,
         userName: req.body.me,
@@ -111,7 +112,7 @@ router.post("/resume", async (req, res) => {
         subject5: req.body.subject5,
         description: req.body.trimmed_content,
         education: req.body.education,
-        mail :  req.body.mail,
+        mail: req.body.mail,
         lowPrice: req.body.lowPrice,
         highPrice: req.body.highPrice,
         timestamp: req.body.timestamp,
@@ -120,9 +121,9 @@ router.post("/resume", async (req, res) => {
       res.status(200).send({
         message: "success",
         data: msg,
-      });}
-    catch(e){
-      console.log(e)
+      });
+    } catch (e) {
+      console.log(e);
       res.status(403).send({
         message: "error",
         data: null,
@@ -136,37 +137,34 @@ router.post("/resume", async (req, res) => {
 
 router.post("/publish", async (req, res) => {
   console.log(req.body.id);
-  const highPrice = parseInt(req.body.highPrice,10)
-  const lowPrice = parseInt(req.body.lowPrice,10)
-  console.log(typeof(req.body.trimmed_content))
+  const highPrice = parseInt(req.body.highPrice, 10);
+  const lowPrice = parseInt(req.body.lowPrice, 10);
+  console.log(typeof req.body.trimmed_content);
   //const msg = await createResume(req.body.postId, req.body.name, req.body.subject,req.body.content,req.body.price);
   try {
-  const msg = await CaseModel.create({
-    postId: req.body.postId,
-    userId: req.body.id,
-    userName: req.body.me,
-    subject: req.body.subject,
-    area: req.body.area,
-    description: req.body.trimmed_content,
-    lowPrice: lowPrice,
-    highPrice: highPrice,
-    //timestamp: req.body.timestamp,
-  });
-  console.log("case_done");
-  res.status(200).send({
-    message: "success",
-    data: msg,
-  });
-}
-catch(e){
-  console.log(e)
-  res.status(403).send({
-    message: "error",
-    data: e,
-  });
-}
-
-
+    const msg = await CaseModel.create({
+      postId: req.body.postId,
+      userId: req.body.id,
+      userName: req.body.me,
+      subject: req.body.subject,
+      area: req.body.area,
+      description: req.body.trimmed_content,
+      lowPrice: lowPrice,
+      highPrice: highPrice,
+      //timestamp: req.body.timestamp,
+    });
+    console.log("case_done");
+    res.status(200).send({
+      message: "success",
+      data: msg,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(403).send({
+      message: "error",
+      data: e,
+    });
+  }
 });
 
 router.get("/query_resume", async (req, res) => {
@@ -174,45 +172,53 @@ router.get("/query_resume", async (req, res) => {
   const queryString = req.query.queryString;
 
   let query;
-   
-  if (queryType == "userId"){
-    let result = []
-    const a = await ResumeModel.find({ userId: queryString });
-    if (a.length === 0){
-      console.log("DID")
-      result = ["","","","","","","","",""]
-    }
-    else {   
-      result = [a[0].subject1, a[0].subject2, a[0].subject3, a[0].subject4, a[0].subject5,  a[0].lowPrice, a[0].highPrice, a[0].education,a[0].description, ]
-    }
-    res.send({result: {result}})
-    console.log(result)
-  }
-  else{
-  if (queryType == "name") {
-    query = await ResumeModel.find({ userName: queryString });
-    console.log("ok");
-    console.log(query);
-  }
-  else {
-    query = await ResumeModel.find({ subject: queryString });
-    console.log("ok");
-    console.log(query);
-  }
-  if (query.length !== 0) res.send({ message: query });
-  else res.send({ message: `${queryType} (${queryString}) not found!` });
-  if (queryType == "name")
-    query = await ResumeModel.find({ name: queryString });
-  else query = await ResumeModel.find({ subject: queryString });
-  var results = new Array();
-  for (let i = 0; i < query.length; i++)
-    results[
-      i
-    ] = `Exist (${query[i].name}, ${query[i].subject}, ${query[i].price})`;
 
-  if (query.length !== 0) res.send({ messages: results });
-  else res.send({ message: `${queryType} (${queryString}) not found!` });
-}});
+  if (queryType == "userId") {
+    let result = [];
+    const a = await ResumeModel.find({ userId: queryString });
+    if (a.length === 0) {
+      console.log("DID");
+      result = ["", "", "", "", "", "", "", "", ""];
+    } else {
+      result = [
+        a[0].subject1,
+        a[0].subject2,
+        a[0].subject3,
+        a[0].subject4,
+        a[0].subject5,
+        a[0].lowPrice,
+        a[0].highPrice,
+        a[0].education,
+        a[0].description,
+      ];
+    }
+    res.send({ result: { result } });
+    console.log(result);
+  } else {
+    if (queryType == "name") {
+      query = await ResumeModel.find({ userName: queryString });
+      console.log("ok");
+      console.log(query);
+    } else {
+      query = await ResumeModel.find({ subject: queryString });
+      console.log("ok");
+      console.log(query);
+    }
+    if (query.length !== 0) res.send({ message: query });
+    else res.send({ message: `${queryType} (${queryString}) not found!` });
+    if (queryType == "name")
+      query = await ResumeModel.find({ name: queryString });
+    else query = await ResumeModel.find({ subject: queryString });
+    var results = new Array();
+    for (let i = 0; i < query.length; i++)
+      results[
+        i
+      ] = `Exist (${query[i].name}, ${query[i].subject}, ${query[i].price})`;
+
+    if (query.length !== 0) res.send({ messages: results });
+    else res.send({ message: `${queryType} (${queryString}) not found!` });
+  }
+});
 
 router.get("/query_case", async (req, res) => {
   let query;
@@ -277,7 +283,10 @@ router.get("/session", needLogin, async (req, res, next) => {
 
 router.post("/session", async (req, res, next) => {
   const { userID, password } = req.body;
-  if (!userID || !password) {
+  console.log(userID);
+  console.log(password);
+  if (!password) {
+    console.log(userID);
     res.status(400).end();
     return;
   }
@@ -298,6 +307,7 @@ router.post("/session", async (req, res, next) => {
   req.session.userID = userID;
   req.session.name = userName;
   req.session.isVerified = isVerified;
+  console.log(req.session);
   res.status(200).send({ userID, userName, isVerified });
 });
 
