@@ -9,36 +9,41 @@ function Appbar(props) {
     <AppBar position="fixed" color="inherit">
       <Toolbar className="toolbar">
         <div className="appbar-left">
-          <img className="logo" src={Logo} alt="Logo" />
+          <img
+            className="logo"
+            src="https://www.ntu.edu.tw/about/doc/Emblem72.jpg"
+            alt="Logo"
+            style={{ maxWidth: "50%", maxHeight: "100%" }}
+          />
           <span className="app-name" onClick={() => props.navigate("/")}>
-            NTU TUTOR WEB
+            &nbsp;NTU TUTOR WEB
           </span>
         </div>
         <div className="appbar-left">
-            <Mail
-              onClick={() => props.navigate("/chatroom")}
-              style={{
-                fontWeight: "Bold",
-                fontSize: 30,
-                display: "flex",
-                justifyContent: "center",
-                cursor: "pointer",
-                paddingRight:"5px"
-              }}
-            />
-            <Button color="inherit" onClick={() => props.navigate("/publish")}>
-              Case Publish
-            </Button>
+          <Mail
+            onClick={() => props.navigate("/chatroom")}
+            style={{
+              fontWeight: "Bold",
+              fontSize: 30,
+              display: "flex",
+              justifyContent: "center",
+              cursor: "pointer",
+              paddingRight: "5px",
+            }}
+          />
+          <Button color="inherit" onClick={() => props.navigate("/publish")}>
+            Case Publish
+          </Button>
 
-            <Button
-              color="inherit"
-              onClick={() => props.navigate("/resumeDisplay")}
-            >
-              Profile
-            </Button>
-            <Button color="inherit" onClick={() => props.navigate("/")}>
-              Log out
-            </Button>
+          <Button
+            color="inherit"
+            onClick={() => props.navigate("/resumeDisplay")}
+          >
+            Profile
+          </Button>
+          <Button color="inherit" onClick={() => props.navigate("/")}>
+            Log out
+          </Button>
         </div>
 
         {/* <IconButton

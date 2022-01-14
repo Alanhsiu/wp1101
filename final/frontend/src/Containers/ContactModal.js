@@ -1,8 +1,8 @@
 import React from "react";
 import { Modal } from "antd";
+import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
 
 const ContactModal = ({ visible, onOk, onCancel }) => {
-
   return (
     <Modal
       visible={visible}
@@ -12,11 +12,12 @@ const ContactModal = ({ visible, onOk, onCancel }) => {
       onOk={onOk}
       onCancel={onCancel}
     >
-      Please Call 0974147414
-      or 
-      Email to b09907414@ntu.edu.tw
+      <PhoneOutlined />
+      &nbsp;:&nbsp;0974147414
+      <br />
+      <MailOutlined />&nbsp;:&nbsp;b09907414@ntu.edu.tw
     </Modal>
-  )
+  );
 };
 
 export default ContactModal;

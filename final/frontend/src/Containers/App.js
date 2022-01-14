@@ -1,9 +1,8 @@
 import "./App.css";
-import { useState, useEffect, React } from "react";
+import { useState, React } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import { message } from "antd";
 import { CssBaseline } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
 
 import Publish from "./Publish";
@@ -62,15 +61,7 @@ function App(props) {
     }
   };
   return (
-    <div
-      style={{
-        // backgroundImage:
-        //   "url(https://egoldenyears.com/wp-content/uploads/2018/09/201800926_a0312.jpg.jpg)",
-        // backgroundSize: "100% 100%",
-        backgroundColor: "PowderBlue",
-        // opacity:0.7,
-      }}
-    >
+    <div style={{ backgroundColor: "PowderBlue" }}>
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
