@@ -32,8 +32,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: pink;
-  background-attachment:scroll;
 `;
 
 function App(props) {
@@ -67,8 +65,22 @@ function App(props) {
       }
     }
   };
-  return (
-    <>
+  useEffect(() => {
+    dispatch(init());
+  }, []);
+  const initialized = useSelector(selectSession);
+  return !initialized ? (
+    <Loading />
+  ) : (
+    <div
+      style={{
+        // backgroundImage:
+        //   "url(https://egoldenyears.com/wp-content/uploads/2018/09/201800926_a0312.jpg.jpg)",
+        // backgroundSize: "100% 100%",
+        backgroundColor: "PowderBlue",
+        // opacity:0.7,
+      }}
+    >
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
@@ -94,8 +106,8 @@ function App(props) {
                 />
               }
             />
-            {/* </Route>
-          <Route path="" element={<PrivateRoute />}> */}
+            </Route>
+          <Route path="" element={<PrivateRoute />}> 
             <Route
               path="/body"
               element={<Body navigate={navigate} me={me} id={id} />}
@@ -134,7 +146,7 @@ function App(props) {
           </Route>
         </Routes>
       </Wrapper>
-    </>
+    </div>
   );
 }
 

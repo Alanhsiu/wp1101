@@ -16,7 +16,6 @@ const { Option } = Select;
 const Wrapper = styled.section`
   position: absolute;
   top: 100px;
-  background-color: white;
 `;
 
 const ResumeDisplay = ({ id, me, navigate }) => {
@@ -107,22 +106,6 @@ const ResumeDisplay = ({ id, me, navigate }) => {
               id="pid-create-subject"
             >
               {show[2]}
-            </Form.Item>
-            <Form.Item
-              label="Subject4"
-              variant="outlined"
-              className="post-subject"
-              id="pid-create-subject"
-            >
-              {show[3]}
-            </Form.Item>
-            <Form.Item
-              label="Subject5"
-              variant="outlined"
-              className="post-subject"
-              id="pid-create-subject"
-            >
-              {show[4]}
             </Form.Item>
             <Form.Item
               label="Wage (/hr)"

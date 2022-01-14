@@ -11,7 +11,6 @@ const { Option } = Select;
 const Wrapper = styled.section`
   position: absolute;
   top: 100px;
-  background-color: white;
 `;
 const ResumeEdit = ({ id, me, navigate }) => {
   const [subject5, setSubject5] = useState("");
