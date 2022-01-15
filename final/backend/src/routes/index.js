@@ -165,7 +165,7 @@ router.post("/publish", async (req, res) => {
 
 router.get("/query_resume", async (req, res) => {
   const queryType = req.query.type;
-  const queryString = req.query.id;
+  const queryString = req.query.queryString;
   console.log(queryType);
   console.log(queryString);
   let query;
@@ -193,23 +193,17 @@ router.get("/query_resume", async (req, res) => {
       console.log("ok");
       console.log(query);
     } else {
-      query = await ResumeModel.find({ subject: queryString });
+      let temp
+      query = await ResumeModel.find({ subject1: queryString });
+      temp = await ResumeModel.find({ subject2: queryString });
+      query.concat(temp)
+      temp = await ResumeModel.find({ subject3: queryString });
+      query.concat(temp)
       console.log("ok");
       console.log(query);
     }
-    if (query.length !== 0) res.send({ message: query });
-    else res.send({ message: `${queryType} (${queryString}) not found!` });
-    if (queryType == "name")
-      query = await ResumeModel.find({ name: queryString });
-    else query = await ResumeModel.find({ subject: queryString });
-    var results = new Array();
-    for (let i = 0; i < query.length; i++)
-      results[
-        i
-      ] = `Exist (${query[i].name}, ${query[i].subject}, ${query[i].price})`;
-
-    if (query.length !== 0) res.send({ messages: results });
-    else res.send({ message: `${queryType} (${queryString}) not found!` });
+    console.log("ooooo")
+    res.send({ result: { query } });
   }
 });
 
@@ -223,20 +217,18 @@ router.get("/query_case", async (req, res) => {
     });
   else if (req.query.subject.trim().length === 0)
     query = await CaseModel.find({
-      price: req.query.price,
+      lowPrice: {$lt : req.query.price-0},
+      highPrice: {$gt : req.query.price-0},
     });
   else
     query = await CaseModel.find({
       subject: req.query.subject,
-      price: req.query.price,
+      lowPrice: {$lt : req.query.price-0},
+      highPrice: {$gt : req.query.price-0},
     });
 
   console.log(query);
-
-  if (query !== []) res.send({ message: query });
-  else {
-    query = { name: "we cant find anything" };
-  }
+  res.send({ message: query });
 });
 
 router.get("/resumeDetail", async (req, res) => {
