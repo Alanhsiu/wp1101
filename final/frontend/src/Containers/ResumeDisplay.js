@@ -115,17 +115,7 @@ const ResumeDisplay = ({ id, me, navigate }) => {
               type="number"
             >
               {show[3]}
-              <Input
-                className="site-input-split"
-                style={{
-                  width: 30,
-                  borderLeft: 0,
-                  borderRight: 0,
-                  pointerEvents: "none",
-                }}
-                placeholder="~"
-                disabled
-              />
+              ~
               {show[4]}
             </Form.Item>
             <Form.Item

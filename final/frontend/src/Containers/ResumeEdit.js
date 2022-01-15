@@ -278,7 +278,7 @@ const ResumeEdit = ({id,me,navigate}) => {
               />
             </Form.Item>
             <Form.Item
-              label="Description"
+              label="Email"
               variant="outlined"
               className="post-experience"
               id="pid-create-experience"
