@@ -53,7 +53,7 @@ function ResumeDetail(props) {
             </IconButton>
           </div>
           <div className="article-title" id="pid-detail-title">
-            {`tutoring Subject : ${resume[0].subject1} / ${resume[0].subject2} / ${resume[0].subject3} / ${resume[0].subject4} / ${resume[0].subject5}`}
+            {`tutoring Subject : ${resume[0].subject1} / ${resume[0].subject2} / ${resume[0].subject3} `}
           </div>
           <div className="article-title" id="pid-detail-title">
             {`highest degree : ${resume[0].education}`}

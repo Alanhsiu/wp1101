@@ -75,7 +75,7 @@ function App(props) {
     <Loading />
   ) : (
     <div style={{ backgroundColor: "PowderBlue" }}>
-      <Appbar navigate={navigate} />
+     {signIn===true ?(<Appbar navigate={navigate} setSignedIn={setSignedIn} />): (<></>)}
       <CssBaseline />
       <Wrapper>
         <Routes>
@@ -97,6 +97,7 @@ function App(props) {
                   id={id}
                   setId={setId}
                   displayStatus={displayStatus}
+                  setSignedIn={setSignedIn}
                 />
               }
             />

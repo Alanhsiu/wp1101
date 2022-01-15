@@ -21,11 +21,12 @@ const ResumeEdit = ({id,me,navigate}) => {
   const [education, setEducation] = useState("")
   const [content, setContent] = useState("");
   const handleQueryResume = async () => {
+    const queryString = id;
     const {data: {result} 
     } = await instance.get("/api/query_resume", {
       params: {
         type: "userId",
-        id,
+        queryString,
       },
     });
     if(result.result[0]!=='')

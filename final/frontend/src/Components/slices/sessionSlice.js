@@ -30,6 +30,7 @@ export const init = () => async (dispatch) => {
   try {
     const session = await SessionAPI.getSession();
     if (session.status === 200) {
+      console.log("success")
       dispatch(setLogin(session.data));
       dispatch(setInitialized());
     }

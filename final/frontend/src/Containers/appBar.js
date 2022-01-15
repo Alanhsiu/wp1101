@@ -47,15 +47,15 @@ function Appbar(props) {
           </Button>
           <Button
             color="inherit"
-            onClick={() => {
+            onClick={async() => {
               props.navigate("/");
-              dispatch(logout());
+              await sessionAPI.deleteSession()
+              props.setSignedIn("false")
             }}
           >
             Log out
           </Button>
         </div>
-
         {/* <IconButton
             size="large"
             edge="start"
@@ -67,18 +67,8 @@ function Appbar(props) {
           </IconButton> */}
       </Toolbar>
     </AppBar>
-  );
+  )
 }
-// function Appbar(props) {
-//   return (
-//     <AppBar position="fixed" color="inherit">
-//       <Title >
-//           <span onClick={() => props.navigate('/body')}>
-//           NTU Tutor Web
-//           </span>
-//     </Title>
-//     </AppBar>
-//   )
-// }
+
 
 export default Appbar;

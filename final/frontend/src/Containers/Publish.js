@@ -127,7 +127,7 @@ const Publish = ({me,navigate,id}) => {
               <Option value="English">English</Option>
               <Option value="Physics">Physics</Option>
               <Option value="Chemistry">Chemistry</Option>
-              <Option value="Geogrphy">Geography</Option>
+              <Option value="Geography">Geography</Option>
               <Option value="Others">Others</Option>
             </Select>
           </Form.Item>

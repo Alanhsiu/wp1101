@@ -20,14 +20,14 @@ const Wrapper = styled.section`
 
 const ResumeDisplay = ({ id, me, navigate }) => {
   const [show, setShow] = useState([]);
-
+  const queryString = id;
   const handleQueryResume = async () => {
     const {
       data: { result },
     } = await axios.get("/api/query_resume", {
       params: {
         type: "userId",
-        id,
+        queryString,
       },
     });
     setShow(result.result);
@@ -80,7 +80,7 @@ const ResumeDisplay = ({ id, me, navigate }) => {
             className="post-subject"
             id="pid-create-subject"
           >
-            {`${id} / ${me}`}
+            {`${me}`}
           </Form.Item>
           <Form.Item
             label="Subject1"

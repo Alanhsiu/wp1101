@@ -18,7 +18,7 @@ import instance from "../api";
 
 
 
-const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
+const SignIn = ({ me, setMe, id, setId, displayStatus,setSignedIn, navigate }) => {
   const [password, setPassword] = useState("");
   const [userID, setUserID] = useState("");
   return (
@@ -83,6 +83,7 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
                 await console.log(temp)
                 setMe(temp[1])
                 setId(temp[0])
+                setSignedIn(true)
                 setTimeout(() => {
                     navigate("/body");
                   }, 300);
