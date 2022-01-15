@@ -165,41 +165,51 @@ router.post("/publish", async (req, res) => {
 
 router.get("/query_resume", async (req, res) => {
   const queryType = req.query.type;
-  const queryString = req.query.queryString;
-  console.log(queryType)
-  console.log(queryString)
+  const queryString = req.query.id;
+  console.log(queryType);
+  console.log(queryString);
   let query;
 
   if (queryType == "userId") {
     let result = [];
     const a = await ResumeModel.find({ userId: queryString });
-    if (a[0] === undefined){
-      result = ["","","","","","",""]
+    if (a[0] === undefined) {
+      result = ["", "", "", "", "", "", ""];
+    } else {
+      result = [
+        a[0].subject1,
+        a[0].subject2,
+        a[0].subject3,
+        a[0].lowPrice,
+        a[0].highPrice,
+        a[0].education,
+        a[0].description,
+      ];
     }
-    else {   
-      result = [a[0].subject1, a[0].subject2, a[0].subject3, a[0].lowPrice, a[0].highPrice, a[0].education,a[0].description, ]
+    res.send({ result: { result } });
+  } else {
+    if (queryType == "name") {
+      query = await ResumeModel.find({ userName: queryString });
+      console.log("ok");
+      console.log(query);
+    } else {
+      query = await ResumeModel.find({ subject: queryString });
+      console.log("ok");
+      console.log(query);
     }
-    res.send({result: {result}})
-  }
-  else{
-  if (queryType == "name") {
-    query = await ResumeModel.find({ userName: queryString });
-    console.log("ok");
-    console.log(query);
-  }
-  else {
-    query = await ResumeModel.find({ subject1: queryString });
-    let temp
-    temp =  await ResumeModel.find({ subject2: queryString });
-    query.concat(temp)
-    temp = await ResumeModel.find({ subject3: queryString });
-    query.concat(temp)
+    if (query.length !== 0) res.send({ message: query });
+    else res.send({ message: `${queryType} (${queryString}) not found!` });
+    if (queryType == "name")
+      query = await ResumeModel.find({ name: queryString });
+    else query = await ResumeModel.find({ subject: queryString });
+    var results = new Array();
+    for (let i = 0; i < query.length; i++)
+      results[
+        i
+      ] = `Exist (${query[i].name}, ${query[i].subject}, ${query[i].price})`;
 
-    console.log("ok");
-    console.log(query);
-  }
-    res.send({ message: query });
-  
+    if (query.length !== 0) res.send({ messages: results });
+    else res.send({ message: `${queryType} (${queryString}) not found!` });
   }
 });
 
@@ -213,14 +223,12 @@ router.get("/query_case", async (req, res) => {
     });
   else if (req.query.subject.trim().length === 0)
     query = await CaseModel.find({
-      lowPrice: { $lt: req.query.price-0 },
-      highPrice: { $gt: req.query.price-0 },
+      price: req.query.price,
     });
   else
     query = await CaseModel.find({
       subject: req.query.subject,
-      lowPrice: { $lt: req.query.price-0 },
-      highPrice: { $gt: req.query.price-0 },
+      price: req.query.price,
     });
 
   console.log(query);
@@ -272,13 +280,11 @@ router.post("/session", async (req, res, next) => {
   console.log(password);
   if (!password) {
     console.log(userID);
-    console.log(password);
     res.status(400).end();
     return;
   }
   const user = await UserModel.findOne({ userID }).exec();
   if (!user) {
-
     res.status(400).end();
     return;
   }
@@ -294,19 +300,23 @@ router.post("/session", async (req, res, next) => {
   req.session.userID = userID;
   req.session.name = userName;
   req.session.isVerified = isVerified;
+  console.log(userID);
+  console.log(userName);
+  console.log(isVerified);
   console.log(req.session);
-  res.status(200).send({userID:userID, userName:userName, isVerified:isVerified});
+  res
+    .status(200)
+    .send({ userID: userID, userName: userName, isVerified: isVerified });
 });
 
 router.delete("/session", async (req, res, next) => {
   req.session = null;
   res.status(204).end();
-  console.log("log out")
 });
 
 router.post("/user", async (req, res, next) => {
   const { userID, password, userName} = req.body;
-  if (!userID || !password ) {
+  if (!userID || !password) {
     res.status(400).end();
     return;
   }
@@ -314,7 +324,7 @@ router.post("/user", async (req, res, next) => {
   const user = await UserModel.findOne({ userID }).exec();
   if (user) {
     res.status(403).send("Existed User ID");
-    
+
     return;
   }
 
@@ -331,41 +341,25 @@ router.post("/user", async (req, res, next) => {
 });
 
 router.post("/verify", async (req, res, next) => {
-  const { userID } = req.body;
-  const user = UserModel.find({ userID });
-  let token = new TokenModel({
-    _userId: user._id,
-    token: crypto.randomBytes(16).toString("hex"),
-  });
+  const { studentID, newUserName } = req.body;
+  console.log(studentID);
   let mailOptions = {
     from: process.env.EMAILACCOUNT,
-    to: user.email,
-    subject: "Account Verification Link",
+    to: `${studentID}@ntu.edu.tw`,
+    subject: "Account Notification",
     text:
       "Hello " +
-      req.body.name +
+      newUserName +
       ",\n\n" +
-      "Please verify your account by clicking the link: \nhttp://" +
-      req.headers.host +
-      "/confirmation/" +
-      user.email +
-      "/" +
-      token.token +
+      "You have registered an account for NTU tutor website.\n\nIf you don't recognize the activity, please contact us as soon as possible." +
       "\n\nThank You!\n",
   };
-  transporter.sendMail(mailOptions, function (err) {
+  SMTPTransport.sendMail(mailOptions, function (err) {
     if (err) {
-      return res.status(500).send({
-        msg: "Technical Issue!, Please click on resend for verify your Email.",
-      });
+      console.log(err);
+      return;
     }
-    return res
-      .status(200)
-      .send(
-        "A verification email has been sent to " +
-          user.email +
-          ". It will be expire after one day. If you not get verification Email click on resend token."
-      );
+    return res.status(200).send("A verification email has been sent. ");
   });
 });
 

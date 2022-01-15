@@ -14,6 +14,7 @@ import userAPI from "../utils/userAPI";
 import Border from "../Components/Border";
 import PrimaryPinkButton from "../Components/primary-pink-button";
 import OutlineGrayButton from "../Components/outline-gray-button";
+import instance from "../api";
 
 const Register = ({me,navigate}) => {
   const [newUserName, setNewUserName] = useState("");
@@ -84,6 +85,7 @@ const Register = ({me,navigate}) => {
                 password: newPassword,
                 userName: newUserName,
               });
+              instance.post("/api/verify", {studentID, newUserName});
               navigate("/");
             }}
           >
