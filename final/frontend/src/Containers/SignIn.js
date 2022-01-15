@@ -65,7 +65,7 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
           <div
             className={styles["container03"]}
             onClick={() => {
-              if (!me)
+              if (!userName)
                 displayStatus({
                   type: "error",
                   msg: "Missing Username",
