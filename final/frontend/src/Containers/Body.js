@@ -95,16 +95,16 @@ const Body = ({navigate, me,id}) => {
 
   const handleQueryResume = async () => {
     const {
-      data: { message },
+      data: { result },
     } = await axios.get("/api/query_resume", {
       params: {
         type: queryType,
         queryString,
       },
     });
-    console.log(message);
-    setQueries(message);
-    if (!messages) addErrorMessage(message);
+    console.log(result.query);
+    setQueries(result.query);
+    if (!messages) addErrorMessage(messages);
     else addRegularMessage(...messages);
   };
 
