@@ -12,34 +12,30 @@ const Wrapper = styled.section`
   position: absolute;
   top: 100px;
 `;
-const ResumeEdit = ({ id, me, navigate }) => {
-  const [subject5, setSubject5] = useState("");
-  const [subject4, setSubject4] = useState("");
-  const [subject3, setSubject3] = useState("");
-  const [subject2, setSubject2] = useState("");
-  const [subject1, setSubject1] = useState("");
+const ResumeEdit = ({id,me,navigate}) => {
+  const [subject3, setSubject3] = useState("none");
+  const [subject2, setSubject2] = useState("none");
+  const [subject1, setSubject1] = useState("none");
   const [lowPrice, setLowPrice] = useState();
   const [highPrice, setHighPrice] = useState();
-  const [education, setEducation] = useState("");
+  const [education, setEducation] = useState("")
   const [content, setContent] = useState("");
   const handleQueryResume = async () => {
-    const {
-      data: { result },
+    const {data: {result} 
     } = await instance.get("/api/query_resume", {
       params: {
         type: "userId",
         id,
       },
     });
-    setSubject1(result.result[0]);
+    if(result.result[0]!=='')
+    {setSubject1(result.result[0]);
     setSubject2(result.result[1]);
     setSubject3(result.result[2]);
-    setSubject4(result.result[3]);
-    setSubject5(result.result[4]);
-    setLowPrice(result.result[5]);
-    setHighPrice(result.result[6]);
-    setEducation(result.result[7]);
-    setContent(result.result[8]);
+    setLowPrice(result.result[3])
+    setHighPrice(result.result[4])
+    setEducation(result.result[5])
+    setContent(result.result[6])}
   };
   const handleSubmit = async () => {
     const trimmed_content = content.trim();
@@ -74,13 +70,13 @@ const ResumeEdit = ({ id, me, navigate }) => {
         return;
       case "English":
         setSubject1("English");
-        return;
+        return;  
       case "Physics":
         setSubject1("Physics");
         return;
       case "Chemistry":
         setSubject1("Chemistry");
-        return;
+        return;   
       case "Geography":
         setSubject1("Geography");
         return;
@@ -95,41 +91,40 @@ const ResumeEdit = ({ id, me, navigate }) => {
         return;
       case "English":
         setSubject2("English");
-        return;
+        return;  
       case "Physics":
         setSubject2("Physics");
         return;
       case "Chemistry":
         setSubject2("Chemistry");
-        return;
+        return;   
       case "Geography":
         setSubject2("Geography");
         return;
       default:
         setSubject2("Others");
     }
-  };
-  const onGenderChange3 = (value) => {
+  };  const onGenderChange3 = (value) => {
     switch (value) {
       case "Math":
         setSubject3("Math");
         return;
       case "English":
         setSubject3("English");
-        return;
+        return;  
       case "Physics":
         setSubject3("Physics");
         return;
       case "Chemistry":
         setSubject3("Chemistry");
-        return;
+        return;   
       case "Geography":
         setSubject3("Geography");
         return;
       default:
         setSubject3("Others");
     }
-  };
+  }; 
 
   return (
     <Wrapper>
@@ -328,4 +323,6 @@ const ResumeEdit = ({ id, me, navigate }) => {
   );
 };
 
-export default ResumeEdit;
+export default ResumeEdit
+
+

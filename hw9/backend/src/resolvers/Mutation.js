@@ -33,8 +33,8 @@ const Mutation = {
   },
 
   async createChatBox(parent, { name1, name2 }, { db, pubsub }, info) {
-    if (!name1 || !name2)
-      throw new Error("Missing chatBox name for CreateChatBox");
+    // if (!name1 || !name2)
+    //   throw new Error("Missing chatBox name for CreateChatBox");
 
     if (!(await checkUser(db, name1, "createChatBox"))) {
       console.log("User does not exist for CreateChatBox: " + name1);
@@ -48,7 +48,10 @@ const Mutation = {
 
     const chatBoxName = makeName(name1, name2);
     let chatBox = await checkChatBox(db, chatBoxName, "createChatBox");
-    if (!chatBox) chatBox = await newChatBox(db, chatBoxName);
+    if (!chatBox) {
+      console.log("create new ChatBox:", chatBoxName);
+      chatBox = await newChatBox(db, chatBoxName);
+    }
 
     return chatBox;
   },

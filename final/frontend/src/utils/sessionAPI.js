@@ -2,12 +2,17 @@ import instance from "../api";
 import qs from "qs";
 
 const sessionAPI = {
-  getSession: () => instance.get("/api/session"),
-  postSession: (payload) => {
+  getSession: async() =>await instance.get("/api/session"),
+  postSession: async(payload) => {
     console.log(payload);
-    return instance.post("/api/session", payload);
+    
+    const a  = await instance.post("/api/session", payload)
+    const temp = [a.data.userID, a.data.userName]
+    console.log(temp)
+    return temp
+     ;
   },
-  deleteSession: () => instance.delete("/api/session"),
+  deleteSession: async() =>await instance.delete("/api/session"),
 };
 
 export default sessionAPI;

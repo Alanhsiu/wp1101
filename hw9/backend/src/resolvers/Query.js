@@ -1,12 +1,13 @@
-import { makeName } from "./utility";
+import { makeName, checkChatBox } from "./utility";
 import ChatBox from "./ChatBox";
 
 const Query = {
   async chatBox(parent, { name1, name2 }, { db, pubsub }, info) {
-    const chatBox = await db.ChatBoxModel.findOne({
-      name: makeName(name1, name2),
-    });
-    if (!chatBox) throw new Error("chatBox not found");
+    const chatBoxName = makeName(name1, name2);
+    let chatBox = await checkChatBox(db, chatBoxName, "queryChatBox");
+    if (!chatBox) {
+      throw new Error(`ChatBox ${chatBoxName} is not exist.`);
+    }
     return chatBox;
   },
 };

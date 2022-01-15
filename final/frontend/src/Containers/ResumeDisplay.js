@@ -38,59 +38,59 @@ const ResumeDisplay = ({ id, me, navigate }) => {
 
   return (
     <Wrapper>
-      <div className="post-wrapper">
-        <div className="post-text-container">
-          <div
-            style={{
-              fontWeight: "Bold",
-              fontSize: 36,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            ResumeDisplay
-            <Edit
-              style={{
-                fontWeight: "Bold",
-                fontSize: 45,
-                display: "flex",
-                justifyContent: "center",
-                paddingLeft: "15px",
-                cursor: "pointer",
-              }}
-              onClick={() => navigate("/resumeEdit")}
-            />
-          </div>
-          <br />
-          <Form
+    <div className="post-wrapper">
+      <div className="post-text-container">
+        <div
+          style={{
+            fontWeight: "Bold",
+            fontSize: 36,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          ResumeDisplay
+          <Edit 
+          style={{
+            fontWeight: "Bold",
+            fontSize: 45,
+            display: "flex",
+            justifyContent: "center",
+            paddingLeft:"15px",
+            cursor: "pointer"
+          }}
+          onClick={() => navigate("/resumeEdit")}/>
+        </div>
+        <br />
+        <Form
+          className="post-subject"
+          style={{
+            display: "left",
+            flexDirection: "column",
+            justifyContent: "start",
+            // alignItems: "center",
+            margin: "auto",
+          }}
+          labelCol={{ span: 5 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+        >
+          <Form.Item
+            label="Name"
+            variant="outlined"
             className="post-subject"
-            style={{
-              display: "left",
-              flexDirection: "column",
-              justifyContent: "start",
-              // alignItems: "center",
-              margin: "auto",
-            }}
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
+            id="pid-create-subject"
           >
-            <Form.Item
-              label="Name"
-              variant="outlined"
-              className="post-subject"
-              id="pid-create-subject"
-            >
-              {me}
-            </Form.Item>
-            <Form.Item
-              label="Subject1"
-              variant="outlined"
-              className="post-subject"
-              id="pid-create-subject"
-            >
-              {show[0]}
-            </Form.Item>
+            {`${id} / ${me}`}
+          </Form.Item>
+          <Form.Item
+            label="Subject1"
+            variant="outlined"
+            className="post-subject"
+            id="pid-create-subject"
+          >
+            {show[0]}
+          </Form.Item>
+          <br />
             <Form.Item
               label="Subject2"
               variant="outlined"
@@ -114,7 +114,7 @@ const ResumeDisplay = ({ id, me, navigate }) => {
               id="pid-create-price"
               type="number"
             >
-              {show[5]}
+              {show[3]}
               <Input
                 className="site-input-split"
                 style={{
@@ -126,7 +126,7 @@ const ResumeDisplay = ({ id, me, navigate }) => {
                 placeholder="~"
                 disabled
               />
-              {show[6]}
+              {show[4]}
             </Form.Item>
             <Form.Item
               label="Acedemic Degree"
@@ -134,7 +134,7 @@ const ResumeDisplay = ({ id, me, navigate }) => {
               className="post-experience"
               id="pid-create-experience"
             >
-              {show[7]}
+              {show[5]}
             </Form.Item>
             <Form.Item
               label="Description"
@@ -142,7 +142,7 @@ const ResumeDisplay = ({ id, me, navigate }) => {
               className="post-experience"
               id="pid-create-experience"
             >
-              {show[8]}
+              {show[6]}
             </Form.Item>
           </Form>
         </div>

@@ -43,7 +43,7 @@ function App(props) {
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [id, setId] = useState(savedMe || "");
-  const [me, setMe] = useState("Alan");
+  const [me, setMe] = useState("");
   const [password, setPassword] = useState("");
   const [signIn, setSignedIn] = useState(false);
   const [registered, setRegistered] = useState(false);

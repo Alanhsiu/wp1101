@@ -37,9 +37,9 @@ mongoose
   .then((res) => console.log("mongo db connection created"));
 const db = mongoose.connection;
 db.on("error", (err) => console.log(err));
-// db.once("open", async () => {
-//   if (process.env.MODE === "EXAM") dataInit();
-// });
+db.once("open", async () => {
+  if (process.env.MODE === "EXAM") dataInit();
+});
 
 app.use("/api", postRoute);
 
