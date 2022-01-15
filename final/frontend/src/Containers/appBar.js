@@ -17,9 +17,9 @@ function Appbar(props) {
             className="logo"
             src="https://www.ntu.edu.tw/about/doc/Emblem72.jpg"
             alt="Logo"
-            style={{ maxWidth: "50%", maxHeight: "100%" }}
+            style={{ width:"50px" }}
           />
-          <span className="app-name" onClick={() => props.navigate("/")}>
+          <span className="app-name" onClick={() => props.navigate("/body")}>
             &nbsp;NTU TUTOR WEB
           </span>
         </div>

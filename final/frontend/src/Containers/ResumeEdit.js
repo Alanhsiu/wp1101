@@ -312,7 +312,7 @@ const ResumeEdit = ({id,me,navigate}) => {
               color="secondary"
               className="post-cancel-btn"
               endIcon={<DeleteIcon />}
-              onClick={() => navigate("/body")}
+              onClick={() => navigate(-1)}
             >
               Cancel
             </Button>

@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, React, useEffect} from "react";
+import { useState, React, useEffect } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
@@ -32,6 +32,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-attachment: scroll;
 `;
 
 function App(props) {
@@ -42,10 +43,11 @@ function App(props) {
   const LOCALSTORAGE_KEY = "save-me";
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const [id, setId] = useState(savedMe || "");
-  const [me, setMe] = useState("");
+  const [me, setMe] = useState("Alan");
   const [password, setPassword] = useState("");
   const [signIn, setSignedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const [chatPersonID, setChatPersonID] = useState("Bea")
 
   const displayStatus = (payload) => {
     if (payload.msg) {
@@ -72,15 +74,7 @@ function App(props) {
   return !initialized ? (
     <Loading />
   ) : (
-    <div
-      style={{
-        // backgroundImage:
-        //   "url(https://egoldenyears.com/wp-content/uploads/2018/09/201800926_a0312.jpg.jpg)",
-        // backgroundSize: "100% 100%",
-        backgroundColor: "PowderBlue",
-        // opacity:0.7,
-      }}
-    >
+    <div style={{ backgroundColor: "PowderBlue" }}>
       <Appbar navigate={navigate} />
       <CssBaseline />
       <Wrapper>
@@ -106,8 +100,8 @@ function App(props) {
                 />
               }
             />
-            {/* </Route>
-          <Route path="" element={<PrivateRoute />}>  */}
+          </Route>
+          <Route path="" element={<PrivateRoute />}>
             <Route
               path="/body"
               element={<Body navigate={navigate} me={me} id={id} />}
@@ -118,11 +112,11 @@ function App(props) {
             />
             <Route
               path="/resumeDetail/:pid"
-              element={<ResumeDetail navigate={navigate} me={me} id={id} />}
+              element={<ResumeDetail navigate={navigate} me={me} id={id} setChatPersonID={setChatPersonID}/>}
             />
             <Route
               path="/caseDetail/:pid"
-              element={<CaseDetail navigate={navigate} me={me} id={id} />}
+              element={<CaseDetail navigate={navigate} me={me} id={id} setChatPersonID={setChatPersonID}/>}
             />
             <Route
               path="/resumeDisplay"
@@ -138,8 +132,10 @@ function App(props) {
                 <ChatRoom
                   id={id}
                   navigate={navigate}
-                  username={me}
+                  me={me}
                   displayStatus={displayStatus}
+                  chatPersonID={chatPersonID}
+                  setChatPersonID={setChatPersonID}
                 />
               }
             />
