@@ -13,8 +13,10 @@ import OutlineGrayButton from "../Components/outline-gray-button";
 import projectStyles from "../style.module.css";
 import styles from "./home.module.css";
 import Border from "../Components/Border";
-
 import sessionAPI from "../utils/sessionAPI";
+import instance from "../api";
+
+
 
 const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
   const [password, setPassword] = useState("");
@@ -64,8 +66,8 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
         <Space>
           <div
             className={styles["container03"]}
-            onClick={() => {
-              if (!me)
+            onClick={async() => {
+              if (!userID)
                 displayStatus({
                   type: "error",
                   msg: "Missing Username",
@@ -77,13 +79,13 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
                 });
               } else {
                 console.log("go");
-                const { userName } = sessionAPI.postSession({
-                  userID,
-                  password,
-                });
-                setId(userID);
-                setMe(userName);
-                navigate("/body");
+                const temp = await  sessionAPI.postSession({userID, password})
+                await console.log(temp)
+                setMe(temp[1])
+                setId(temp[0])
+                setTimeout(() => {
+                    navigate("/body");
+                  }, 300);
               }
             }}
           >

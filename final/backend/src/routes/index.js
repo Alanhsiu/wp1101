@@ -296,8 +296,11 @@ router.post("/session", async (req, res, next) => {
   req.session.userID = userID;
   req.session.name = userName;
   req.session.isVerified = isVerified;
+  console.log(userID)
+  console.log(userName)
+  console.log(isVerified)
   console.log(req.session);
-  res.status(200).send({ userID, userName, isVerified });
+  res.status(200).send({userID:userID, userName:userName, isVerified:isVerified});
 });
 
 router.delete("/session", async (req, res, next) => {
