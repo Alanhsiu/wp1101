@@ -64,8 +64,9 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
         <Space>
           <div
             className={styles["container03"]}
-            onClick={() => {
-              if (!userName)
+            onClick={async () => {
+              setId(userID);
+              if (!userID)
                 displayStatus({
                   type: "error",
                   msg: "Missing Username",
@@ -77,13 +78,12 @@ const SignIn = ({ me, setMe, id, setId, displayStatus, navigate }) => {
                 });
               } else {
                 console.log("go");
-                const { userName } = sessionAPI.postSession({
+                 const { userName } = await sessionAPI.postSession({
                   userID,
                   password,
                 });
-                setId(userID);
-                setMe(userName);
-                navigate("/body");
+                await setMe(userName);
+                await navigate("/body");
               }
             }}
           >
