@@ -106,8 +106,8 @@ function App(props) {
                 />
               }
             />
-            </Route>
-          <Route path="" element={<PrivateRoute />}> 
+            {/* </Route>
+          <Route path="" element={<PrivateRoute />}>  */}
             <Route
               path="/body"
               element={<Body navigate={navigate} me={me} id={id} />}

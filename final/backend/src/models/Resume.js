@@ -3,27 +3,19 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const ResumeSchema = new Schema({
   postId: { type: String, unique: true },
-  userId: String,
+  userId:  { type: String, unique: true },
   userName: String,
   subject1: {
     type : String,
-    enum : ['Math','English','Physics','Chemistry','Geography','Others'],
+    enum : ['Math','English','Physics','Chemistry','Geography','Others',"none"],
   },
   subject2: {
     type : String,
-    enum : ['Math','English','Physics','Chemistry','Geography','Others'],
+    enum : ['Math','English','Physics','Chemistry','Geography','Others',"none"],
   },
   subject3: {
     type : String,
-    enum : ['Math','English','Physics','Chemistry','Geography','Others'],
-  },
-  subject4: {
-    type : String,
-    enum : ['Math','English','Physics','Chemistry','Geography','Others'],
-  },
-  subject5: {
-    type : String,
-    enum : ['Math','English','Physics','Chemistry','Geography','Others'],
+    enum : ['Math','English','Physics','Chemistry','Geography','Others',"none"],
   },
   description: String,
   lowPrice: Number,

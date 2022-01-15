@@ -87,8 +87,6 @@ router.post("/resume", async (req, res) => {
       subject1: req.body.subject1,
       subject2: req.body.subject2,
       subject3: req.body.subject3,
-      subject4: req.body.subject4,
-      subject5: req.body.subject5,
       description: req.body.trimmed_content,
       education: req.body.education,
       mail :  req.body.mail,
@@ -107,8 +105,6 @@ router.post("/resume", async (req, res) => {
         subject1: req.body.subject1,
         subject2: req.body.subject2,
         subject3: req.body.subject3,
-        subject4: req.body.subject4,
-        subject5: req.body.subject5,
         description: req.body.trimmed_content,
         education: req.body.education,
         mail :  req.body.mail,
@@ -171,22 +167,21 @@ catch(e){
 
 router.get("/query_resume", async (req, res) => {
   const queryType = req.query.type;
-  const queryString = req.query.queryString;
-
+  const queryString = req.query.id;
+  console.log(queryType)
+  console.log(queryString)
   let query;
    
   if (queryType == "userId"){
     let result = []
     const a = await ResumeModel.find({ userId: queryString });
-    if (a.length === 0){
-      console.log("DID")
-      result = ["","","","","","","","",""]
+    if (a[0] === undefined){
+      result = ["","","","","","",""]
     }
     else {   
-      result = [a[0].subject1, a[0].subject2, a[0].subject3, a[0].subject4, a[0].subject5,  a[0].lowPrice, a[0].highPrice, a[0].education,a[0].description, ]
+      result = [a[0].subject1, a[0].subject2, a[0].subject3, a[0].lowPrice, a[0].highPrice, a[0].education,a[0].description, ]
     }
     res.send({result: {result}})
-    console.log(result)
   }
   else{
   if (queryType == "name") {
@@ -283,6 +278,7 @@ router.post("/session", async (req, res, next) => {
   }
   const user = await UserModel.findOne({ userID }).exec();
   if (!user) {
+
     res.status(400).end();
     return;
   }
@@ -307,8 +303,8 @@ router.delete("/session", async (req, res, next) => {
 });
 
 router.post("/user", async (req, res, next) => {
-  const { userID, password, userName } = req.body;
-  if (!userID || !password || !userName) {
+  const { userID, password } = req.body;
+  if (!userID || !password ) {
     res.status(400).end();
     return;
   }
@@ -316,6 +312,7 @@ router.post("/user", async (req, res, next) => {
   const user = await UserModel.findOne({ userID }).exec();
   if (user) {
     res.status(403).send("Existed User ID");
+    
     return;
   }
 

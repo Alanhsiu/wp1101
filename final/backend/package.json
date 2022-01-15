@@ -7,9 +7,11 @@
     "server": "nodemon src/main.js --ext js --exec babel-node"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.7.1",
     "dotenv-defaults": "^3.0.0",
     "graphql-yoga": "^1.17.4",
     "mongoose": "^6.1.2",
+    "nodemailer": "^6.7.2",
     "yarn": "^1.22.17"
   },
   "devDependencies": {

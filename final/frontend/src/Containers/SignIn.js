@@ -42,9 +42,8 @@ const SignIn = ({
         <Border>
         <Input
           prefix={<UserOutlined />}
-          value={me}
-          onChange={(e) => setMe(e.target.value)}
-          placeholder="Username"
+          onChange={(e) => setUserID(e.target.value)}
+          placeholder="UserID"
           size="large"
           font-weight="bold"
           outline="none"
@@ -53,7 +52,6 @@ const SignIn = ({
         <Border>
         <Input.Password
           prefix={<LockOutlined />}
-          value={password}
           placeholder="Password"
           size="large"
           onChange={(e) => setPassword(e.target.value)}
@@ -68,7 +66,7 @@ const SignIn = ({
         <div
           className={styles["container03"]}
           onClick={() => {
-            if (!me)
+            if (!userID)
               displayStatus({
                 type: "error",
                 msg: "Missing Username",
@@ -80,9 +78,11 @@ const SignIn = ({
               });
             } else {
               console.log("go")
-              const {tuserId ,userName } = sessionAPI.postSession({userID, password})          
+              // const {tuserId ,userName, verified } = sessionAPI.postSession({userID, password})          
               setId("tuserId");
               setMe("userName");
+              console.log(id)
+              console.log(me)
               navigate("/body");
             }
           }}
