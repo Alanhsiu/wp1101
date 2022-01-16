@@ -5,11 +5,11 @@ topic: 台大家教網
 
 安裝與測試:
 開啟final檔案 在最外層和backend/frontend 分別yarn
-自行新增.env檔，填入MONGO_URL=(自己的mongodb)
-並在.env.default 中新增:
-    MONGO_URL = 
+自行以.env.defauts為模板新增.env檔，填入
+    MONGO_URL=(自己的mongodb)
     EMAILACCOUNT = 我們給助教的gmail帳號
     EMAILPASSWORD = 我們給助教的gmail密碼
+或直接在.env.defaults中修改
 這邊的email address 與 email password 是我們特別辦來送驗證信的帳號，附在期末的google form上
 yarn start 執行前端
 yarn server 執行後端
