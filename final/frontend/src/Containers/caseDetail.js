@@ -10,7 +10,6 @@ function CaseDetail(props) {
   const { pid } = useParams();
   const [cases, setCases] = useState(null);
 
-  // TODO 3-(2): complete getPostDetail function to get the full information of a post from database
   const getCaseDetail = async () => {
     const {
       data: { message, cases },
@@ -20,11 +19,16 @@ function CaseDetail(props) {
     props.setChatPersonID(cases[1]);
   };
 
-  // TODO 3-(2): fetch the full information of a post from database
   useEffect(() => {
     getCaseDetail();
     console.log("ok");
   }, [pid]);
+
+  const Mailonclick = (userName) => {
+    console.log(userName);
+    props.setChatPersonID(userName);
+    props.navigate("/chatroom");
+  };
 
   return (
     <div className="article-wrapper">
@@ -49,7 +53,7 @@ function CaseDetail(props) {
             >
               <MailIcon
                 fontSize="inherit"
-                onClick={() => props.navigate("/chatroom")}
+                onClick={() => Mailonclick(cases[0].userName)}
               />
             </IconButton>
           </div>

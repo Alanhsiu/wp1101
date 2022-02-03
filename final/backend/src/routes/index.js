@@ -16,6 +16,7 @@ import { needLogin } from "./api/middleware";
 const router = express.Router();
 const secret = uuid.v4();
 const sessionOptions = {
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
   cookie: {
     path: "/",
     httpOnly: true,
@@ -25,8 +26,7 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
   secret,
-  unset: "destroy",
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+  unset: "destroy"
 };
 
 sessionOptions.store.clear();

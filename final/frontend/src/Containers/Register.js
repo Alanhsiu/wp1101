@@ -34,12 +34,12 @@ const Register = ({me,navigate}) => {
           NTU Tutor
         </h1>
       </Title>
-      <Space direction="vertical" class="bodrer">
+      <Space direction="vertical">
         <Border>
           <Input
             prefix={<UserOutlined />}
             value={newUserID}
-            enterButton="Sign In"
+            enterbutton="Sign In"
             onChange={(e) => setNewUserID(e.target.value)}
             placeholder="UserID (帳號)"
             size="large"

@@ -15,8 +15,14 @@ function ResumeDetail(props) {
       data: { message, resume },
     } = await instance.get("/api/resumeDetail", { params: { pid } });
     setResume(resume);
-    console.log("here"+resume);
+    console.log("here" + resume);
     props.setChatPersonID(resume[1]);
+  };
+
+  const Mailonclick = (userName) => {
+    console.log(userName);
+    props.setChatPersonID(userName);
+    props.navigate("/chatroom");
   };
 
   useEffect(() => {
@@ -48,7 +54,7 @@ function ResumeDetail(props) {
             >
               <MailIcon
                 fontSize="inherit"
-                onClick={() => props.navigate("/chatroom")}
+                onClick={() => Mailonclick(resume[0].userName)}
               />
             </IconButton>
           </div>
